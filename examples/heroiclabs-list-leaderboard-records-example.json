@@ -1,0 +1,29 @@
+{
+  "summary": "List leaderboard records",
+  "request": {
+    "method": "GET",
+    "path": "/v2/leaderboard/{leaderboardId}",
+    "parameters": {
+      "leaderboardId": "weekly_score_board",
+      "limit": 10
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "records": [
+        {
+          "leaderboard_id": "weekly_score_board",
+          "owner_id": "a1b2c3d4-...",
+          "username": "player1",
+          "score": 5000,
+          "subscore": 0,
+          "num_score": 1,
+          "rank": 1
+        }
+      ],
+      "next_cursor": "...",
+      "prev_cursor": ""
+    }
+  }
+}

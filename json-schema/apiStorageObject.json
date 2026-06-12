@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/heroiclabs/json-schema/apiStorageObject.json",
+  "title": "apiStorageObject",
+  "type": "object",
+  "properties": {
+    "collection": {
+      "type": "string",
+      "description": "The collection which stores the object."
+    },
+    "key": {
+      "type": "string",
+      "description": "The key of the object within the collection."
+    },
+    "userId": {
+      "type": "string",
+      "description": "The user owner of the object."
+    },
+    "value": {
+      "type": "string",
+      "description": "The value of the object."
+    },
+    "version": {
+      "type": "string",
+      "description": "The version hash of the object."
+    },
+    "permissionRead": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The read access permissions for the object."
+    },
+    "permissionWrite": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The write access permissions for the object."
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created."
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated."
+    }
+  },
+  "description": "An object within the storage engine."
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/heroiclabs/json-schema/apiFriend.json",
+  "title": "apiFriend",
+  "type": "object",
+  "properties": {
+    "user": {
+      "$ref": "#/components/schemas/apiUser"
+    },
+    "state": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The friend status.\n\none of \"Friend.State\"."
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time of the latest relationship update."
+    },
+    "metadata": {
+      "type": "string",
+      "description": "Metadata."
+    }
+  },
+  "description": "A friend of a user."
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/heroiclabs/json-schema/apiMatch.json",
+  "title": "apiMatch",
+  "type": "object",
+  "properties": {
+    "matchId": {
+      "type": "string",
+      "description": "The ID of the match, can be used to join."
+    },
+    "authoritative": {
+      "type": "boolean",
+      "description": "True if it's an server-managed authoritative match, false otherwise."
+    },
+    "label": {
+      "type": "string",
+      "description": "Match label, if any."
+    },
+    "size": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Current number of users in the match."
+    },
+    "tickRate": {
+      "type": "integer",
+      "format": "int32",
+      "title": "Tick Rate"
+    },
+    "handlerName": {
+      "type": "string",
+      "title": "Handler name"
+    }
+  },
+  "description": "Represents a realtime match."
+}

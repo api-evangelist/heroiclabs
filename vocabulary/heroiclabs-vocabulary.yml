@@ -1,0 +1,284 @@
+vocabulary:
+  name: Heroic Labs (Nakama) API Vocabulary
+  description: >
+    Core terms and concepts used across the Nakama game backend API and Hiro framework,
+    covering authentication, real-time multiplayer, social features, storage, and LiveOps.
+  url: https://heroiclabs.com/docs/nakama/
+  version: "2.0"
+  updated: "2026-06-12"
+
+terms:
+  - term: Session
+    type: resource
+    description: >
+      An authenticated session token (JWT) returned after successful user authentication.
+      Contains a token for API requests and a refresh_token for session renewal.
+    properties:
+      - name: token
+        type: string
+        description: JWT bearer token for authenticating API requests.
+      - name: refresh_token
+        type: string
+        description: Token used to obtain a new session without re-authenticating.
+      - name: created
+        type: boolean
+        description: Whether a new account was created during this authentication.
+
+  - term: Account
+    type: resource
+    description: >
+      A Nakama user account containing identity details, linked devices/socials,
+      wallet balance, and custom metadata.
+    properties:
+      - name: user
+        type: object
+        description: Core user profile information.
+      - name: wallet
+        type: string
+        description: JSON-encoded wallet with virtual currency balances.
+      - name: email
+        type: string
+        description: Email address associated with the account.
+      - name: devices
+        type: array
+        description: List of linked device identifiers.
+      - name: custom_id
+        type: string
+        description: Custom identifier for the account.
+      - name: verify_time
+        type: string
+        description: Timestamp when the account email was verified.
+
+  - term: Match
+    type: resource
+    description: >
+      A real-time multiplayer match session. Matches can be authoritative (server-managed)
+      or relayed (peer-to-peer via Nakama server).
+    properties:
+      - name: match_id
+        type: string
+        description: Unique identifier for the match.
+      - name: authoritative
+        type: boolean
+        description: Whether match logic runs on the server (true) or is relayed (false).
+      - name: label
+        type: string
+        description: Freeform label for match discovery and filtering.
+      - name: size
+        type: integer
+        description: Current number of participants in the match.
+
+  - term: LeaderboardRecord
+    type: resource
+    description: >
+      A single entry in a named leaderboard, tracking a player's score,
+      rank, and metadata.
+    properties:
+      - name: leaderboard_id
+        type: string
+        description: Identifier of the leaderboard this record belongs to.
+      - name: owner_id
+        type: string
+        description: UUID of the user who owns this record.
+      - name: username
+        type: string
+        description: Display name of the record owner.
+      - name: score
+        type: integer
+        description: Primary numeric score value.
+      - name: subscore
+        type: integer
+        description: Secondary score for tiebreaking.
+      - name: rank
+        type: integer
+        description: Current rank of the user in the leaderboard.
+      - name: num_score
+        type: integer
+        description: Number of times the score was updated.
+
+  - term: StorageObject
+    type: resource
+    description: >
+      A JSON document stored in the Nakama key-value storage engine,
+      scoped to a collection and key within a user's namespace.
+    properties:
+      - name: collection
+        type: string
+        description: Logical grouping of related storage keys.
+      - name: key
+        type: string
+        description: Unique key within the collection.
+      - name: user_id
+        type: string
+        description: UUID of the owning user (empty for public objects).
+      - name: value
+        type: string
+        description: JSON-encoded document content.
+      - name: version
+        type: string
+        description: ETag version for optimistic concurrency control.
+      - name: permission_read
+        type: integer
+        description: "Read permission level: 0=none, 1=owner, 2=public."
+      - name: permission_write
+        type: integer
+        description: "Write permission level: 0=none, 1=owner."
+
+  - term: Group
+    type: resource
+    description: >
+      A social group (clan, guild, team) with membership management,
+      open/closed join policy, and metadata.
+    properties:
+      - name: id
+        type: string
+        description: UUID of the group.
+      - name: creator_id
+        type: string
+        description: UUID of the user who created the group.
+      - name: name
+        type: string
+        description: Display name of the group.
+      - name: description
+        type: string
+        description: Human-readable description of the group.
+      - name: open
+        type: boolean
+        description: Whether the group accepts join requests without approval.
+      - name: edge_count
+        type: integer
+        description: Current number of group members.
+      - name: max_count
+        type: integer
+        description: Maximum allowed members in the group.
+
+  - term: Friend
+    type: resource
+    description: >
+      A directional friendship relationship between two users, with a state
+      indicating whether the relationship is established, pending, or blocked.
+    properties:
+      - name: user
+        type: object
+        description: Profile of the friend user.
+      - name: state
+        type: integer
+        description: "Relationship state: 0=friend, 1=invite sent, 2=invite received, 3=blocked."
+      - name: update_time
+        type: string
+        description: Timestamp when the friendship state last changed.
+
+  - term: Notification
+    type: resource
+    description: >
+      An in-app notification sent to a user with a subject, code, and optional content.
+    properties:
+      - name: id
+        type: string
+        description: Unique notification identifier.
+      - name: subject
+        type: string
+        description: Short notification subject line.
+      - name: content
+        type: string
+        description: JSON-encoded notification payload.
+      - name: code
+        type: integer
+        description: Application-defined numeric code categorizing the notification.
+      - name: sender_id
+        type: string
+        description: UUID of the sending user (empty for server-sent notifications).
+      - name: persistent
+        type: boolean
+        description: Whether the notification persists after being read.
+
+  - term: Tournament
+    type: resource
+    description: >
+      A time-bounded competitive event with rankings, prize distribution,
+      and optional join requirements.
+    properties:
+      - name: id
+        type: string
+        description: Unique tournament identifier.
+      - name: title
+        type: string
+        description: Display title of the tournament.
+      - name: start_time
+        type: integer
+        description: Unix timestamp when the tournament starts.
+      - name: end_time
+        type: integer
+        description: Unix timestamp when the tournament ends.
+      - name: max_size
+        type: integer
+        description: Maximum number of participants.
+      - name: max_num_score
+        type: integer
+        description: Maximum number of score submissions per participant.
+
+  - term: ChannelMessage
+    type: resource
+    description: >
+      A chat message sent in a named channel, group chat, or direct message conversation.
+    properties:
+      - name: channel_id
+        type: string
+        description: Identifier of the channel the message belongs to.
+      - name: message_id
+        type: string
+        description: Unique message identifier.
+      - name: sender_id
+        type: string
+        description: UUID of the sending user.
+      - name: username
+        type: string
+        description: Display name of the sender.
+      - name: content
+        type: string
+        description: JSON-encoded message content.
+      - name: code
+        type: integer
+        description: "Message type code: 0=chat, 1=join, 2=leave, etc."
+
+  - term: Matchmaker
+    type: concept
+    description: >
+      The Nakama matchmaking system that groups players with similar skill ratings,
+      latency, and custom properties into matches automatically.
+
+  - term: RPC
+    type: concept
+    description: >
+      Remote Procedure Call endpoint for invoking custom server-side logic
+      written in Go, TypeScript, or Lua on the Nakama runtime.
+
+  - term: Wallet
+    type: concept
+    description: >
+      A virtual currency ledger attached to each user account, supporting
+      multiple denominations and atomic transaction operations.
+
+  - term: Presence
+    type: concept
+    description: >
+      Real-time user status tracking that indicates whether a user is
+      currently online and in which matches or channels.
+
+  - term: LiveOps
+    type: concept
+    description: >
+      Live operations features provided by the Satori platform: feature flags,
+      A/B experiments, audience segmentation, and scheduled in-game events.
+
+  - term: FeatureFlag
+    type: resource
+    description: >
+      A Satori LiveOps toggle that enables or disables game features for specific
+      audiences without requiring a game client update.
+
+  - term: Experiment
+    type: resource
+    description: >
+      A Satori A/B or multivariate test assigning users to variants to measure
+      impact on engagement or monetization metrics.

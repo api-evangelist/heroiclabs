@@ -1,0 +1,24 @@
+{
+  "summary": "Authenticate with email and password",
+  "request": {
+    "method": "POST",
+    "path": "/v2/account/authenticate/email",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "email": "player@example.com",
+      "password": "s3cur3p@ssword",
+      "username": "player1",
+      "create": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "created": true
+    }
+  }
+}

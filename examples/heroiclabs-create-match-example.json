@@ -1,0 +1,22 @@
+{
+  "summary": "Create a realtime match",
+  "request": {
+    "method": "POST",
+    "path": "/v2/match",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {}
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "match": {
+        "match_id": "m1a2t3c4h5...",
+        "authoritative": false,
+        "label": "",
+        "size": 1
+      }
+    }
+  }
+}

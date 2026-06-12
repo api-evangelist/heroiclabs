@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/heroiclabs/json-schema/apiGroup.json",
+  "title": "apiGroup",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The id of a group."
+    },
+    "creatorId": {
+      "type": "string",
+      "description": "The id of the user who created the group."
+    },
+    "name": {
+      "type": "string",
+      "description": "The unique name of the group."
+    },
+    "description": {
+      "type": "string",
+      "description": "A description for the group."
+    },
+    "langTag": {
+      "type": "string",
+      "description": "The language expected to be a tag which follows the BCP-47 spec."
+    },
+    "metadata": {
+      "type": "string",
+      "description": "Additional information stored as a JSON object."
+    },
+    "avatarUrl": {
+      "type": "string",
+      "description": "A URL for an avatar image."
+    },
+    "open": {
+      "type": "boolean",
+      "description": "Anyone can join open groups, otherwise only admins can accept members."
+    },
+    "edgeCount": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The current count of all members in the group."
+    },
+    "maxCount": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The maximum number of members allowed."
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the group was created."
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the group was last updated."
+    }
+  },
+  "description": "A group in the server."
+}

@@ -1,0 +1,235 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "heroiclabs": "https://heroiclabs.com/docs/nakama/concepts/",
+
+    "Session": {
+      "@id": "heroiclabs:session",
+      "@type": "@id"
+    },
+    "token": {
+      "@id": "heroiclabs:session/token",
+      "@type": "xsd:string"
+    },
+    "refresh_token": {
+      "@id": "heroiclabs:session/refresh_token",
+      "@type": "xsd:string"
+    },
+    "created": {
+      "@id": "heroiclabs:session/created",
+      "@type": "xsd:boolean"
+    },
+
+    "Account": {
+      "@id": "heroiclabs:account",
+      "@type": "@id"
+    },
+    "user_id": {
+      "@id": "heroiclabs:account/user_id",
+      "@type": "xsd:string"
+    },
+    "username": {
+      "@id": "heroiclabs:account/username",
+      "@type": "xsd:string"
+    },
+    "wallet": {
+      "@id": "heroiclabs:account/wallet",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+
+    "Match": {
+      "@id": "heroiclabs:match",
+      "@type": "@id"
+    },
+    "match_id": {
+      "@id": "heroiclabs:match/match_id",
+      "@type": "xsd:string"
+    },
+    "authoritative": {
+      "@id": "heroiclabs:match/authoritative",
+      "@type": "xsd:boolean"
+    },
+    "label": {
+      "@id": "heroiclabs:match/label",
+      "@type": "xsd:string"
+    },
+    "size": {
+      "@id": "heroiclabs:match/size",
+      "@type": "xsd:integer"
+    },
+
+    "LeaderboardRecord": {
+      "@id": "heroiclabs:leaderboard_record",
+      "@type": "@id"
+    },
+    "leaderboard_id": {
+      "@id": "heroiclabs:leaderboard_record/leaderboard_id",
+      "@type": "xsd:string"
+    },
+    "score": {
+      "@id": "heroiclabs:leaderboard_record/score",
+      "@type": "xsd:integer"
+    },
+    "subscore": {
+      "@id": "heroiclabs:leaderboard_record/subscore",
+      "@type": "xsd:integer"
+    },
+    "rank": {
+      "@id": "heroiclabs:leaderboard_record/rank",
+      "@type": "xsd:integer"
+    },
+    "num_score": {
+      "@id": "heroiclabs:leaderboard_record/num_score",
+      "@type": "xsd:integer"
+    },
+
+    "StorageObject": {
+      "@id": "heroiclabs:storage_object",
+      "@type": "@id"
+    },
+    "collection": {
+      "@id": "heroiclabs:storage_object/collection",
+      "@type": "xsd:string"
+    },
+    "key": {
+      "@id": "heroiclabs:storage_object/key",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "heroiclabs:storage_object/value",
+      "@type": "xsd:string"
+    },
+    "version": {
+      "@id": "heroiclabs:storage_object/version",
+      "@type": "xsd:string"
+    },
+    "permission_read": {
+      "@id": "heroiclabs:storage_object/permission_read",
+      "@type": "xsd:integer"
+    },
+    "permission_write": {
+      "@id": "heroiclabs:storage_object/permission_write",
+      "@type": "xsd:integer"
+    },
+
+    "Group": {
+      "@id": "heroiclabs:group",
+      "@type": "@id"
+    },
+    "creator_id": {
+      "@id": "heroiclabs:group/creator_id",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "open": {
+      "@id": "heroiclabs:group/open",
+      "@type": "xsd:boolean"
+    },
+    "edge_count": {
+      "@id": "heroiclabs:group/edge_count",
+      "@type": "xsd:integer"
+    },
+    "max_count": {
+      "@id": "heroiclabs:group/max_count",
+      "@type": "xsd:integer"
+    },
+
+    "Friend": {
+      "@id": "heroiclabs:friend",
+      "@type": "@id"
+    },
+    "state": {
+      "@id": "heroiclabs:friend/state",
+      "@type": "xsd:integer"
+    },
+    "update_time": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+
+    "Notification": {
+      "@id": "heroiclabs:notification",
+      "@type": "@id"
+    },
+    "subject": {
+      "@id": "heroiclabs:notification/subject",
+      "@type": "xsd:string"
+    },
+    "content": {
+      "@id": "heroiclabs:notification/content",
+      "@type": "xsd:string"
+    },
+    "code": {
+      "@id": "heroiclabs:notification/code",
+      "@type": "xsd:integer"
+    },
+    "sender_id": {
+      "@id": "heroiclabs:notification/sender_id",
+      "@type": "xsd:string"
+    },
+    "persistent": {
+      "@id": "heroiclabs:notification/persistent",
+      "@type": "xsd:boolean"
+    },
+
+    "Tournament": {
+      "@id": "heroiclabs:tournament",
+      "@type": "@id"
+    },
+    "title": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "start_time": {
+      "@id": "schema:startDate",
+      "@type": "xsd:integer"
+    },
+    "end_time": {
+      "@id": "schema:endDate",
+      "@type": "xsd:integer"
+    },
+    "max_size": {
+      "@id": "heroiclabs:tournament/max_size",
+      "@type": "xsd:integer"
+    },
+
+    "ChannelMessage": {
+      "@id": "heroiclabs:channel_message",
+      "@type": "@id"
+    },
+    "channel_id": {
+      "@id": "heroiclabs:channel_message/channel_id",
+      "@type": "xsd:string"
+    },
+    "message_id": {
+      "@id": "heroiclabs:channel_message/message_id",
+      "@type": "xsd:string"
+    },
+
+    "FeatureFlag": {
+      "@id": "heroiclabs:feature_flag",
+      "@type": "@id"
+    },
+    "Experiment": {
+      "@id": "heroiclabs:experiment",
+      "@type": "@id"
+    },
+    "LiveOps": {
+      "@id": "heroiclabs:liveops",
+      "@type": "@id"
+    }
+  }
+}

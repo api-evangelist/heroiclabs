@@ -1,0 +1,34 @@
+{
+  "summary": "Write a storage object",
+  "request": {
+    "method": "PUT",
+    "path": "/v2/storage",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "objects": [
+        {
+          "collection": "player_data",
+          "key": "inventory",
+          "value": "{\"gold\": 100, \"items\": [\"sword\", \"shield\"]}",
+          "permission_read": 1,
+          "permission_write": 1
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "acks": [
+        {
+          "collection": "player_data",
+          "key": "inventory",
+          "user_id": "a1b2c3d4-...",
+          "version": "abc123"
+        }
+      ]
+    }
+  }
+}

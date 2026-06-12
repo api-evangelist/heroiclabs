@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/heroiclabs/json-schema/apiSession.json",
+  "title": "apiSession",
+  "type": "object",
+  "properties": {
+    "created": {
+      "type": "boolean",
+      "description": "True if the corresponding account was just created, false otherwise."
+    },
+    "token": {
+      "type": "string",
+      "description": "Authentication credentials."
+    },
+    "refreshToken": {
+      "type": "string",
+      "description": "Refresh token that can be used for session token renewal."
+    }
+  },
+  "description": "A user's session used to authenticate messages."
+}

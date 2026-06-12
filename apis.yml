@@ -55,8 +55,34 @@ apis:
         url: https://heroiclabs.com/docs/nakama/
       - type: OpenAPI
         url: https://heroiclabs.github.io/nakama-docs/
+      - type: OpenAPI
+        url: openapi/heroiclabs-nakama-api-openapi.yml
+      - type: OpenAPI
+        url: openapi/heroiclabs-nakama-console-api-openapi.yml
       - type: GitHubRepository
         url: https://github.com/heroiclabs/nakama
+  - aid: heroiclabs:hiro-api
+    name: Hiro RPC API
+    description: >
+      The Hiro RPC API is Heroic Labs' game framework server interface exposing
+      economy, progression, achievements, inventory, and social graph RPCs
+      that run on the Nakama server runtime. It is available as an OAS 3.0
+      specification and is designed for authoritative server-to-server calls
+      from game clients and backend services.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://heroiclabs.com/docs/nakama/
+    baseURL: https://127.0.0.1:7350
+    tags:
+      - Game Framework
+      - Economy
+      - Progression
+      - Achievements
+      - Inventory
+    properties:
+      - type: OpenAPI
+        url: openapi/heroiclabs-hiro-rpc-api-openapi.yml
+      - type: GitHubRepository
+        url: https://github.com/heroiclabs/hiro
   - aid: heroiclabs:satori-api
     name: Satori API
     description: >
@@ -103,6 +129,10 @@ common:
     url: rate-limits/heroiclabs-rate-limits.yml
   - type: FinOps
     url: finops/heroiclabs-finops.yml
+  - type: Vocabulary
+    url: vocabulary/heroiclabs-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/heroiclabs-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/heroiclabs/json-schema/apiLeaderboardRecord.json",
+  "title": "apiLeaderboardRecord",
+  "type": "object",
+  "properties": {
+    "leaderboardId": {
+      "type": "string",
+      "description": "The ID of the leaderboard this score belongs to."
+    },
+    "ownerId": {
+      "type": "string",
+      "description": "The ID of the score owner, usually a user or group."
+    },
+    "username": {
+      "type": "string",
+      "description": "The username of the score owner, if the owner is a user."
+    },
+    "score": {
+      "type": "string",
+      "format": "int64",
+      "description": "The score value."
+    },
+    "subscore": {
+      "type": "string",
+      "format": "int64",
+      "description": "An optional subscore value."
+    },
+    "numScore": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of submissions to this score record."
+    },
+    "metadata": {
+      "type": "string",
+      "description": "Metadata."
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the leaderboard record was created."
+    },
+    "updateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the leaderboard record was updated."
+    },
+    "expiryTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the leaderboard record expires."
+    },
+    "rank": {
+      "type": "string",
+      "format": "int64",
+      "description": "The rank of this record."
+    },
+    "maxNumScore": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The maximum number of score updates allowed by the owner."
+    }
+  },
+  "description": "Represents a complete leaderboard record with all scores and associated metadata."
+}

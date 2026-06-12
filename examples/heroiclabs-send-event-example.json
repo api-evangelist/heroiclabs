@@ -1,0 +1,27 @@
+{
+  "summary": "Send a game event",
+  "request": {
+    "method": "POST",
+    "path": "/v2/event",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "events": [
+        {
+          "name": "purchase",
+          "properties": {
+            "item": "sword",
+            "cost": "100"
+          },
+          "timestamp": "2026-06-12T00:00:00Z",
+          "external": false
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {}
+  }
+}

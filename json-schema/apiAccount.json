@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/heroiclabs/json-schema/apiAccount.json",
+  "title": "apiAccount",
+  "type": "object",
+  "properties": {
+    "user": {
+      "$ref": "#/components/schemas/apiUser"
+    },
+    "wallet": {
+      "type": "string",
+      "description": "The user's wallet data."
+    },
+    "email": {
+      "type": "string",
+      "description": "The email address of the user."
+    },
+    "devices": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/apiAccountDevice"
+      },
+      "description": "The devices which belong to the user's account."
+    },
+    "customId": {
+      "type": "string",
+      "description": "The custom id in the user's account."
+    },
+    "verifyTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's email was verified."
+    },
+    "disableTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's account was disabled/banned."
+    }
+  },
+  "description": "A user with additional account details. Always the current user."
+}

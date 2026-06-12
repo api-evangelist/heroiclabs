@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/heroiclabs/json-schema/apiTournament.json",
+  "title": "apiTournament",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The ID of the tournament."
+    },
+    "title": {
+      "type": "string",
+      "description": "The title for the tournament."
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the tournament. May be blank."
+    },
+    "category": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The category of the tournament. e.g. \"vip\" could be category 1."
+    },
+    "sortOrder": {
+      "type": "integer",
+      "format": "int64",
+      "description": "ASC (0) or DESC (1) sort mode of scores in the tournament."
+    },
+    "size": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The current number of players in the tournament."
+    },
+    "maxSize": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The maximum number of players for the tournament."
+    },
+    "maxNumScore": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The maximum score updates allowed per player for the current tournament."
+    },
+    "canEnter": {
+      "type": "boolean",
+      "description": "True if the tournament is active and can enter. A computed value."
+    },
+    "endActive": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The UNIX time when the tournament stops being active until next reset. A computed value."
+    },
+    "nextReset": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The UNIX time when the tournament is next playable. A computed value."
+    },
+    "metadata": {
+      "type": "string",
+      "description": "Additional information stored as a JSON object."
+    },
+    "createTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the tournament was created."
+    },
+    "startTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the tournament will start."
+    },
+    "endTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The UNIX time (for gRPC clients) or ISO string (for REST clients) when the tournament will be stopped."
+    },
+    "duration": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Duration of the tournament in seconds."
+    },
+    "startActive": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The UNIX time when the tournament start being active. A computed value."
+    },
+    "prevReset": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The UNIX time when the tournament was last reset. A computed value."
+    },
+    "operator": {
+      "$ref": "#/components/schemas/apiOperator"
+    },
+    "authoritative": {
+      "type": "boolean",
+      "description": "Whether the leaderboard was created authoritatively or not."
+    },
+    "joinRequired": {
+      "type": "boolean",
+      "description": "Whether the user must join the tournament before being able to submit scores."
+    }
+  },
+  "description": "A tournament on the server."
+}
