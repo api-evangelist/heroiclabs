@@ -1,0 +1,147 @@
+name: Heroic Labs Plans and Pricing
+description: >
+  Heroic Labs offers Nakama on Heroic Cloud as a managed service with
+  CPU-based resource allocation pricing for the game server and database.
+  There are no DAU, MAU, or CCU limits on any plan. Pricing scales based
+  on the number of CPU cores allocated to the Nakama server instance and
+  the database. Satori LiveOps is sold separately. Support packages are
+  available as add-ons at additional monthly cost.
+specificationVersion: '0.1'
+url: https://heroiclabs.com/pricing/
+plans:
+  - name: Heroic Cloud - Development
+    description: >
+      Entry-level tier for development and testing with burstable CPU,
+      micro database, and continuous integration support. Suitable for
+      non-production workloads and initial integration testing.
+    type: development
+    features:
+      - Burstable CPU allocation
+      - Micro database
+      - CI/CD for server modules
+      - Nakama Enterprise license included
+      - Automated backups
+      - Metrics and monitoring
+      - SSL certificates
+      - Log aggregation
+    limits:
+      - name: DAU/MAU/CCU
+        value: No limits
+      - name: CPU
+        value: Burstable (shared)
+  - name: Heroic Cloud - Production (1 Core)
+    description: >
+      Production tier with 1 dedicated CPU core for the Nakama server.
+      Suitable for small studios launching their first title or running
+      low-to-moderate concurrent player loads.
+    type: paid
+    features:
+      - 1 dedicated CPU core (Nakama)
+      - Dedicated database (1 core option)
+      - Nakama Enterprise license included
+      - Dedicated hardware
+      - Managed database
+      - CI/CD for server modules
+      - Automated backups
+      - Metrics and monitoring
+      - System scaling
+      - Load balancer
+      - SSL certificates
+      - Log aggregation
+      - SOC 2 Type II compliance
+    limits:
+      - name: DAU/MAU/CCU
+        value: No limits
+      - name: CPU cores (Nakama)
+        value: '1'
+  - name: Heroic Cloud - Production (2 Cores)
+    description: >
+      Production tier with 2 dedicated CPU cores for Nakama. Suited for
+      growing titles with moderate concurrent player loads.
+    type: paid
+    features:
+      - 2 dedicated CPU cores (Nakama)
+      - Dedicated database (up to 2 core options)
+      - All standard production features included
+      - SOC 2 Type II compliance
+    limits:
+      - name: DAU/MAU/CCU
+        value: No limits
+      - name: CPU cores (Nakama)
+        value: '2'
+  - name: Heroic Cloud - Production (4-64+ Cores)
+    description: >
+      High-capacity production tiers with 4, 8, 12, 16, 24, or 64+ CPU
+      cores for Nakama and up to 16+ cores for the database. Designed for
+      large studios and publishers running titles with millions of players.
+    type: enterprise
+    features:
+      - 4 to 64+ dedicated CPU cores (Nakama)
+      - Up to 16+ dedicated database CPU cores
+      - All standard production features included
+      - SOC 2 Type II compliance
+      - Custom scaling configurations
+    limits:
+      - name: DAU/MAU/CCU
+        value: No limits
+      - name: CPU cores (Nakama)
+        value: 4 to 64+
+      - name: Database CPU cores
+        value: Up to 16+
+  - name: Satori LiveOps
+    description: >
+      Managed Satori LiveOps platform for feature flags, A/B experiments,
+      audiences, and live events. Priced separately from Nakama with
+      event-based ingestion pricing and custom quotes for high-volume usage.
+    type: paid
+    pricing:
+      - model: monthly
+        startingAt: '$600'
+        currency: USD
+    features:
+      - Managed Satori LiveOps platform
+      - No DAU/MAU/CCU or event limits
+      - Dedicated resources and database
+      - Backups, monitoring, scaling, load balancing
+      - Feature flags and experiments
+      - A/B testing
+      - Audience segmentation
+    limits:
+      - name: Events
+        value: No limits (event-based ingestion pricing applies)
+support_packages:
+  - name: Studio Basic
+    description: Email support during business hours, Monday–Friday
+    price_per_month: '$2,000'
+    features:
+      - Email support
+      - Monday to Friday hours
+      - 24-hour response time
+  - name: Studio Standard
+    description: 24/7 support with improved SLA and developer hours
+    price_per_month: '$6,000'
+    features:
+      - 24/7 support
+      - 8-hour response time
+      - 2 developer hours per month
+      - 99.5% uptime SLA
+  - name: Studio Premium
+    description: Highest tier with dedicated Slack channel and fastest response times
+    price_per_month: Custom
+    features:
+      - Private Slack channel
+      - 1-hour response time
+      - 99.9% uptime SLA
+      - Hot fixes
+      - Custom pricing
+additional_services:
+  - name: Private Cloud
+    description: >
+      Managed deployment on the customer's own cloud infrastructure.
+      Includes Studio Premium support.
+  - name: Adhoc Engineering
+    description: Short-term remote or on-site engineering engagement.
+  - name: Retainer
+    description: Extended team augmentation engagement.
+  - name: Training
+    description: Remote or on-site training options with certification.

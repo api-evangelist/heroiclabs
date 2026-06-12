@@ -1,0 +1,108 @@
+aid: heroiclabs
+name: Heroic Labs
+description: >
+  Heroic Labs is the company behind Nakama, a leading open-source game backend
+  server providing a comprehensive REST, WebSocket, and gRPC API for building
+  scalable multiplayer and social games. The platform delivers essential backend
+  services including real-time matchmaking, leaderboards, tournaments, chat,
+  friend systems, and presence tracking. Nakama exposes its functionality via
+  RESTful HTTP endpoints, real-time WebSocket connections, and gRPC, with server
+  runtime support for custom logic in Go, TypeScript, and Lua. Heroic Labs also
+  offers Heroic Cloud as a fully managed deployment platform and Satori as a
+  LiveOps product for feature flags, A/B experiments, and live events.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/heroiclabs/refs/heads/main/apis.yml
+created: '2026-06-12'
+modified: '2026-06-12'
+specificationVersion: '0.19'
+tags:
+  - Game Backend
+  - Multiplayer
+  - Real-Time
+  - WebSocket
+  - Matchmaking
+  - Leaderboards
+  - Social Gaming
+  - Open Source
+  - LiveOps
+  - gRPC
+apis:
+  - aid: heroiclabs:nakama-api
+    name: Nakama API
+    description: >
+      The Nakama API is the core REST and WebSocket API for Heroic Labs' open-source
+      game backend server. It provides endpoints for user authentication (social,
+      device, email, and custom), account management, multiplayer matchmaking,
+      real-time gameplay via WebSocket, leaderboards, tournaments, group and
+      friend management, in-app notifications, storage, and remote procedure calls
+      (RPC). The gRPC interface mirrors the HTTP API and is suited for
+      server-to-server integrations. Client SDKs are available for Unity, Unreal
+      Engine, Godot, JavaScript, Dart, Java, Swift, C++, and Defold.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://heroiclabs.com/nakama/
+    baseURL: https://127.0.0.1:7350
+    tags:
+      - Game Backend
+      - Multiplayer
+      - Matchmaking
+      - Leaderboards
+      - WebSocket
+      - gRPC
+      - REST
+    properties:
+      - type: Documentation
+        url: https://heroiclabs.com/docs/nakama/
+      - type: OpenAPI
+        url: https://heroiclabs.github.io/nakama-docs/
+      - type: GitHubRepository
+        url: https://github.com/heroiclabs/nakama
+  - aid: heroiclabs:satori-api
+    name: Satori API
+    description: >
+      The Satori API is Heroic Labs' LiveOps platform API enabling game developers
+      to manage live operations including feature flags, A/B experiments, audiences,
+      and scheduled events without redeploying game code. It integrates tightly
+      with Nakama and exposes REST endpoints for event ingestion, experiment
+      assignment, audience segmentation, and flag evaluation. Satori is available
+      as a fully managed service on Heroic Cloud starting at $600 per month.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://heroiclabs.com/docs/satori/
+    baseURL: https://api.heroiclabs.com
+    tags:
+      - LiveOps
+      - Feature Flags
+      - A/B Testing
+      - Experiments
+      - Game Analytics
+    properties:
+      - type: Documentation
+        url: https://heroiclabs.com/docs/satori/
+common:
+  - type: Website
+    url: https://heroiclabs.com/
+  - type: Documentation
+    url: https://heroiclabs.com/docs/nakama/
+  - type: GitHubOrg
+    url: https://github.com/heroiclabs
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/heroic-labs
+  - type: Blog
+    url: https://heroiclabs.com/blog/
+  - type: Pricing
+    url: https://heroiclabs.com/pricing/
+  - type: StatusPage
+    url: https://heroiclabs.com/docs/nakama/getting-started/console/status/
+  - type: X
+    url: https://twitter.com/heroicdev
+  - type: Forum
+    url: https://forum.heroiclabs.com/
+  - type: Plans
+    url: plans/heroiclabs-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/heroiclabs-rate-limits.yml
+  - type: FinOps
+    url: finops/heroiclabs-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

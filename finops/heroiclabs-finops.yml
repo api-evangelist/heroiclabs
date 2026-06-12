@@ -1,0 +1,145 @@
+name: Heroic Labs FinOps
+description: >
+  FinOps Framework 1.0 FOCUS-aligned cost model for Heroic Labs' Heroic Cloud
+  managed game backend platform. Heroic Cloud pricing is CPU-allocation based
+  for Nakama server instances and their associated databases. Satori LiveOps
+  is priced separately with event-based ingestion. Support packages are
+  additional fixed monthly costs. There are no per-user (DAU/MAU/CCU) charges,
+  making cost predictability high once a CPU tier is selected.
+specificationVersion: '1.0'
+url: https://heroiclabs.com/pricing/
+provider: Heroic Labs
+products:
+  - name: Nakama on Heroic Cloud
+    description: Managed Nakama game backend server with dedicated CPU and database
+    billing_model: resource-based
+    billing_unit: CPU cores (Nakama server + database independently selected)
+    billing_frequency: monthly
+    cost_drivers:
+      - name: Nakama Server CPU Cores
+        description: >
+          Number of dedicated CPU cores allocated to the Nakama server process.
+          Options include 1, 2, 4, 8, 12, 16, 24, and 64+ cores. Cost scales
+          with core count; exact per-core pricing is dynamic and shown on the
+          pricing calculator at heroiclabs.com/pricing/.
+        unit: CPU cores
+        tiers:
+          - label: Burstable (Dev)
+            cores: burstable
+          - label: 1 Core
+            cores: 1
+          - label: 2 Cores
+            cores: 2
+          - label: 4 Cores
+            cores: 4
+          - label: 8 Cores
+            cores: 8
+          - label: 12 Cores
+            cores: 12
+          - label: 16 Cores
+            cores: 16
+          - label: 24 Cores
+            cores: 24
+          - label: 64+ Cores
+            cores: 64+
+      - name: Database CPU Cores
+        description: >
+          Number of dedicated CPU cores allocated to the managed PostgreSQL-
+          compatible database (CockroachDB). Options include 1, 2, 3, 4, 6,
+          8, 12, 16+ cores. Database CPU is selected independently of the
+          Nakama server CPU.
+        unit: CPU cores
+        tiers:
+          - label: Micro (Dev)
+            cores: micro
+          - label: 1 Core
+            cores: 1
+          - label: 2 Cores
+            cores: 2
+          - label: 3 Cores
+            cores: 3
+          - label: 4 Cores
+            cores: 4
+          - label: 6 Cores
+            cores: 6
+          - label: 8 Cores
+            cores: 8
+          - label: 12 Cores
+            cores: 12
+          - label: 16+ Cores
+            cores: 16+
+    included_at_no_extra_cost:
+      - Nakama Enterprise license
+      - Dedicated hardware
+      - CI/CD for server modules
+      - Automated backups
+      - Metrics and monitoring
+      - System scaling
+      - Load balancer
+      - SSL certificates
+      - Log aggregation
+      - SOC 2 Type II compliance
+    no_charges_for:
+      - Daily active users (DAU)
+      - Monthly active users (MAU)
+      - Concurrent connected users (CCU)
+      - Bandwidth (no separate egress charge documented)
+  - name: Satori LiveOps on Heroic Cloud
+    description: >
+      Managed Satori LiveOps platform for feature flags, experiments, audiences,
+      and live events. Priced separately from Nakama.
+    billing_model: event-based with monthly floor
+    billing_unit: events ingested
+    billing_frequency: monthly
+    cost_drivers:
+      - name: Monthly Base Fee
+        description: Minimum monthly fee for a managed Satori deployment
+        starting_at: '$600'
+        currency: USD
+      - name: Event Ingestion
+        description: >
+          Additional charges apply based on the volume of events ingested
+          into Satori. Exact per-event pricing is available via custom quote.
+        unit: events
+        pricing: custom / contact sales
+    no_charges_for:
+      - DAU / MAU / CCU limits
+      - Feature flag evaluations (included in base)
+  - name: Support Packages
+    description: >
+      Optional paid support tiers available as add-ons to any Heroic Cloud
+      deployment. Priced as fixed monthly fees.
+    billing_model: flat-fee
+    billing_frequency: monthly
+    tiers:
+      - name: Studio Basic
+        price_usd_per_month: 2000
+        sla_uptime: not specified
+        response_time: 24 hours
+        hours: Monday to Friday business hours
+      - name: Studio Standard
+        price_usd_per_month: 6000
+        sla_uptime: '99.5%'
+        response_time: 8 hours
+        hours: 24/7
+        developer_hours_included: 2 per month
+      - name: Studio Premium
+        price_usd_per_month: custom
+        sla_uptime: '99.9%'
+        response_time: 1 hour
+        hours: 24/7
+        features:
+          - Private Slack channel
+          - Hot fixes
+cost_optimization_guidance:
+  - Right-size Nakama CPU and database CPU independently to match observed
+    load; over-provisioning database CPU is a common source of unnecessary spend.
+  - Use the development (burstable) tier for QA and staging environments to
+    avoid paying production CPU rates for non-production workloads.
+  - Because there are no per-user charges, studios with large but not
+    CPU-intensive player bases benefit from the flat resource pricing model.
+  - Evaluate whether Satori event volume justifies the $600/month minimum before
+    committing; low-event-volume titles may find feature flags cheaper via
+    self-hosted alternatives integrated with Nakama runtime.
+  - Select a support tier only after launch; Studio Basic ($2,000/month) is
+    disproportionately expensive for pre-launch or early-access titles.

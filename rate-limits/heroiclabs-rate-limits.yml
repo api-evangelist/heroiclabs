@@ -1,0 +1,74 @@
+name: Heroic Labs Rate Limits
+description: >
+  Heroic Labs' Nakama does not publish explicit per-endpoint rate limit
+  thresholds as fixed product constraints. Because Nakama is an open-source
+  server that can be self-hosted or run on Heroic Cloud with dedicated CPU
+  and database resources, throughput is primarily bounded by the hardware
+  allocation selected rather than by imposed API quotas. Key operational
+  constraints documented by Heroic Labs include database connection pool
+  limits, session token expiry windows, and configurable request timeouts.
+  No DAU, MAU, or CCU limits are enforced on any Heroic Cloud plan.
+specificationVersion: '0.1'
+url: https://heroiclabs.com/docs/nakama/
+limits:
+  - name: DAU / MAU / CCU Limits
+    description: >
+      Heroic Cloud plans impose no limits on daily active users (DAU),
+      monthly active users (MAU), or concurrent connected users (CCU).
+      Capacity is determined by the CPU allocation of the Nakama instance.
+    scope: platform
+    enforced: false
+    notes: Applies to all Heroic Cloud plans including Satori.
+  - name: Session Token Expiry
+    description: >
+      Authentication sessions use signed JWTs. The JavaScript client SDK
+      automatically refreshes sessions when they are within 5 minutes
+      (300,000 ms) of expiry by default. The expiry timespan is configurable
+      by the developer.
+    scope: authentication
+    default: 300000ms before expiry
+    configurable: true
+    notes: >
+      Developers can set autoRefreshSession=false and manage token refresh
+      manually.
+  - name: Request Timeout
+    description: >
+      Each HTTP or gRPC request to Nakama must complete within a configured
+      timeout period before it is considered failed. The JavaScript SDK
+      defaults to 10,000 ms (10 seconds). This is configurable per client.
+    scope: api
+    default: 10000ms (10 seconds)
+    configurable: true
+    example: client.timeout = 10000
+  - name: Database Connection Pool
+    description: >
+      Nakama maintains a limited pool of database connections. Runtime
+      functions that acquire a database handler must release it after use
+      to avoid connection exhaustion and server slowdowns. The pool size
+      scales with the database CPU allocation on Heroic Cloud.
+    scope: database
+    enforced: true
+    notes: >
+      Self-hosted deployments can configure CockroachDB or any
+      PostgreSQL wire-compatible database pool size independently.
+  - name: WebSocket Connections
+    description: >
+      Real-time WebSocket connections are limited by the CPU and memory
+      resources of the Nakama server instance. No fixed per-account
+      connection limit is published. On Heroic Cloud, capacity scales
+      with the CPU tier selected.
+    scope: real-time
+    enforced: false
+    notes: Determined by server resource allocation; no hard published cap.
+  - name: RPC Throughput
+    description: >
+      Remote Procedure Call (RPC) functions registered in the Nakama
+      runtime are exposed as HTTP endpoints. Throughput is bounded by
+      server CPU and database connection pool capacity rather than a
+      fixed API quota. No per-IP or per-key rate limits are publicly
+      documented for the default configuration.
+    scope: api
+    enforced: false
+    notes: >
+      Operators of self-hosted Nakama can configure reverse proxy rate
+      limiting (e.g., via nginx or Envoy) as an additional layer.
