@@ -1,0 +1,967 @@
+# Heroic Labs (Nakama) Conceptual GraphQL Schema
+# Source: https://heroiclabs.com/docs/nakama/client-libraries/rest-api/
+# This schema maps Nakama's REST/WebSocket/gRPC surface to GraphQL types.
+
+scalar DateTime
+scalar JSON
+scalar Upload
+
+# ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum FriendStatus {
+  FRIEND
+  INVITE_SENT
+  INVITE_RECEIVED
+  BLOCKED
+}
+
+enum GroupMemberState {
+  SUPERADMIN
+  ADMIN
+  MEMBER
+  JOIN_REQUEST
+}
+
+enum MatchState {
+  WAITING
+  ACTIVE
+  ENDED
+  ABANDONED
+}
+
+enum PurchaseType {
+  APPLE_APP_STORE
+  GOOGLE_PLAY_STORE
+  HUAWEI_APP_GALLERY
+}
+
+enum NotificationCode {
+  FRIEND_REQUEST_RECEIVED
+  FRIEND_REQUEST_ACCEPTED
+  GROUP_JOIN_REQUEST
+  GROUP_JOIN_ACCEPTED
+  CHAT_MESSAGE_RECEIVED
+  MATCH_INVITE
+  TOURNAMENT_END
+  CUSTOM
+}
+
+enum UserStatus {
+  ONLINE
+  OFFLINE
+  AWAY
+}
+
+enum StoragePermission {
+  NO_READ
+  OWNER_READ
+  PUBLIC_READ
+  NO_WRITE
+  OWNER_WRITE
+}
+
+enum WalletTransactionType {
+  CREDIT
+  DEBIT
+  PURCHASE
+  REWARD
+  REFUND
+}
+
+enum LeaderboardSortOrder {
+  DESCENDING
+  ASCENDING
+}
+
+enum LeaderboardOperator {
+  BEST
+  SET
+  INCREMENT
+  DECREMENT
+}
+
+enum TournamentState {
+  WAITING
+  ACTIVE
+  ENDED
+}
+
+enum RPCHttpKey {
+  SERVER_KEY
+  SESSION_TOKEN
+  HTTP_KEY
+}
+
+# ─── Session & Auth ──────────────────────────────────────────────────────────
+
+type Token {
+  value: String!
+  expiresAt: DateTime!
+}
+
+type AccessToken {
+  token: String!
+  expiresAt: DateTime!
+  userId: String!
+  username: String!
+  vars: JSON
+}
+
+type RefreshToken {
+  token: String!
+  expiresAt: DateTime!
+}
+
+type Session {
+  token: String!
+  refreshToken: String
+  created: Boolean!
+  userId: String!
+  username: String!
+  expiresAt: DateTime!
+  vars: JSON
+}
+
+# ─── Account & User ──────────────────────────────────────────────────────────
+
+type UserDetails {
+  langTag: String
+  location: String
+  timezone: String
+  metadata: JSON
+  avatarUrl: String
+  createTime: DateTime
+  updateTime: DateTime
+  onlineSince: DateTime
+}
+
+type User {
+  id: String!
+  username: String!
+  displayName: String
+  avatarUrl: String
+  langTag: String
+  location: String
+  timezone: String
+  metadata: JSON
+  edgeCount: Int
+  facebookId: String
+  googleId: String
+  gamecenterId: String
+  steamId: String
+  appleId: String
+  online: Boolean
+  createTime: DateTime
+  updateTime: DateTime
+  details: UserDetails
+}
+
+type ProfileDetails {
+  bio: String
+  website: String
+  country: String
+  avatarUrl: String
+  metadata: JSON
+  updateTime: DateTime
+}
+
+type Profile {
+  userId: String!
+  username: String!
+  displayName: String
+  avatarUrl: String
+  details: ProfileDetails
+}
+
+type AccountDetails {
+  email: String
+  verifyTime: DateTime
+  disableTime: DateTime
+  devices: [DeviceInfo]
+  customId: String
+  wallet: String
+  metadata: JSON
+  langTag: String
+  location: String
+  timezone: String
+}
+
+type DeviceInfo {
+  id: String!
+  vars: JSON
+}
+
+type Account {
+  user: User!
+  wallet: String
+  email: String
+  devices: [DeviceInfo]
+  customId: String
+  verifyTime: DateTime
+  disableTime: DateTime
+  details: AccountDetails
+}
+
+# ─── Friends ─────────────────────────────────────────────────────────────────
+
+type FriendDetails {
+  createTime: DateTime
+  updateTime: DateTime
+  metadata: JSON
+}
+
+type Friend {
+  user: User!
+  state: FriendStatus!
+  updateTime: DateTime
+  details: FriendDetails
+}
+
+# ─── Groups ──────────────────────────────────────────────────────────────────
+
+type GroupDetails {
+  langTag: String
+  metadata: JSON
+  avatarUrl: String
+  createTime: DateTime
+  updateTime: DateTime
+  maxCount: Int
+}
+
+type Group {
+  id: String!
+  creatorId: String!
+  name: String!
+  description: String
+  avatarUrl: String
+  langTag: String
+  metadata: JSON
+  open: Boolean!
+  edgeCount: Int
+  maxCount: Int
+  createTime: DateTime
+  updateTime: DateTime
+  details: GroupDetails
+}
+
+type GroupMember {
+  user: User!
+  group: Group!
+  state: GroupMemberState!
+  joinTime: DateTime
+  updateTime: DateTime
+}
+
+type GroupJoinRequest {
+  userId: String!
+  groupId: String!
+  requestTime: DateTime!
+  metadata: JSON
+}
+
+# ─── Notifications ────────────────────────────────────────────────────────────
+
+type NotificationDetails {
+  persistent: Boolean
+  createTime: DateTime
+  metadata: JSON
+}
+
+type Notification {
+  id: String!
+  userId: String!
+  subject: String!
+  content: JSON
+  code: NotificationCode!
+  senderId: String
+  createTime: DateTime!
+  persistent: Boolean!
+  details: NotificationDetails
+}
+
+# ─── Chat & Messaging ─────────────────────────────────────────────────────────
+
+type Message {
+  messageId: String!
+  channelId: String!
+  code: Int
+  senderId: String!
+  username: String!
+  content: JSON!
+  createTime: DateTime!
+  updateTime: DateTime!
+  persistent: Boolean!
+}
+
+type ChatRoom {
+  roomName: String!
+  persistence: Boolean!
+  hidden: Boolean!
+}
+
+type ChatChannel {
+  id: String!
+  presences: [Presence]
+  self: Presence
+  roomName: String
+  groupId: String
+  userIdOne: String
+  userIdTwo: String
+  messages: [Message]
+}
+
+type Chat {
+  channelId: String!
+  messages: [Message]
+  nextCursor: String
+  prevCursor: String
+}
+
+type DirectMessage {
+  channelId: String!
+  userId: String!
+  username: String!
+  messages: [Message]
+  nextCursor: String
+  prevCursor: String
+}
+
+# ─── Real-time Multiplayer ───────────────────────────────────────────────────
+
+type MatchDetails {
+  label: String
+  authoritative: Boolean
+  tickRate: Int
+  handlerName: String
+  metadata: JSON
+  createTime: DateTime
+}
+
+type MatchData {
+  matchId: String!
+  presence: Presence
+  opCode: Int!
+  data: String
+  reliable: Boolean
+  receiveTime: DateTime
+}
+
+type Match {
+  matchId: String!
+  authoritative: Boolean!
+  label: String
+  size: Int!
+  tickRate: Int
+  handlerName: String
+  presences: [Presence]
+  self: Presence
+  state: MatchState
+  details: MatchDetails
+}
+
+# ─── Presence ─────────────────────────────────────────────────────────────────
+
+type Presence {
+  userId: String!
+  sessionId: String!
+  username: String!
+  node: String
+  status: String
+  persistence: Boolean
+}
+
+type PresenceEvent {
+  joins: [Presence]
+  leaves: [Presence]
+  channelId: String
+  matchId: String
+  streamMode: Int
+  eventTime: DateTime
+}
+
+type Realtime {
+  presence: Presence
+  presences: [Presence]
+  matchId: String
+  channelId: String
+  connected: Boolean
+  heartbeatTimeout: Int
+}
+
+# ─── Leaderboards ─────────────────────────────────────────────────────────────
+
+type LeaderboardDetails {
+  metadata: JSON
+  createTime: DateTime
+  resetSchedule: String
+  nextReset: DateTime
+  prevReset: DateTime
+}
+
+type Leaderboard {
+  id: String!
+  authoritative: Boolean!
+  sortOrder: LeaderboardSortOrder!
+  operator: LeaderboardOperator!
+  prevReset: DateTime
+  nextReset: DateTime
+  metadata: JSON
+  createTime: DateTime
+  details: LeaderboardDetails
+}
+
+type Score {
+  score: Int!
+  subscore: Int
+  numScore: Int
+  maxNumScore: Int
+  metadata: JSON
+  updateTime: DateTime
+  expiryTime: DateTime
+}
+
+type Rank {
+  rank: Int!
+  numScore: Int
+  leaderboardId: String!
+}
+
+type Record {
+  leaderboardId: String!
+  ownerId: String!
+  username: String
+  score: Int!
+  subscore: Int
+  numScore: Int
+  maxNumScore: Int
+  metadata: JSON
+  createTime: DateTime
+  updateTime: DateTime
+  expiryTime: DateTime
+  rank: Rank
+}
+
+# ─── Tournaments ─────────────────────────────────────────────────────────────
+
+type TournamentDetails {
+  description: String
+  category: Int
+  startTime: DateTime
+  endTime: DateTime
+  duration: Int
+  resetSchedule: String
+  metadata: JSON
+  createTime: DateTime
+  startActive: Int
+  endActive: DateTime
+  canEnter: Boolean
+  nextReset: DateTime
+}
+
+type Tournament {
+  id: String!
+  title: String!
+  description: String
+  category: Int
+  sortOrder: LeaderboardSortOrder!
+  operator: LeaderboardOperator!
+  size: Int
+  maxSize: Int
+  maxNumScore: Int
+  canEnter: Boolean!
+  paused: Boolean
+  active: Boolean
+  state: TournamentState
+  prevReset: DateTime
+  nextReset: DateTime
+  startActive: Int
+  endActive: DateTime
+  details: TournamentDetails
+}
+
+type TournamentRecord {
+  tournamentId: String!
+  ownerId: String!
+  username: String
+  score: Int!
+  subscore: Int
+  numScore: Int
+  maxNumScore: Int
+  metadata: JSON
+  createTime: DateTime
+  updateTime: DateTime
+  expiryTime: DateTime
+  rank: Int
+}
+
+# ─── Storage ─────────────────────────────────────────────────────────────────
+
+type StorageDetails {
+  createTime: DateTime
+  updateTime: DateTime
+  version: String
+}
+
+type StorageObject {
+  collection: String!
+  key: String!
+  userId: String!
+  value: JSON!
+  version: String!
+  permissionRead: StoragePermission!
+  permissionWrite: StoragePermission!
+  createTime: DateTime
+  updateTime: DateTime
+  details: StorageDetails
+}
+
+# ─── Wallet ───────────────────────────────────────────────────────────────────
+
+type WalletDetails {
+  createTime: DateTime
+  updateTime: DateTime
+  userId: String!
+}
+
+type Wallet {
+  userId: String!
+  balances: JSON!
+  details: WalletDetails
+}
+
+type WalletTransaction {
+  id: String!
+  userId: String!
+  changeset: JSON!
+  metadata: JSON
+  type: WalletTransactionType!
+  createTime: DateTime!
+}
+
+# ─── Purchases ────────────────────────────────────────────────────────────────
+
+type PurchaseDetails {
+  environment: String
+  refundTime: DateTime
+  providerResponse: JSON
+  providerMetadata: JSON
+  metadata: JSON
+}
+
+type Purchase {
+  userId: String!
+  productId: String!
+  transactionId: String!
+  store: PurchaseType!
+  purchaseTime: DateTime!
+  createTime: DateTime!
+  updateTime: DateTime!
+  refundTime: DateTime
+  environment: String
+  seenBefore: Boolean!
+  details: PurchaseDetails
+}
+
+# ─── Status ───────────────────────────────────────────────────────────────────
+
+type StatusDetails {
+  updateTime: DateTime
+  metadata: JSON
+}
+
+type Status {
+  userId: String!
+  username: String!
+  displayName: String
+  avatarUrl: String
+  online: Boolean!
+  status: String
+  details: StatusDetails
+}
+
+# ─── RPC ─────────────────────────────────────────────────────────────────────
+
+type RPCResult {
+  id: String!
+  payload: JSON
+  httpKey: String
+  executionTime: Int
+}
+
+type RPC {
+  id: String!
+  payload: JSON
+  httpKey: RPCHttpKey
+}
+
+# ─── Webhooks ─────────────────────────────────────────────────────────────────
+
+type WebhookDetails {
+  secret: String
+  createTime: DateTime
+  updateTime: DateTime
+  active: Boolean
+}
+
+type Webhook {
+  id: String!
+  url: String!
+  events: [String!]!
+  details: WebhookDetails
+}
+
+# ─── API Keys ─────────────────────────────────────────────────────────────────
+
+type APIKey {
+  name: String!
+  key: String!
+  createTime: DateTime
+  expiresAt: DateTime
+}
+
+# ─── Console ─────────────────────────────────────────────────────────────────
+
+type ConsoleDetails {
+  version: String
+  startTime: DateTime
+  goVersion: String
+  config: JSON
+}
+
+type ConsoleUser {
+  username: String!
+  email: String!
+  role: String!
+  createTime: DateTime
+  updateTime: DateTime
+}
+
+type Console {
+  serverVersion: String!
+  goVersion: String
+  uptimeMs: Int
+  config: JSON
+  users: [ConsoleUser]
+  details: ConsoleDetails
+}
+
+# ─── Pagination ───────────────────────────────────────────────────────────────
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  cursor: String
+  nextCursor: String
+  prevCursor: String
+  totalCount: Int
+}
+
+# ─── Connection Types ─────────────────────────────────────────────────────────
+
+type UserConnection {
+  users: [User!]!
+  pageInfo: PageInfo!
+}
+
+type FriendConnection {
+  friends: [Friend!]!
+  pageInfo: PageInfo!
+}
+
+type GroupConnection {
+  groups: [Group!]!
+  pageInfo: PageInfo!
+}
+
+type NotificationConnection {
+  notifications: [Notification!]!
+  pageInfo: PageInfo!
+  cacheableCursor: String
+}
+
+type RecordConnection {
+  records: [Record!]!
+  ownerRecords: [Record!]
+  pageInfo: PageInfo!
+  prevCursor: String
+  nextCursor: String
+}
+
+type TournamentConnection {
+  tournaments: [Tournament!]!
+  pageInfo: PageInfo!
+}
+
+type StorageObjectConnection {
+  objects: [StorageObject!]!
+  pageInfo: PageInfo!
+}
+
+type WalletTransactionConnection {
+  transactions: [WalletTransaction!]!
+  pageInfo: PageInfo!
+  prevCursor: String
+  nextCursor: String
+}
+
+type MatchConnection {
+  matches: [Match!]!
+  pageInfo: PageInfo!
+}
+
+type MessageConnection {
+  messages: [Message!]!
+  nextCursor: String
+  prevCursor: String
+}
+
+# ─── Input Types ──────────────────────────────────────────────────────────────
+
+input AuthenticateEmailInput {
+  email: String!
+  password: String!
+  username: String
+  create: Boolean
+  vars: JSON
+}
+
+input AuthenticateDeviceInput {
+  deviceId: String!
+  username: String
+  create: Boolean
+  vars: JSON
+}
+
+input AuthenticateCustomInput {
+  id: String!
+  username: String
+  create: Boolean
+  vars: JSON
+}
+
+input UpdateAccountInput {
+  username: String
+  displayName: String
+  avatarUrl: String
+  langTag: String
+  location: String
+  timezone: String
+  metadata: JSON
+}
+
+input WriteStorageObjectInput {
+  collection: String!
+  key: String!
+  value: JSON!
+  version: String
+  permissionRead: StoragePermission
+  permissionWrite: StoragePermission
+}
+
+input LeaderboardRecordWriteInput {
+  leaderboardId: String!
+  score: Int!
+  subscore: Int
+  metadata: JSON
+  operator: LeaderboardOperator
+}
+
+input GroupCreateInput {
+  name: String!
+  description: String
+  avatarUrl: String
+  langTag: String
+  open: Boolean
+  maxCount: Int
+  metadata: JSON
+}
+
+input GroupUpdateInput {
+  groupId: String!
+  name: String
+  description: String
+  avatarUrl: String
+  langTag: String
+  open: Boolean
+  maxCount: Int
+  metadata: JSON
+}
+
+input SendFriendInput {
+  ids: [String!]
+  usernames: [String!]
+}
+
+input ChatSendMessageInput {
+  channelId: String!
+  content: JSON!
+  persistent: Boolean
+}
+
+input RPCInput {
+  id: String!
+  payload: JSON
+  httpKey: String
+}
+
+# ─── Root Types ───────────────────────────────────────────────────────────────
+
+type Query {
+  # Account
+  account: Account
+  users(ids: [String], usernames: [String], facebookIds: [String]): [User]
+  user(id: String!): User
+
+  # Friends
+  listFriends(limit: Int, state: FriendStatus, cursor: String): FriendConnection
+
+  # Groups
+  listGroups(name: String, cursor: String, limit: Int, langTag: String, members: Int, open: Boolean): GroupConnection
+  listUserGroups(userId: String!, limit: Int, state: GroupMemberState, cursor: String): GroupConnection
+  listGroupUsers(groupId: String!, limit: Int, state: GroupMemberState, cursor: String): UserConnection
+  listGroupJoinRequests(groupId: String!): [GroupJoinRequest]
+
+  # Notifications
+  listNotifications(limit: Int, cacheableCursor: String): NotificationConnection
+
+  # Storage
+  readStorageObjects(objectIds: [StorageReadInput!]!): [StorageObject]
+  listStorageObjects(collection: String!, userId: String, limit: Int, cursor: String): StorageObjectConnection
+
+  # Leaderboards
+  listLeaderboards(limit: Int, cursor: String): [Leaderboard]
+  listLeaderboardRecords(leaderboardId: String!, ownerIds: [String], limit: Int, cursor: String, expiry: Int): RecordConnection
+  listLeaderboardRecordsAroundOwner(leaderboardId: String!, ownerId: String!, limit: Int, expiry: Int): RecordConnection
+  getLeaderboard(leaderboardId: String!): Leaderboard
+
+  # Tournaments
+  listTournaments(categoryStart: Int, categoryEnd: Int, startTime: Int, endTime: Int, limit: Int, cursor: String): TournamentConnection
+  listTournamentRecords(tournamentId: String!, ownerIds: [String], limit: Int, cursor: String, expiry: Int): RecordConnection
+  listTournamentRecordsAroundOwner(tournamentId: String!, ownerId: String!, limit: Int, expiry: Int): RecordConnection
+  getTournament(tournamentId: String!): Tournament
+
+  # Matches
+  listMatches(limit: Int, authoritative: Boolean, label: String, minSize: Int, maxSize: Int, query: String): MatchConnection
+
+  # Chat
+  listChannelMessages(channelId: String!, limit: Int, forward: Boolean, cursor: String): MessageConnection
+
+  # Wallet
+  getWallet: Wallet
+  listWalletTransactions(limit: Int, ascending: Boolean, cursor: String): WalletTransactionConnection
+
+  # Purchases
+  listPurchases(limit: Int, cursor: String): [Purchase]
+
+  # Status
+  getStatus(userIds: [String!]!): [Status]
+
+  # RPC
+  rpc(id: String!, payload: JSON, httpKey: String): RPCResult
+
+  # Console
+  consoleStatus: Console
+  listConsoleUsers: [ConsoleUser]
+}
+
+type Mutation {
+  # Auth
+  authenticateEmail(input: AuthenticateEmailInput!): Session
+  authenticateDevice(input: AuthenticateDeviceInput!): Session
+  authenticateCustom(input: AuthenticateCustomInput!): Session
+  authenticateFacebook(token: String!, username: String, create: Boolean, vars: JSON, sync: Boolean): Session
+  authenticateGoogle(token: String!, username: String, create: Boolean, vars: JSON): Session
+  authenticateApple(token: String!, username: String, create: Boolean, vars: JSON): Session
+  authenticateSteam(token: String!, username: String, create: Boolean, vars: JSON, sync: Boolean): Session
+  authenticateGameCenter(token: String!, bundleId: String!, playerId: String!, publicKeyUrl: String!, salt: String!, timestamp: String!, signature: String!, username: String, create: Boolean, vars: JSON): Session
+  refreshSession(refreshToken: String!): Session
+  linkEmail(email: String!, password: String!, vars: JSON): Boolean
+  linkDevice(deviceId: String!, vars: JSON): Boolean
+  linkCustom(id: String!, vars: JSON): Boolean
+  unlinkEmail(email: String!, password: String!): Boolean
+  unlinkDevice(deviceId: String!): Boolean
+  unlinkCustom(id: String!): Boolean
+  sessionLogout(token: String!, refreshToken: String): Boolean
+
+  # Account
+  updateAccount(input: UpdateAccountInput!): Account
+  deleteAccount: Boolean
+
+  # Friends
+  addFriends(input: SendFriendInput!): Boolean
+  deleteFriends(ids: [String], usernames: [String]): Boolean
+  blockFriends(ids: [String], usernames: [String]): Boolean
+
+  # Groups
+  createGroup(input: GroupCreateInput!): Group
+  updateGroup(input: GroupUpdateInput!): Group
+  deleteGroup(groupId: String!): Boolean
+  joinGroup(groupId: String!): Boolean
+  leaveGroup(groupId: String!): Boolean
+  addGroupUsers(groupId: String!, userIds: [String!]!): Boolean
+  kickGroupUsers(groupId: String!, userIds: [String!]!): Boolean
+  promoteGroupUsers(groupId: String!, userIds: [String!]!): Boolean
+  demoteGroupUsers(groupId: String!, userIds: [String!]!): Boolean
+  banGroupUsers(groupId: String!, userIds: [String!]!): Boolean
+
+  # Notifications
+  deleteNotifications(ids: [String!]!): Boolean
+
+  # Storage
+  writeStorageObjects(objects: [WriteStorageObjectInput!]!): [StorageObject]
+  deleteStorageObjects(objectIds: [StorageDeleteInput!]!): Boolean
+
+  # Leaderboards
+  writeLeaderboardRecord(input: LeaderboardRecordWriteInput!): Record
+  deleteLeaderboardRecord(leaderboardId: String!): Boolean
+
+  # Tournaments
+  joinTournament(tournamentId: String!): Boolean
+  writeTournamentRecord(tournamentId: String!, score: Int!, subscore: Int, metadata: JSON, operator: LeaderboardOperator): TournamentRecord
+
+  # Matches
+  createMatch: Match
+
+  # Wallet
+  updateWallet(changeset: JSON!, metadata: JSON): Wallet
+
+  # Purchases
+  validatePurchaseApple(receipt: String!, persist: Boolean): [Purchase]
+  validatePurchaseGoogle(purchase: String!, persist: Boolean): [Purchase]
+  validatePurchaseHuawei(inAppPurchaseData: String!, inAppPurchaseDataSignature: String!, persist: Boolean): [Purchase]
+
+  # Status
+  updateStatus(status: String!): Boolean
+  deleteStatus: Boolean
+
+  # Chat
+  joinChat(target: String!, type: Int!, persistence: Boolean, hidden: Boolean): ChatChannel
+  leaveChat(channelId: String!): Boolean
+  sendMessage(input: ChatSendMessageInput!): Message
+  updateMessage(channelId: String!, messageId: String!, content: JSON!): Message
+  removeMessage(channelId: String!, messageId: String!): Boolean
+
+  # RPC
+  rpc(input: RPCInput!): RPCResult
+
+  # API Keys
+  createApiKey(name: String!, expiresAt: DateTime): APIKey
+  deleteApiKey(name: String!): Boolean
+}
+
+input StorageReadInput {
+  collection: String!
+  key: String!
+  userId: String!
+}
+
+input StorageDeleteInput {
+  collection: String!
+  key: String!
+  version: String
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
