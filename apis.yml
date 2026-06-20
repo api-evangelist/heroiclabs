@@ -12,7 +12,7 @@ description: 'Heroic Labs is the company behind Nakama, a leading open-source ga
 
   '
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/heroiclabs/refs/heads/main/apis.yml
 created: '2026-06-12'
 modified: '2026-06-12'
@@ -41,7 +41,7 @@ apis:
     Swift, C++, and Defold.
 
     '
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://heroiclabs.com/nakama/
   baseURL: https://127.0.0.1:7350
   tags:
@@ -74,7 +74,7 @@ apis:
     backend services.
 
     '
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://heroiclabs.com/docs/nakama/
   baseURL: https://127.0.0.1:7350
   tags:
@@ -98,7 +98,7 @@ apis:
     service on Heroic Cloud starting at $600 per month.
 
     '
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://heroiclabs.com/docs/satori/
   baseURL: https://api.heroiclabs.com
   tags:
