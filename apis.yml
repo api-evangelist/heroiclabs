@@ -127,7 +127,7 @@ common:
   url: https://heroiclabs.com/docs/nakama/getting-started/console/status/
 - type: X
   url: https://twitter.com/heroicdev
-- type: Forum
+- type: Forums
   url: https://forum.heroiclabs.com/
 - type: Plans
   url: plans/heroiclabs-plans-pricing.yml
