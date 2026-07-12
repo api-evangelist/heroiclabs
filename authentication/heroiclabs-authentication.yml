@@ -1,0 +1,36 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/heroiclabs-hiro-rpc-api-openapi.yml, openapi/heroiclabs-nakama-api-openapi.yml,
+  openapi/heroiclabs-nakama-console-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: bearerAuthNakama
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/heroiclabs-hiro-rpc-api-openapi.yml
+- name: BasicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/heroiclabs-nakama-api-openapi.yml
+  - openapi/heroiclabs-nakama-console-api-openapi.yml
+- name: BearerJwt
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/heroiclabs-nakama-api-openapi.yml
+  - openapi/heroiclabs-nakama-console-api-openapi.yml
+- name: HttpKeyAuth
+  type: apiKey
+  in: header
+  parameter: http_key
+  sources:
+  - openapi/heroiclabs-nakama-api-openapi.yml

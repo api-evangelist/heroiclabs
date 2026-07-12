@@ -111,6 +111,10 @@ apis:
   - type: Documentation
     url: https://heroiclabs.com/docs/satori/
 common:
+- type: DomainSecurity
+  url: security/heroiclabs-domain-security.yml
+- type: Authentication
+  url: authentication/heroiclabs-authentication.yml
 - type: Website
   url: https://heroiclabs.com/
 - type: Documentation
