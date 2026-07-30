@@ -12,7 +12,20 @@ description: 'Heroic Labs is the company behind Nakama, a leading open-source ga
 
   '
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/heroiclabs.png
 url: https://raw.githubusercontent.com/api-evangelist/heroiclabs/refs/heads/main/apis.yml
 created: '2026-06-12'
 modified: '2026-06-12'
@@ -31,16 +44,13 @@ tags:
 apis:
 - aid: heroiclabs:nakama-api
   name: Nakama API
-  description: 'The Nakama API is the core REST and WebSocket API for Heroic Labs''
-    open-source game backend server. It provides endpoints for user authentication
-    (social, device, email, and custom), account management, multiplayer matchmaking,
-    real-time gameplay via WebSocket, leaderboards, tournaments, group and friend
-    management, in-app notifications, storage, and remote procedure calls (RPC). The
-    gRPC interface mirrors the HTTP API and is suited for server-to-server integrations.
-    Client SDKs are available for Unity, Unreal Engine, Godot, JavaScript, Dart, Java,
-    Swift, C++, and Defold.
-
-    '
+  description: >
+    The Nakama API is the core REST and WebSocket API for Heroic Labs' open-source game backend server.
+    It provides endpoints for user authentication (social, device, email, and custom), account management,
+    multiplayer matchmaking, real-time gameplay via WebSocket, leaderboards, tournaments, group and friend
+    management, in-app notifications, storage, and remote procedure calls (RPC). The gRPC interface mirrors
+    the HTTP API and is suited for server-to-server integrations. Client SDKs are available for Unity,
+    Unreal Engine, Godot, JavaScript, Dart, Java, Swift, C++, and Defold.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://heroiclabs.com/nakama/
   baseURL: https://127.0.0.1:7350
@@ -65,39 +75,14 @@ apis:
     url: https://github.com/heroiclabs/nakama
   - url: graphql/heroiclabs-graphql.md
     type: GraphQL
-- aid: heroiclabs:hiro-api
-  name: Hiro RPC API
-  description: 'The Hiro RPC API is Heroic Labs'' game framework server interface
-    exposing economy, progression, achievements, inventory, and social graph RPCs
-    that run on the Nakama server runtime. It is available as an OAS 3.0 specification
-    and is designed for authoritative server-to-server calls from game clients and
-    backend services.
-
-    '
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://heroiclabs.com/docs/nakama/
-  baseURL: https://127.0.0.1:7350
-  tags:
-  - Game Framework
-  - Economy
-  - Progression
-  - Achievements
-  - Inventory
-  properties:
-  - type: OpenAPI
-    url: openapi/heroiclabs-hiro-rpc-api-openapi.yml
-  - type: GitHubRepository
-    url: https://github.com/heroiclabs/hiro
 - aid: heroiclabs:satori-api
   name: Satori API
-  description: 'The Satori API is Heroic Labs'' LiveOps platform API enabling game
-    developers to manage live operations including feature flags, A/B experiments,
-    audiences, and scheduled events without redeploying game code. It integrates tightly
-    with Nakama and exposes REST endpoints for event ingestion, experiment assignment,
-    audience segmentation, and flag evaluation. Satori is available as a fully managed
-    service on Heroic Cloud starting at $600 per month.
-
-    '
+  description: >
+    The Satori API is Heroic Labs' LiveOps platform API enabling game developers to manage live operations
+    including feature flags, A/B experiments, audiences, and scheduled events without redeploying game
+    code. It integrates tightly with Nakama and exposes REST endpoints for event ingestion, experiment
+    assignment, audience segmentation, and flag evaluation. Satori is available as a fully managed service
+    on Heroic Cloud starting at $600 per month.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://heroiclabs.com/docs/satori/
   baseURL: https://api.heroiclabs.com
@@ -110,6 +95,30 @@ apis:
   properties:
   - type: Documentation
     url: https://heroiclabs.com/docs/satori/
+- aid: heroiclabs:heroiclabs-console-api
+  name: Heroic Labs Console API
+  description: The Console API from Heroic Labs — 73 operation(s) for console.
+  humanURL: https://heroiclabs.com/nakama/
+  baseURL: https://127.0.0.1:7350
+  tags:
+  - Console
+  properties:
+  - type: OpenAPI
+    url: openapi/heroiclabs-console-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/heroiclabs/hiro
+- aid: heroiclabs:heroiclabs-rpc-api
+  name: Heroic Labs Rpc API
+  description: The Rpc API from Heroic Labs — 131 operation(s) for rpc.
+  humanURL: https://heroiclabs.com/nakama/
+  baseURL: https://127.0.0.1:7350
+  tags:
+  - Rpc
+  properties:
+  - type: OpenAPI
+    url: openapi/heroiclabs-rpc-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/heroiclabs/hiro
 common:
 - type: AgenticAccess
   url: agentic-access/heroiclabs-agentic-access.yml
