@@ -1,0 +1,18 @@
+{
+  "provider": "heroiclabs",
+  "sources": [
+    "heroiclabs-console-api-openapi.yml",
+    "heroiclabs-nakama-api-openapi.yml",
+    "heroiclabs-rpc-api-openapi.yml"
+  ],
+  "outputs": [
+    "heroiclabs-console-api-openapi.yml",
+    "heroiclabs-nakama-api-openapi.yml",
+    "heroiclabs-rpc-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
