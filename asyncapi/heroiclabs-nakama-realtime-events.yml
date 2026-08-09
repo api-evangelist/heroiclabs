@@ -1,0 +1,32 @@
+generated: '2026-07-19'
+method: derived
+source: grpc/heroic-labs-nakama-realtime.proto
+spec_type: Webhooks
+surface: realtime-socket
+transport: WebSocket (and rUDP); protobuf or JSON Envelope frames
+description: >-
+  Nakama delivers its real-time features over a persistent bidirectional socket rather
+  than the REST API or classic outbound webhooks. Clients and server exchange a single
+  `Envelope` message whose oneof payload selects one of the message types below. This
+  is the provider's event/streaming surface. Derived from the published realtime.proto.
+message_groups:
+- group: chat
+  messages: [Channel, ChannelJoin, ChannelLeave, ChannelMessage, ChannelMessageAck, ChannelMessageSend, ChannelMessageUpdate, ChannelMessageRemove, ChannelPresenceEvent]
+- group: multiplayer-match
+  messages: [Match, MatchCreate, MatchData, MatchDataSend, MatchJoin, MatchLeave, MatchPresenceEvent]
+- group: matchmaker
+  messages: [MatchmakerAdd, MatchmakerMatched, MatchmakerRemove, MatchmakerTicket]
+- group: notifications
+  messages: [Notifications]
+- group: status-presence
+  messages: [Status, StatusFollow, StatusPresenceEvent, StatusUnfollow, StatusUpdate]
+- group: streams
+  messages: [StreamData, StreamPresenceEvent]
+- group: parties
+  messages: [Party, PartyCreate, PartyJoin, PartyLeave, PartyPromote, PartyLeader, PartyAccept, PartyRemove, PartyClose, PartyJoinRequestList, PartyJoinRequest, PartyMatchmakerAdd, PartyMatchmakerRemove, PartyMatchmakerTicket, PartyData, PartyDataSend, PartyPresenceEvent, PartyUpdate]
+- group: rpc-and-control
+  messages: [Rpc, Error, Ping, Pong]
+notes: >-
+  Not a published AsyncAPI document; this is a faithful catalog derived from the
+  server's realtime protobuf. Nakama also supports server-side notification delivery
+  and Satori provides a separate LiveOps event/messaging surface.

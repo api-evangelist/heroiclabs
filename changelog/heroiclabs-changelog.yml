@@ -1,0 +1,40 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/heroiclabs/nakama/blob/master/CHANGELOG.md
+scheme: keepachangelog + semver
+current_version: 3.40.0
+docs: https://heroiclabs.com/docs/
+entries:
+- version: 3.40.0
+  date: '2026-07-13'
+  breaking: false
+  highlights:
+  - Add Samsung Galaxy Store purchase validation and SAMSUNG_GALAXY_STORE provider.
+  - Add Samsung IAP runtime hooks and PurchaseValidateSamsung module function.
+  - Improve Apple JWS receipt validation logic.
+  - Fix orphaned group edges on group-admin account deletion.
+- version: 3.39.0
+  date: '2026-05-20'
+  breaking: false
+  highlights:
+  - New runtime function to update storage objects with retries.
+  - Update Satori client to match latest API spec; configurable retries.
+- version: 3.38.0
+  date: '2026-03-20'
+  breaking: false
+  highlights:
+  - Runtime Satori client can delete identities.
+  - Import account export snapshot from Go/TypeScript/Lua runtimes.
+  - Better console account display-name search.
+- version: 3.37.0
+  date: '2026-02-12'
+  breaking: false
+  highlights:
+  - Support Apple JWS receipts in In-App Purchase validation APIs.
+  - Expose new Prometheus RPC metrics with a label per gRPC status.
+- version: 3.36.0
+  date: '2026-01-13'
+  breaking: false
+  highlights:
+  - Console user setup/management improvements.
+  - Faster cleanup of idle/empty parties; build with Go 1.25.5.

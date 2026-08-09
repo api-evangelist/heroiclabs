@@ -1,0 +1,22 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Nakama API v2
+  version: 1.0.0
+extends: openapi/heroic-labs-nakama-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: heroic-labs
+    x-apievangelist-product: Nakama
+    x-apievangelist-notes: >-
+      Open-source game backend. Auth via HTTP Basic (server key) / Bearer JWT session
+      / HTTP key. Errors use the gRPC rpcStatus envelope. Real-time features are on a
+      separate WebSocket socket protocol (see grpc/heroic-labs-nakama-realtime.proto).
+- target: $.info
+  update:
+    x-artifacts:
+      authentication: authentication/heroic-labs-authentication.yml
+      errors: errors/heroic-labs-problem-types.yml
+      conventions: conventions/heroic-labs-conventions.yml
+      data_model: data-model/heroic-labs-data-model.yml
+      realtime_events: asyncapi/heroic-labs-nakama-realtime-events.yml

@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: searched
+source: https://heroiclabs.com/docs/nakama/getting-started/
+description: >-
+  Nakama is self-hosted for local development, so the "sandbox" is a local server run
+  via Docker Compose or a binary, seeded with a well-known default server key. Heroic
+  Cloud additionally provides non-production (development) title environments.
+local_dev:
+  method: docker-compose
+  server_default_host: http://127.0.0.1:7350
+  console_default_host: http://127.0.0.1:7351
+  reference: https://heroiclabs.com/docs/nakama/getting-started/install/docker-quickstart/
+credentials:
+  default_server_key: defaultkey
+  notes: >-
+    `defaultkey` is the documented default server key used as the HTTP Basic username
+    (with empty password) to obtain a session from a fresh local Nakama instance. It
+    should be changed for production. This is a published default, not a secret.
+console_default_login:
+  username: admin
+  password: password
+  notes: Documented default Nakama Console credentials for a fresh local install; change for production.
+environments:
+  heroic_cloud: Development and Production title environments; development instances are non-scaling test targets.
+notes: >-
+  No hosted public demo API is published; test values above are the documented local
+  development defaults. Never reuse these in production.

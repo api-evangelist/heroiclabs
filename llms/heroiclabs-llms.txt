@@ -1,0 +1,441 @@
+# Heroic Labs Documentation
+
+> Technical documentation for Nakama, Hiro, Satori, and Heroic Cloud — the Heroic Game Stack.
+
+Each page is also available as clean Markdown at its URL with `/llm.md` appended, e.g. `https://heroiclabs.com/docs/nakama/llm.md`. See also: [full site index](https://heroiclabs.com/llms.txt).
+
+## Heroic Cloud
+- [Access control](https://heroiclabs.com/docs/heroic-cloud/access-control/llm.md): Heroic Cloud gives you granular control over who can do what, down to individual deployments, built around teams, users, service users, and layered permissions.
+- [Additional add-ons](https://heroiclabs.com/docs/heroic-cloud/operations/additional-addons/llm.md): Database replica and profiling add-ons for additional visibility and access to your Heroic Cloud deployments.
+- [Architecture overview](https://heroiclabs.com/docs/heroic-cloud/introduction/architectural-overview/llm.md): Heroic Cloud deploys a fully dedicated infrastructure stack for every title, with four layers designed for predictable performance, data isolation, and high availability.
+- [Audit log](https://heroiclabs.com/docs/heroic-cloud/organizations/audit-log/llm.md): The audit log is a complete, tamper-evident record of every user action performed in your organization.
+- [Billing](https://heroiclabs.com/docs/heroic-cloud/organizations/billing-support/llm.md): Learn how billing works, what you're charged for, how invoices are generated, and how to set up a support plan.
+- [Builders](https://heroiclabs.com/docs/heroic-cloud/titles/builders/llm.md): Builders are the bridge between your source code and your Nakama deployments, connecting to your Git repository and compiling server code into container images.
+- [Dashboard metrics and logs](https://heroiclabs.com/docs/heroic-cloud/operations/dashboard-metrics-logs/llm.md): Each Nakama deployment includes built-in graphs and logs to monitor health, spot issues, and investigate incidents before they affect players.
+- [Disaster recovery and backups](https://heroiclabs.com/docs/heroic-cloud/operations/disaster-recovery/llm.md): Heroic Cloud automatically backs up your database and replicates data across availability zones for production deployments with high availability.
+- [Enterprise SSO and directory sync](https://heroiclabs.com/docs/heroic-cloud/enterprise/enterprise-sso/llm.md): Enterprise SSO lets your team sign in to Heroic Cloud using your corporate identity provider instead of managing separate credentials.
+- [Environment strategy](https://heroiclabs.com/docs/heroic-cloud/introduction/environment-strategy/llm.md): Two things define how studios work on Heroic Cloud — how to structure environments within a title, and how a title progresses from signup to production. This page covers both.
+- [Export your Nakama database](https://heroiclabs.com/docs/heroic-cloud/operations/data-exporting/llm.md): Download a complete snapshot of your Nakama deployment's PostgreSQL database for backup, analysis, or migration.
+- [How to set up Enterprise SSO and directory sync](https://heroiclabs.com/docs/heroic-cloud/enterprise/enterprise-sso/setup-guide/llm.md): Configure SAML-based Single Sign-On and SCIM directory sync so users can access Heroic Cloud through your corporate identity provider.
+- [How to set up your repository for Heroic Cloud](https://heroiclabs.com/docs/heroic-cloud/titles/builders/repository-setup/llm.md): Prepare your Git repository structure and connect it to a builder using OAuth or a Personal Access Token.
+- [Introduction](https://heroiclabs.com/docs/heroic-cloud/introduction/llm.md): Heroic Cloud is a fully managed platform for deploying and operating game backends at scale. It handles infrastructure, tooling, and observability so your studio can focus on building games.
+- [Load test your Nakama deployment](https://heroiclabs.com/docs/heroic-cloud/operations/load-testing/llm.md): Validate your deployment's performance under realistic load before going live, with a production-class Nakama instance and clear performance baselines.
+- [Log exporting (add-on)](https://heroiclabs.com/docs/heroic-cloud/operations/log-exporting/llm.md): Log exporting ships your Nakama instance logs to an S3 bucket for external consumption in your own observability platform.
+- [Metric exporting (add-on)](https://heroiclabs.com/docs/heroic-cloud/operations/metric-exporting/llm.md): Metric exporting provides a Prometheus-conforming endpoint for scraping application performance metrics from your Nakama instances.
+- [Migrating from open source Nakama to Heroic Cloud](https://heroiclabs.com/docs/heroic-cloud/titles/oss-to-cloud/llm.md): What to know when moving from a self-hosted open source Nakama deployment to Heroic Cloud, covering custom code, forks, compatibility, and data migration.
+- [Nakama deployments](https://heroiclabs.com/docs/heroic-cloud/titles/nakama-deployments/llm.md): A Nakama deployment is your dedicated game backend — servers, database, load balancer, monitoring, and scaling in one managed unit.
+- [Operations](https://heroiclabs.com/docs/heroic-cloud/operations/llm.md): Once your game is running on Heroic Cloud, you need visibility into how it's performing and tools to act on what you see. This section covers the observability and operational tooling available to you.
+- [Organizations](https://heroiclabs.com/docs/heroic-cloud/organizations/llm.md): An organization is the top-level entity in Heroic Cloud. Everything you create (titles, deployments, builders, teams, and users) is owned by an organization.
+- [Privacy and compliance](https://heroiclabs.com/docs/heroic-cloud/enterprise/privacy-compliance/llm.md): Learn about data ownership, privacy practices, GDPR compliance, and security certifications for Heroic Cloud.
+- [Private Cloud and VPC peering](https://heroiclabs.com/docs/heroic-cloud/enterprise/private-cloud/llm.md): Run Heroic Cloud infrastructure inside your own cloud account, or enable private network connectivity between Heroic Cloud and other internal services.
+- [Satori deployments](https://heroiclabs.com/docs/heroic-cloud/titles/satori-deployments/llm.md): A Satori deployment is your managed LiveOps platform—player segmentation, experimentation, messaging, analytics, and live events in one service.
+- [Scaling](https://heroiclabs.com/docs/heroic-cloud/introduction/scaling/llm.md): Heroic Cloud sizes infrastructure by CPU cores for both Nakama and database resources. Scaling is available only for production instances.
+- [Set up CI/CD for Nakama](https://heroiclabs.com/docs/heroic-cloud/titles/cicd/llm.md): Automate your full pipeline from code push to running deployment — triggering builds, deploying images to target instances, and choosing the right automation strategy.
+- [Signup and onboarding](https://heroiclabs.com/docs/heroic-cloud/introduction/signup-onboarding/llm.md): Create a Heroic Cloud account, your first organization, and access the dashboard.
+- [Titles and resources](https://heroiclabs.com/docs/heroic-cloud/titles/llm.md): A title represents one game in Heroic Cloud. It's the container that holds all of your Nakama deployments, Satori deployments, and builders for that game.
+
+## Hiro
+- [Achievements](https://heroiclabs.com/docs/hiro/concepts/achievements/llm.md): Achievements are a way to reward players for completing specific tasks in your game.
+- [Achievements](https://heroiclabs.com/docs/hiro/cpp/achievements/llm.md)
+- [Achievements](https://heroiclabs.com/docs/hiro/godot/achievements/llm.md)
+- [Achievements](https://heroiclabs.com/docs/hiro/python/achievements/llm.md): Achievements are a way to reward players for completing specific tasks in your game.
+- [Achievements](https://heroiclabs.com/docs/hiro/server-framework/achievements/llm.md)
+- [Achievements](https://heroiclabs.com/docs/hiro/unity/achievements/llm.md): Achievements are a way to reward players for completing specific tasks in your game.
+- [Achievements](https://heroiclabs.com/docs/hiro/unreal/achievements/llm.md)
+- [Analytics](https://heroiclabs.com/docs/hiro/unity/analytics/llm.md): Analytics are a way to track the performance of your game.
+- [Auctions](https://heroiclabs.com/docs/hiro/concepts/auctions/llm.md)
+- [Auctions](https://heroiclabs.com/docs/hiro/cpp/auctions/llm.md)
+- [Auctions](https://heroiclabs.com/docs/hiro/dart/auctions/llm.md)
+- [Auctions](https://heroiclabs.com/docs/hiro/godot/auctions/llm.md)
+- [Auctions](https://heroiclabs.com/docs/hiro/python/auctions/llm.md): Auctions allow players to bid and purchase in-game items from other players in your game
+- [Auctions](https://heroiclabs.com/docs/hiro/server-framework/auctions/llm.md)
+- [Auctions](https://heroiclabs.com/docs/hiro/typescript/auctions/llm.md)
+- [Auctions](https://heroiclabs.com/docs/hiro/unity/auctions/llm.md)
+- [Auctions](https://heroiclabs.com/docs/hiro/unreal/auctions/llm.md)
+- [Authentication](https://heroiclabs.com/docs/hiro/unity/authentication/llm.md): Learn how to handle player authentication flows in Hiro, including linking social providers and switching between accounts.
+- [Base](https://heroiclabs.com/docs/hiro/concepts/base/llm.md): A group of features that are common to all games.
+- [Base](https://heroiclabs.com/docs/hiro/cpp/base/llm.md)
+- [Base](https://heroiclabs.com/docs/hiro/dart/base/llm.md)
+- [Base](https://heroiclabs.com/docs/hiro/godot/base/llm.md)
+- [Base](https://heroiclabs.com/docs/hiro/python/base/llm.md)
+- [Base](https://heroiclabs.com/docs/hiro/server-framework/base/llm.md)
+- [Base](https://heroiclabs.com/docs/hiro/typescript/base/llm.md)
+- [Base](https://heroiclabs.com/docs/hiro/unity/base/llm.md): A group of features that are common to all games.
+- [Base](https://heroiclabs.com/docs/hiro/unreal/base/llm.md)
+- [Battle Pass](https://heroiclabs.com/docs/hiro/guides/gameplay-mechanics/battle-pass/llm.md)
+- [Blueprints Visual Scripting](https://heroiclabs.com/docs/hiro/unreal/getting-started/blueprints/llm.md): Learn about using Blueprints with Hiro in Unreal.
+- [Challenges](https://heroiclabs.com/docs/hiro/concepts/challenges/llm.md): Challenges are player-driven events, encouraging players to invite friends while fostering community and friendly rivalry.
+- [Challenges](https://heroiclabs.com/docs/hiro/cpp/challenges/llm.md): Challenges enable social and competitive experiences by allowing players to compete in time-bound events with friends.
+- [Challenges](https://heroiclabs.com/docs/hiro/dart/challenges/llm.md): Challenges enable social and competitive experiences by allowing players to compete in time-bound events with friends.
+- [Challenges](https://heroiclabs.com/docs/hiro/godot/challenges/llm.md): Challenges enable social and competitive experiences by allowing players to compete in time-bound events with friends.
+- [Challenges](https://heroiclabs.com/docs/hiro/python/challenges/llm.md): Challenges enable social and competitive experiences by allowing players to compete in time-bound events with friends.
+- [Challenges](https://heroiclabs.com/docs/hiro/typescript/challenges/llm.md): Challenges enable social and competitive experiences by allowing players to compete in time-bound events with friends.
+- [Challenges](https://heroiclabs.com/docs/hiro/unity/challenges/llm.md): Challenges enable social and competitive experiences by allowing players to compete in time-bound events with friends.
+- [Challenges](https://heroiclabs.com/docs/hiro/unreal/challenges/llm.md): Challenges enable social and competitive experiences by allowing players to compete in time-bound events with friends.
+- [Collectible Cards (Clash Royale)](https://heroiclabs.com/docs/hiro/guides/gameplay-mechanics/collectible-cards/llm.md)
+- [Configurations](https://heroiclabs.com/docs/hiro/concepts/getting-started/configurations/llm.md): Configuration parameters for Hiro systems.
+- [Core Functions and Hooks](https://heroiclabs.com/docs/hiro/server-framework/introduction/core-functions-and-hooks/llm.md)
+- [Create Custom Systems](https://heroiclabs.com/docs/hiro/unity/getting-started/custom-systems/llm.md): Learn how to create custom systems in Hiro.
+- [Donations](https://heroiclabs.com/docs/hiro/concepts/economy/donations/llm.md): Donations are a way for players to share in-game items.
+- [Donations](https://heroiclabs.com/docs/hiro/unity/economy/donations/llm.md): Donations are a way for players to share in-game items.
+- [Economy](https://heroiclabs.com/docs/hiro/concepts/economy/llm.md)
+- [Economy](https://heroiclabs.com/docs/hiro/cpp/economy/llm.md)
+- [Economy](https://heroiclabs.com/docs/hiro/dart/economy/llm.md)
+- [Economy](https://heroiclabs.com/docs/hiro/godot/economy/llm.md)
+- [Economy](https://heroiclabs.com/docs/hiro/python/economy/llm.md): Manage your game's virtual economy including donations, purchases, rewards, and advertisements.
+- [Economy](https://heroiclabs.com/docs/hiro/server-framework/economy/llm.md)
+- [Economy](https://heroiclabs.com/docs/hiro/typescript/economy/llm.md)
+- [Economy](https://heroiclabs.com/docs/hiro/unity/economy/llm.md)
+- [Economy](https://heroiclabs.com/docs/hiro/unreal/economy/llm.md)
+- [Energy](https://heroiclabs.com/docs/hiro/concepts/energy/llm.md)
+- [Energy](https://heroiclabs.com/docs/hiro/cpp/energy/llm.md)
+- [Energy](https://heroiclabs.com/docs/hiro/dart/energy/llm.md)
+- [Energy](https://heroiclabs.com/docs/hiro/godot/energy/llm.md)
+- [Energy](https://heroiclabs.com/docs/hiro/python/energy/llm.md): Manage player energy resources including retrieval, usage, and direct grants.
+- [Energy](https://heroiclabs.com/docs/hiro/server-framework/energy/llm.md)
+- [Energy](https://heroiclabs.com/docs/hiro/typescript/energy/llm.md)
+- [Energy](https://heroiclabs.com/docs/hiro/unity/energy/llm.md)
+- [Energy](https://heroiclabs.com/docs/hiro/unreal/energy/llm.md)
+- [Energy Modifiers](https://heroiclabs.com/docs/hiro/concepts/energy/energy-modifiers/llm.md)
+- [Event Leaderboard (Royal Match King's Cup)](https://heroiclabs.com/docs/hiro/guides/gameplay-mechanics/event-leaderboard/llm.md)
+- [Event leaderboards](https://heroiclabs.com/docs/hiro/cpp/event-leaderboards/llm.md)
+- [Event leaderboards](https://heroiclabs.com/docs/hiro/dart/event-leaderboards/llm.md)
+- [Event leaderboards](https://heroiclabs.com/docs/hiro/godot/event-leaderboards/llm.md)
+- [Event leaderboards](https://heroiclabs.com/docs/hiro/python/event-leaderboards/llm.md): Manage and interact with event-based leaderboards for player competition.
+- [Event leaderboards](https://heroiclabs.com/docs/hiro/typescript/event-leaderboards/llm.md)
+- [Event Leaderboards](https://heroiclabs.com/docs/hiro/concepts/event-leaderboards/llm.md)
+- [Event Leaderboards](https://heroiclabs.com/docs/hiro/server-framework/event-leaderboards/llm.md)
+- [Event Leaderboards](https://heroiclabs.com/docs/hiro/unity/event-leaderboards/llm.md)
+- [Event Leaderboards](https://heroiclabs.com/docs/hiro/unreal/event-leaderboards/llm.md)
+- [GDD Templates](https://heroiclabs.com/docs/hiro/concepts/getting-started/templates/llm.md): Use a Game Design Document (GDD) to set the scope and expectations for your game.
+- [Getting Started](https://heroiclabs.com/docs/hiro/dart/getting-started/llm.md)
+- [Getting Started](https://heroiclabs.com/docs/hiro/godot/getting-started/llm.md)
+- [Getting Started](https://heroiclabs.com/docs/hiro/python/getting-started/llm.md)
+- [Getting Started](https://heroiclabs.com/docs/hiro/typescript/getting-started/llm.md)
+- [Hiro Exporter](https://heroiclabs.com/docs/hiro/guides/hiro-exporter/llm.md)
+- [How to implement IAPs in Unity](https://heroiclabs.com/docs/hiro/guides/unity/unity-iap/llm.md)
+- [In-Game Store (Fall Guys Style)](https://heroiclabs.com/docs/hiro/guides/gameplay-mechanics/in-game-store/llm.md)
+- [Incentives](https://heroiclabs.com/docs/hiro/concepts/incentives/llm.md)
+- [Incentives](https://heroiclabs.com/docs/hiro/dart/incentives/llm.md)
+- [Incentives](https://heroiclabs.com/docs/hiro/godot/incentives/llm.md)
+- [Incentives](https://heroiclabs.com/docs/hiro/python/incentives/llm.md): Manage sender and recipient incentives to encourage player interactions.
+- [Incentives](https://heroiclabs.com/docs/hiro/server-framework/incentives/llm.md)
+- [Incentives](https://heroiclabs.com/docs/hiro/typescript/incentives/llm.md)
+- [Incentives](https://heroiclabs.com/docs/hiro/unity/incentives/llm.md): Incentives are a way to drive and increase player retention and engagement in your game.
+- [Initializing the HiroClient](https://heroiclabs.com/docs/hiro/unreal/getting-started/hiro-client/llm.md): Learn how to initialize and use the HiroClient in Unreal.
+- [Install Hiro](https://heroiclabs.com/docs/hiro/concepts/getting-started/install/llm.md): Learn how to set up Hiro on your Nakama server.
+- [Integrations](https://heroiclabs.com/docs/hiro/concepts/integrations/llm.md)
+- [Introduction](https://heroiclabs.com/docs/hiro/concepts/introduction/llm.md): Introduction to the Hiro, a library of tools for building games with Nakama, enabling the quick implementation of social, economy, and other features.
+- [Introduction](https://heroiclabs.com/docs/hiro/server-framework/introduction/llm.md)
+- [Inventor](https://heroiclabs.com/docs/hiro/python/inventory/llm.md): Manage player inventories, including listing, granting, consuming, and updating items.
+- [Inventory](https://heroiclabs.com/docs/hiro/concepts/inventory/llm.md)
+- [Inventory](https://heroiclabs.com/docs/hiro/cpp/inventory/llm.md)
+- [Inventory](https://heroiclabs.com/docs/hiro/dart/inventory/llm.md)
+- [Inventory](https://heroiclabs.com/docs/hiro/godot/inventory/llm.md)
+- [Inventory](https://heroiclabs.com/docs/hiro/server-framework/inventory/llm.md)
+- [Inventory](https://heroiclabs.com/docs/hiro/typescript/inventory/llm.md)
+- [Inventory](https://heroiclabs.com/docs/hiro/unity/inventory/llm.md)
+- [Inventory](https://heroiclabs.com/docs/hiro/unreal/inventory/llm.md)
+- [Leaderboards](https://heroiclabs.com/docs/hiro/concepts/leaderboards/llm.md)
+- [Leaderboards](https://heroiclabs.com/docs/hiro/cpp/leaderboards/llm.md)
+- [Leaderboards](https://heroiclabs.com/docs/hiro/dart/leaderboards/llm.md)
+- [Leaderboards](https://heroiclabs.com/docs/hiro/godot/leaderboards/llm.md)
+- [Leaderboards](https://heroiclabs.com/docs/hiro/python/leaderboards/llm.md): Retrieve leaderboard configurations defined in your game.
+- [Leaderboards](https://heroiclabs.com/docs/hiro/server-framework/leaderboards/llm.md)
+- [Leaderboards](https://heroiclabs.com/docs/hiro/typescript/leaderboards/llm.md)
+- [Leaderboards](https://heroiclabs.com/docs/hiro/unity/leaderboards/llm.md)
+- [Leaderboards](https://heroiclabs.com/docs/hiro/unreal/leaderboards/llm.md)
+- [Level-Based Stats](https://heroiclabs.com/docs/hiro/guides/personalizer/level-based-stats/llm.md)
+- [Observe System Changes](https://heroiclabs.com/docs/hiro/unity/getting-started/observing-system-changes/llm.md): Learn how to observe changes in Hiro Systems.
+- [Offline Support](https://heroiclabs.com/docs/hiro/unity/offline-support/llm.md): Offline Support allows Hiro systems to store state locally and sync back to the server when connectivity is restored.
+- [One Time Store Offers](https://heroiclabs.com/docs/hiro/guides/personalizer/one-time-store-offers/llm.md)
+- [Online Subsystem](https://heroiclabs.com/docs/hiro/unreal/getting-started/online-subsystem/llm.md): Learn about Hiro's support for Unreal Engine's Online Subsystem.
+- [Personalizers](https://heroiclabs.com/docs/hiro/concepts/personalizers/llm.md): Dynamic, context-aware configuration system that customizes Hiro data definitions for individual players, audiences, or game versions without requiring deployments.
+- [Progression](https://heroiclabs.com/docs/hiro/concepts/progression/llm.md)
+- [Progression](https://heroiclabs.com/docs/hiro/cpp/progression/llm.md)
+- [Progression](https://heroiclabs.com/docs/hiro/dart/progression/llm.md)
+- [Progression](https://heroiclabs.com/docs/hiro/godot/progression/llm.md)
+- [Progression](https://heroiclabs.com/docs/hiro/python/progression/llm.md): Manage player progressions, including retrieval and purchasing for permanent unlocks.
+- [Progression](https://heroiclabs.com/docs/hiro/server-framework/progression/llm.md)
+- [Progression](https://heroiclabs.com/docs/hiro/typescript/progression/llm.md)
+- [Progression](https://heroiclabs.com/docs/hiro/unity/progression/llm.md)
+- [Progression](https://heroiclabs.com/docs/hiro/unreal/progression/llm.md)
+- [Publishers](https://heroiclabs.com/docs/hiro/concepts/publishers/llm.md): Learn about the Publishers system for processing analytics events in Hiro
+- [Quests (Hearthstone Quests)](https://heroiclabs.com/docs/hiro/guides/gameplay-mechanics/quests/llm.md)
+- [Randomize daily missions](https://heroiclabs.com/docs/hiro/guides/personalizer/random-daily-missions/llm.md)
+- [Release Notes](https://heroiclabs.com/docs/hiro/concepts/introduction/release-notes/llm.md): The latest Hiro releases and included features, improvements, and fixes.
+- [Reward Mailbox](https://heroiclabs.com/docs/hiro/concepts/mailbox/llm.md): The Reward Mailbox is a temporary holding for rewards, allowing you to deliver deferred game resources to players.
+- [Rewarded Video](https://heroiclabs.com/docs/hiro/concepts/economy/rewarded-video/llm.md)
+- [Rewarded Video](https://heroiclabs.com/docs/hiro/unity/economy/rewarded-video/llm.md)
+- [Rewards](https://heroiclabs.com/docs/hiro/concepts/economy/rewards/llm.md): The Rewards system is the foundation of player progression and engagement in Hiro, enabling you to grant game resources in response to player actions and accomplishments.
+- [Set up built-in Personalizers](https://heroiclabs.com/docs/hiro/guides/personalizer/setup-personalizers/llm.md)
+- [Set up Hiro with Nakama](https://heroiclabs.com/docs/hiro/unity/getting-started/nakama-system/llm.md): Learn how to initialize and use the `NakamaSystem` in Hiro.
+- [Set up rewarded video providers](https://heroiclabs.com/docs/hiro/guides/gameplay-mechanics/rewarded-video-providers/llm.md)
+- [Solo Live Event (Fortnite Style)](https://heroiclabs.com/docs/hiro/guides/gameplay-mechanics/solo-live-event/llm.md)
+- [Stats](https://heroiclabs.com/docs/hiro/concepts/stats/llm.md)
+- [Stats](https://heroiclabs.com/docs/hiro/cpp/stats/llm.md)
+- [Stats](https://heroiclabs.com/docs/hiro/dart/stats/llm.md)
+- [Stats](https://heroiclabs.com/docs/hiro/godot/stats/llm.md)
+- [Stats](https://heroiclabs.com/docs/hiro/python/stats/llm.md): Manage and update player statistics, both public and private.
+- [Stats](https://heroiclabs.com/docs/hiro/server-framework/stats/llm.md)
+- [Stats](https://heroiclabs.com/docs/hiro/typescript/stats/llm.md)
+- [Stats](https://heroiclabs.com/docs/hiro/unity/stats/llm.md)
+- [Stats](https://heroiclabs.com/docs/hiro/unreal/stats/llm.md)
+- [Streaks](https://heroiclabs.com/docs/hiro/concepts/streaks/llm.md)
+- [Streaks](https://heroiclabs.com/docs/hiro/cpp/streaks/llm.md)
+- [Streaks](https://heroiclabs.com/docs/hiro/dart/streaks/llm.md)
+- [Streaks](https://heroiclabs.com/docs/hiro/godot/streaks/llm.md)
+- [Streaks](https://heroiclabs.com/docs/hiro/python/streaks/llm.md): Manage player streaks including listing, claiming rewards, resetting, and updating streak statuses.
+- [Streaks](https://heroiclabs.com/docs/hiro/server-framework/streaks/llm.md)
+- [Streaks](https://heroiclabs.com/docs/hiro/typescript/streaks/llm.md)
+- [Streaks](https://heroiclabs.com/docs/hiro/unity/streaks/llm.md)
+- [Streaks](https://heroiclabs.com/docs/hiro/unreal/streaks/llm.md)
+- [Sub Achievements](https://heroiclabs.com/docs/hiro/concepts/achievements/sub-achievements/llm.md): Sub achievements are nested, hierarchical achievements that can be used for progressive rewards.
+- [Team Achievements](https://heroiclabs.com/docs/hiro/concepts/teams/achievements/llm.md)
+- [Team Event Leaderboards](https://heroiclabs.com/docs/hiro/concepts/teams/event-leaderboards/llm.md)
+- [Team Gifts](https://heroiclabs.com/docs/hiro/concepts/teams/gifts/llm.md)
+- [Team Inventory](https://heroiclabs.com/docs/hiro/concepts/teams/inventory/llm.md)
+- [Team Mailbox](https://heroiclabs.com/docs/hiro/concepts/teams/mailbox/llm.md)
+- [Team Stats](https://heroiclabs.com/docs/hiro/concepts/teams/stats/llm.md): Track and manage public and private stats for teams
+- [Team Store](https://heroiclabs.com/docs/hiro/concepts/teams/store/llm.md)
+- [Team Wallet](https://heroiclabs.com/docs/hiro/concepts/teams/wallet/llm.md)
+- [Teams](https://heroiclabs.com/docs/hiro/concepts/teams/llm.md)
+- [Teams](https://heroiclabs.com/docs/hiro/cpp/teams/llm.md)
+- [Teams](https://heroiclabs.com/docs/hiro/dart/teams/llm.md)
+- [Teams](https://heroiclabs.com/docs/hiro/godot/teams/llm.md)
+- [Teams](https://heroiclabs.com/docs/hiro/python/teams/llm.md): Manage player teams including creation, listing, searching, and team chat functionality.
+- [Teams](https://heroiclabs.com/docs/hiro/server-framework/teams/llm.md)
+- [Teams](https://heroiclabs.com/docs/hiro/typescript/teams/llm.md)
+- [Teams](https://heroiclabs.com/docs/hiro/unity/teams/llm.md)
+- [Teams](https://heroiclabs.com/docs/hiro/unreal/teams/llm.md)
+- [Testing Hiro RPCs via API Client](https://heroiclabs.com/docs/hiro/guides/server-framework/api-calls/llm.md)
+- [Thinking in Hiro](https://heroiclabs.com/docs/hiro/concepts/introduction/thinking-in-hiro/llm.md): Core mental models and design philosophy that explain how Hiro works and why it's designed the way it is.
+- [Tutorials](https://heroiclabs.com/docs/hiro/concepts/tutorials/llm.md)
+- [Tutorials](https://heroiclabs.com/docs/hiro/cpp/tutorials/llm.md)
+- [Tutorials](https://heroiclabs.com/docs/hiro/dart/tutorials/llm.md)
+- [Tutorials](https://heroiclabs.com/docs/hiro/godot/tutorials/llm.md)
+- [Tutorials](https://heroiclabs.com/docs/hiro/python/tutorials/llm.md): Manage tutorials including retrieving, accepting, declining, abandoning, and updating progress.
+- [Tutorials](https://heroiclabs.com/docs/hiro/server-framework/tutorials/llm.md)
+- [Tutorials](https://heroiclabs.com/docs/hiro/typescript/tutorials/llm.md)
+- [Tutorials](https://heroiclabs.com/docs/hiro/unity/tutorials/llm.md)
+- [Tutorials](https://heroiclabs.com/docs/hiro/unreal/tutorials/llm.md)
+- [Unlockables](https://heroiclabs.com/docs/hiro/concepts/unlockables/llm.md)
+- [Unlockables](https://heroiclabs.com/docs/hiro/cpp/unlockables/llm.md)
+- [Unlockables](https://heroiclabs.com/docs/hiro/dart/unlockables/llm.md)
+- [Unlockables](https://heroiclabs.com/docs/hiro/godot/unlockables/llm.md)
+- [Unlockables](https://heroiclabs.com/docs/hiro/python/unlockables/llm.md): Manage unlockable items including creation, progress tracking, purchasing, and claiming.
+- [Unlockables](https://heroiclabs.com/docs/hiro/server-framework/unlockables/llm.md)
+- [Unlockables](https://heroiclabs.com/docs/hiro/typescript/unlockables/llm.md)
+- [Unlockables](https://heroiclabs.com/docs/hiro/unity/unlockables/llm.md)
+- [Unlockables](https://heroiclabs.com/docs/hiro/unreal/unlockables/llm.md)
+- [Unregister RPCs](https://heroiclabs.com/docs/hiro/guides/server-framework/unregister-rpcs/llm.md)
+- [Virtual Currencies](https://heroiclabs.com/docs/hiro/concepts/economy/virtual-currencies/llm.md)
+- [Virtual Currencies](https://heroiclabs.com/docs/hiro/unity/economy/virtual-currencies/llm.md)
+- [Virtual Store](https://heroiclabs.com/docs/hiro/concepts/economy/virtual-store/llm.md)
+- [Virtual Store](https://heroiclabs.com/docs/hiro/unity/economy/virtual-store/llm.md)
+
+## Nakama
+- [Access Controls](https://heroiclabs.com/docs/nakama/concepts/storage/permissions/llm.md): The storage engine has two features which control access to objects. Object ownership and access permissions.
+- [Architecture Overview](https://heroiclabs.com/docs/nakama/getting-started/architecture/llm.md): Nakama is a monolithic stateful server that exposes real-time and non-real-time APIs from multiple subsystems. Nakama’s subsystems cover a variety of tasks, with the major subsystems discussed below.
+- [Asset Management](https://heroiclabs.com/docs/nakama/guides/deployment/asset-management/llm.md): This guide shows how to use Nakama as an asset management system, providing clients with temporary access to secure cloud hosted (Amazon S3) assets, and provides a complete example for Unity Addressables.
+- [Authentication](https://heroiclabs.com/docs/nakama/concepts/authentication/llm.md): Users must authenticate before interacting with the server. This authentication can be done using the user's device, email, a variety of social providers, or your custom solution. Linking authentication methods can be used to support multiple logins and identifying a user across multiple devices.
+- [Authentication](https://heroiclabs.com/docs/nakama/tutorials/unity/pirate-panic/authentication/llm.md): Learn how to add authentication to the Pirate Panic tutorial game.
+- [Authoritative In-game Items](https://heroiclabs.com/docs/nakama/client-libraries/snippets/authoritative-read/llm.md): An example of how you can use an RPC to allow players to equip items authoritatively, ensuring the player owns the items before allowing them to equip them.
+- [Authoritative Multiplayer](https://heroiclabs.com/docs/nakama/concepts/multiplayer/authoritative/llm.md): Authoritative multiplayer is suited for gameplay which depends on central state managed by the game backend. The Nakama authoritative multiplayer engine introduces a way to run custom match logic with a fixed tick rate. Messages can be validated and state changes broadcast to connected peers.
+- [Authoritative Storage](https://heroiclabs.com/docs/nakama/client-libraries/snippets/authoritative-write/llm.md): An example of how you would write to the Storage Engine authoritatively.
+- [Background Jobs](https://heroiclabs.com/docs/nakama/guides/server-framework/background-jobs/llm.md): This guide explains best practices around background jobs.
+- [Banning Users](https://heroiclabs.com/docs/nakama/client-libraries/snippets/banning-users/llm.md): An example of how you can use an RPC to ban a user, then logout and disconnect any active sessions.
+- [Benchmarks](https://heroiclabs.com/docs/nakama/getting-started/benchmarks/llm.md): Performance benchmarks for Nakama on a number of different workloads for several of the core APIs, such as Concurrent User Count, New User Registration, Custom RPC calls, and authoritative multiplayer.
+- [Best Practices](https://heroiclabs.com/docs/nakama/concepts/friends/best-practices/llm.md): Friend relationships are a core part of contemporary online gaming and the Nakama feature set and APIs help you build engaging friend experiences into your game. Learn how these features work and how they are best implemented.
+- [Bucketed Leaderboards](https://heroiclabs.com/docs/nakama/guides/concepts/bucketed-leaderboards/llm.md): A guide for implementing bucketed leaderboards, where players play against a limited view of other players rather thana global leaderboard, using Nakama’s Storage Engine, Leaderboards, and Tournaments features.
+- [C++](https://heroiclabs.com/docs/nakama/client-libraries/cpp/llm.md): The official C++ client handles all communication in real-time with the server. It implements all features in the server. This guide will show you how to use the core Nakama features in Unity by showing you how to develop the Nakama specific parts of a game.
+- [Clans](https://heroiclabs.com/docs/nakama/tutorials/unity/pirate-panic/clans/llm.md): Learn how to add clans to the Pirate Panic tutorial game.
+- [CLI Commands](https://heroiclabs.com/docs/nakama/getting-started/commands/llm.md): Overview of the available command-line commands available for running and administration of Nakama, including upgrade and migration.
+- [Client Relayed Multiplayer](https://heroiclabs.com/docs/nakama/concepts/multiplayer/relayed/llm.md): The real-time multiplayer engine makes it easy for users to set up and join matches where they can rapidly exchange data with opponents. Users can create, join, and leave matches with messages sent from clients, with matches existing on the server until their last participant has left.
+- [Cocos2d-x C++](https://heroiclabs.com/docs/nakama/client-libraries/cocos2d-x/llm.md): The official cocos2d C++ client handles all communication in real-time with the server. It implements all features in the server and is written with C++11. Learn how to setup and use the cocos2d C++ client for Nakama.
+- [Cocos2d-x JavaScript](https://heroiclabs.com/docs/nakama/client-libraries/cocos2d-js/llm.md): The official cocos2d JavaScript client handles all communication in real-time with the server. It implements all features in the server and can be used in cocos2d-x js projects. The client also comes with type definitions so it can be used via TypeScript. Learn how to setup and use the cocos2s JS client for Nakama.
+- [Code Samples](https://heroiclabs.com/docs/nakama/server-framework/go-runtime/code-samples/llm.md): Development examples for the Go runtime.
+- [Code Samples](https://heroiclabs.com/docs/nakama/server-framework/lua-runtime/code-samples/llm.md): Development examples for the Lua runtime.
+- [Code Samples](https://heroiclabs.com/docs/nakama/server-framework/typescript-runtime/code-samples/llm.md): Development examples for the TypeScript runtime.
+- [Collections](https://heroiclabs.com/docs/nakama/concepts/storage/collections/llm.md): Nakama incorporates a storage engine for project-specific data, such as user accounts. The storage engine design is optimized for object ownership, access permissions, and batch operations. Data is stored in collections with one or more objects which contain a unique key with JSON content.
+- [Configuration](https://heroiclabs.com/docs/nakama/getting-started/configuration/llm.md): Overview of how to provide a custom configuration for your Nakama server, and all available configuration properties.
+- [Creating a Lobby System](https://heroiclabs.com/docs/nakama/guides/concepts/lobby/llm.md): This guide demonstrates how to implement a multiplayer lobby system using server authoritative runtime code.
+- [Creating an Economy](https://heroiclabs.com/docs/nakama/guides/concepts/economy/llm.md): This guide gives practical guidance on creating an in-game economy using IAPs, the virtual wallet and storage engine.
+- [Custom Authentication](https://heroiclabs.com/docs/nakama/client-libraries/snippets/custom-authentication/llm.md): An example of custom authentication with the Itch.io platform via a `BeforeAuthenticateCustom` hook.
+- [Custom Authentication with Third-Party Services](https://heroiclabs.com/docs/nakama/guides/concepts/custom-authentication/llm.md): This guide provides an example implementation of using third-party authentication APIs to authenticate with Nakama using Custom Authentication.
+- [Custom Leaderboards](https://heroiclabs.com/docs/nakama/guides/concepts/custom-leaderboards/llm.md): This guide provides an example implementation of a custom leaderboard where players can play against only their specific group or friends, helping to maintain engagement as opposed to often static global leaderboards.
+- [Daily Rewards](https://heroiclabs.com/docs/nakama/guides/concepts/daily-rewards/llm.md): End to end tutorial for implementing a daily reward system using Server Runtime Code.
+- [Dart (Flutter)](https://heroiclabs.com/docs/nakama/client-libraries/dart/llm.md): The official Dart client handles all communication in real-time with the server. It implements all features in the server. This guide will show you how to use the core Nakama features in Dart by showing you how to develop the Nakama specific parts of a game.
+- [Data Privacy](https://heroiclabs.com/docs/nakama/getting-started/data-privacy/llm.md): The latest Nakama release and include features, improvements, and fixes.
+- [Debugging with Delve](https://heroiclabs.com/docs/nakama/guides/server-framework/debugging-with-delve/llm.md): This guide demonstrates how you can debug your custom Go server runtime code using Delve inside a Docker container.
+- [Defold](https://heroiclabs.com/docs/nakama/client-libraries/defold/llm.md): The official Defold client is build using Lua 5.1 on top of the Defold game engine. It can also be used by other engines running Lua. Learn how to setup and use the Defold client for Nakama.
+- [Dependency Pinning](https://heroiclabs.com/docs/nakama/server-framework/go-runtime/go-dependencies/llm.md): Overview of common issues and possible solutions when developing your project's server runtime code using Go.
+- [Deploy on Digital Ocean](https://heroiclabs.com/docs/nakama/guides/deployment/digital-ocean/llm.md): This guide provides the initial configurations for your Digital Ocean droplet required to develop with Nakama. After configuring the droplet, Nakama can be installed like any other Docker install.
+- [Docker Compose](https://heroiclabs.com/docs/nakama/getting-started/install/docker/llm.md): See the prerequisites and installation procedure for running Nakama via Docker.
+- [Docker Configuration](https://heroiclabs.com/docs/nakama/getting-started/configuration/docker-configuration/llm.md): Learn how to configure Nakama via Docker and a Docker Compose file.
+- [Events](https://heroiclabs.com/docs/nakama/concepts/events/llm.md): Events let you capture player behavior and analytics data once in the client, then route and process it server-side, so you avoid embedding multiple third-party SDKs into your game.
+- [Fish Game](https://heroiclabs.com/docs/nakama/tutorials/godot/fishgame/llm.md): Fish Game - Making an online multiplayer game with Godot and Nakama
+- [Fish Game](https://heroiclabs.com/docs/nakama/tutorials/unity/fishgame/llm.md): End to end tutorial for creating Fish Game - a fast-paced 2D competitive shooter inspired by Duck Game - using Nakama and Unity.
+- [Friends](https://heroiclabs.com/docs/nakama/concepts/friends/llm.md): Friends are a great way to build a social community. Users can add other users to their list of friends, see who is online or when they were last online, chat together in real-time, and interact together in gameplay or collaboration.
+- [Friends](https://heroiclabs.com/docs/nakama/tutorials/unity/pirate-panic/friends/llm.md): Learn how to work with Nakama friends in the Pirate Panic tutorial game.
+- [Function Reference](https://heroiclabs.com/docs/nakama/server-framework/go-runtime/function-reference/llm.md): This page lists all functions available within Nakama's Go runtime, with their respective parameters and corresponding code samples.
+- [Function Reference](https://heroiclabs.com/docs/nakama/server-framework/lua-runtime/function-reference/llm.md): This page lists all functions available within Nakama's Lua runtime, with their respective parameters and corresponding code samples.
+- [Function Reference](https://heroiclabs.com/docs/nakama/server-framework/typescript-runtime/function-reference/llm.md): This page lists all functions available within Nakama's JavaScript runtime, with their respective parameters and corresponding code samples.
+- [Game Console SDKs](https://heroiclabs.com/docs/nakama/client-libraries/consoles/llm.md): The supported client libraries for consoles and how to obtain access.
+- [GameLift Fleet Management](https://heroiclabs.com/docs/nakama/guides/concepts/gamelift-integration/llm.md): This guide explains how to integrate Nakama's matchmaking system with Amazon GameLift for efficient multiplayer game scaling, covering AWS configuration, queue setup, plugin installation, and session management.
+- [Getting Started](https://heroiclabs.com/docs/nakama/getting-started/llm.md): Introduction to Nakama, a scalable server for social and real-time games and apps. See the available features and next steps for getting started developing with Nakama.
+- [Go Runtime](https://heroiclabs.com/docs/nakama/server-framework/go-runtime/llm.md): Learn how to configure and develop your project using Go for your game backend custom logic.
+- [Godot 3](https://heroiclabs.com/docs/nakama/client-libraries/godot-3/llm.md): The official Godot 3 client handles all communication in real-time with the server. It implements all features in the server. This guide will show you how to use the core Nakama features in Godot by showing you how to develop the Nakama specific parts of a game.
+- [Godot 4](https://heroiclabs.com/docs/nakama/client-libraries/godot/llm.md): The official Godot 4 client handles all communication in real-time with the server. It implements all features in the server. This guide will show you how to use the core Nakama features in Godot by showing you how to develop the Nakama specific parts of a game.
+- [Groups](https://heroiclabs.com/docs/nakama/concepts/groups/llm.md): Groups enable players to chat and play together as a team or community. These player groups can be public or private, requiring approval from group admin(s) to join.
+- [Groups Best Practices](https://heroiclabs.com/docs/nakama/concepts/groups/best-practices/llm.md): Groups are a foundational building block of social interaction in games, providing a chance for users to form closer bonds to other users and to your game. To support group play in your game, Nakama provides a core groups system, which includes a data model and APIs.
+- [Guarding APIs](https://heroiclabs.com/docs/nakama/guides/server-framework/guarding-apis/llm.md): A guide demonstrating how to limit or completely prevent client access to any or all of the Nakama APIs, useful for performing any desired validation on a client request or preventing client attempts at circumventing your game logic.
+- [Hooks](https://heroiclabs.com/docs/nakama/server-framework/introduction/hooks/llm.md): Learn the basics of using Before and After hooks via the server runtime.
+- [How to deploy game servers with Edgegap](https://heroiclabs.com/docs/nakama/guides/concepts/edgegap-integration/llm.md): This guide explains how to integrate Nakama's matchmaking system with Edgegap for efficient multiplayer game scaling, covering Edgegap configuration, queue setup, plugin installation, and session management.
+- [i3D.net integration](https://heroiclabs.com/docs/nakama/guides/concepts/i3d-integration/llm.md): Integrate Nakama matchmaking with i3D.net to allocate and manage dedicated servers. This guide covers Arcus SDK setup, Nakama plugin configuration, matchmaking callbacks, and the session lifecycle.
+- [In-app Purchase Validation](https://heroiclabs.com/docs/nakama/concepts/iap-validation/llm.md): In-App purchases enable purchases for unlocks, in-game consumables, subscriptions, and more. Purchases must be validated to maintain integrity and security in the player experience. Nakama supports single product and subscription purchase validation for Apple, Google, and Huawei services.
+- [Initialize a New User](https://heroiclabs.com/docs/nakama/guides/concepts/initialize-users/llm.md): Tutorial with different methods to create and initialize user records - wallets, inventory, etc. - for new players when first signing up.
+- [Installation](https://heroiclabs.com/docs/nakama/getting-started/install/llm.md): Find out what installation options are available for Nakama.
+- [Introduction](https://heroiclabs.com/docs/nakama/server-framework/introduction/llm.md): Nakama includes a fast embedded code runtime for writing custom logic as JavaScript bundles, Go plugins, and Lua modules. Learn the basics of using the server runtime features.
+- [Java/Android](https://heroiclabs.com/docs/nakama/client-libraries/java/llm.md): The official Java client handles all communication in real-time with the server. It implements all features in the server. This guide will show you how to use the core Nakama features in Java by showing you how to develop the Nakama specific parts of a game.
+- [JavaScript](https://heroiclabs.com/docs/nakama/client-libraries/javascript/llm.md): The official JavaScript client handles all communication in real-time with the server. It implements all features in the server. This guide will show you how to use the core Nakama features in JavaScript by showing you how to develop the Nakama specific parts of a game.
+- [Leaderboards](https://heroiclabs.com/docs/nakama/concepts/leaderboards/llm.md): Leaderboards are a great way to add a social and competitive element to any game. They're a fun way to drive competition among your players. The server supports an unlimited number of individual leaderboards with each one as a scoreboard which tracks separate records.
+- [Leaderboards](https://heroiclabs.com/docs/nakama/tutorials/unity/pirate-panic/leaderboards/llm.md): Learn how to add leaderboards to the Pirate Panic tutorial game.
+- [Leaderboards Best Practices](https://heroiclabs.com/docs/nakama/concepts/leaderboards/best-practices/llm.md): Leaderboards are often part of a game’s competitive experience. Nakama provides a data model and API for creating, calculating, and managing leaderboards. Learn how these features work and how they are best implemented.
+- [Linux](https://heroiclabs.com/docs/nakama/getting-started/install/linux/llm.md): How to setup and run Nakama binary and its prerequisites on any X86_64 Linux distribution. The binary setup allows you to install and manage Nakama without Docker.
+- [Lua Runtime](https://heroiclabs.com/docs/nakama/server-framework/lua-runtime/llm.md): Learn how to configure and develop your project using Lua for your game backend custom logic.
+- [macOS Binary](https://heroiclabs.com/docs/nakama/getting-started/install/macos/llm.md): How to setup and run Nakama binary and its prerequisites on macOS. The binary setup allows you to install and manage Nakama without Docker.
+- [Match Handler API](https://heroiclabs.com/docs/nakama/server-framework/go-runtime/function-reference/match-handler/llm.md): This page lists all functions for Nakama's Server Authoritative multiplayer match handler.
+- [Match Handler API](https://heroiclabs.com/docs/nakama/server-framework/lua-runtime/function-reference/match-handler/llm.md): This page lists all functions for Nakama's Server Authoritative multiplayer match handler.
+- [Match Handler API](https://heroiclabs.com/docs/nakama/server-framework/typescript-runtime/function-reference/match-handler/llm.md): This page lists all functions for Nakama's Server Authoritative multiplayer match handler.
+- [Match Listing](https://heroiclabs.com/docs/nakama/concepts/multiplayer/match-listing/llm.md): Match labels can be used to filter active multiplayer matches based on exact matches or queried to find and sort the best possible matches. Listing matches is useful for presenting player lobbies and searching existing matches prior to creating a new one.
+- [Match Runtime API](https://heroiclabs.com/docs/nakama/server-framework/go-runtime/function-reference/match-runtime/llm.md): This page lists all functions exposed in the match handler Dispatcher type.
+- [Match Runtime API](https://heroiclabs.com/docs/nakama/server-framework/lua-runtime/function-reference/match-runtime/llm.md): This page lists all functions exposed in the match handler Dispatcher type.
+- [Match Runtime API](https://heroiclabs.com/docs/nakama/server-framework/typescript-runtime/function-reference/match-runtime/llm.md): This page lists all functions exposed in the match handler Dispatcher type.
+- [Matchmaker](https://heroiclabs.com/docs/nakama/concepts/multiplayer/matchmaker/llm.md): The Nakama matchmaker enables users to find opponents and teammates for matches, groups, and other activities. The matchmaker maintains a pool of users that are currently looking for opponents and places them together whenever a good match, based on the defined criteria, is possible.
+- [Matchmaking](https://heroiclabs.com/docs/nakama/tutorials/unity/pirate-panic/matchmaking/llm.md): Learn how to add matchmaking to the Pirate Panic tutorial game.
+- [Matchmaking Around Blocked Users](https://heroiclabs.com/docs/nakama/guides/concepts/matchmaking-blocked-users/llm.md): A guide for implementing implementing Nakama's matchmaker to ensure players are not matched with any users they have blocked.
+- [Metrics](https://heroiclabs.com/docs/nakama/getting-started/metrics/llm.md): The available metrics produced by Nakama and available for export to Prometheus.
+- [Modeling for Scalability](https://heroiclabs.com/docs/nakama/concepts/storage/modeling/llm.md): When you’re building a game, it’s tempting to model your server code directly after the player’s experience, especially for progression-based mechanics.
+- [Multiplayer](https://heroiclabs.com/docs/nakama/tutorials/unity/pirate-panic/multiplayer/llm.md): Learn how to add multiplayer to the Pirate Panic tutorial game.
+- [Multiplayer Engine](https://heroiclabs.com/docs/nakama/concepts/multiplayer/llm.md): The Nakama Multiplayer Engine is comprised of the matchmaker, matches, and two multiplayer architectures.
+- [Nakama Console](https://heroiclabs.com/docs/nakama/getting-started/console/llm.md): The Nakama console is an easy-to-use and flexible UI for managing your Nakama server instance.
+- [Ninja Battle](https://heroiclabs.com/docs/nakama/tutorials/unity/ninja-battle/llm.md): Developed using Unity, Ninja Battle is a real-time top-down 2d battler where players control sprinting ninjas who drop deadly caltrops as they run across the grid.
+- [Notifications](https://heroiclabs.com/docs/nakama/concepts/notifications/llm.md): In-app notifications make it easy to broadcast a message to one or more users. They are great for sending announcements, alerts, or notices of in-game rewards and gifts. Notifications can be stored until read or pushed so only a connected user will see it.
+- [Notifications](https://heroiclabs.com/docs/nakama/tutorials/unity/pirate-panic/notifications/llm.md): Learn how to add notification to the Pirate Panic tutorial game.
+- [Offline Matchmaking](https://heroiclabs.com/docs/nakama/concepts/multiplayer/matchmaker/offline-matchmaking/llm.md): Using the Storage Engine indices and search capabilities to implement offline matchmaking.
+- [Parties](https://heroiclabs.com/docs/nakama/concepts/parties/llm.md): Enable users to form parties and communicate with their members. Any user can create a party and will become the initial party leader. Users can invite other players to join, mark the party as private, or set a searchable label so other players can discover and join the party. When all players leave the party it’s gone.
+- [Passive Multiplayer](https://heroiclabs.com/docs/nakama/guides/concepts/passive-multiplayer/llm.md): Guide for implementing passive multiplayer gameplay. In “passive” games the gameplay can span several hours to weeks. Here the server receives input, validates them, stores them in the database and broadcasts changes to any connected peers before shutting down the server loop until the next gameplay sequence.
+- [Pirate Panic](https://heroiclabs.com/docs/nakama/tutorials/unity/pirate-panic/llm.md): Comprehensive tutorial with complete sample project demonstrating the usage of almost all core Nakama features in the scope of a full-scale project.
+- [Query Syntax](https://heroiclabs.com/docs/nakama/concepts/multiplayer/query-syntax/llm.md): Matchmaker properties and Match labels can be queried to return only the desired matches. Learn about the query syntax used to filter these results.
+- [Real-time Chat](https://heroiclabs.com/docs/nakama/concepts/chat/llm.md): Enable community interaction via direct, group, or public chat channels. Allows users to browse and join their desired chats, or create new ones. Messages in these channels can be persistent, enabling offline users to review them later, or visible to online users only.
+- [Release Notes](https://heroiclabs.com/docs/nakama/getting-started/release-notes/llm.md): The latest Nakama release and include features, improvements, and fixes.
+- [Remote Configuration](https://heroiclabs.com/docs/nakama/guides/deployment/remote-configuration/llm.md): Tutorial showing how to manage and fetch in-app parameters via remote configuration. Developers can use remote configuration to remove the hassle of a lengthy review process or modifying the game or app and then waiting for users to update. This makes it especially useful with mobile projects.
+- [Runtime Context](https://heroiclabs.com/docs/nakama/server-framework/introduction/runtime-context/llm.md): Nakama includes a fast embedded code runtime for writing custom logic as JavaScript bundles, Go plugins, and Lua modules. Learn the basics of using the server runtime features.
+- [Satori Integration](https://heroiclabs.com/docs/nakama/guides/server-framework/satori-integration/llm.md): This guide details how to integrate with Satori via the Nakama server framework.
+- [Sending Email Using SendGrid](https://heroiclabs.com/docs/nakama/guides/server-framework/sendgrid/llm.md): Tutorial showing how to send email notifications to players via integration with SendGrid.
+- [Server Runtime Examples](https://heroiclabs.com/docs/nakama/server-framework/runtime-examples/llm.md): Examples of using the embedded code runtime for writing custom logic with Go plugins, Lua modules, or JavaScript bundles.
+- [Server To Server](https://heroiclabs.com/docs/nakama/server-framework/runtime-examples/server-to-server/llm.md)
+- [Session Management](https://heroiclabs.com/docs/nakama/concepts/session/management/llm.md): Learn how sessions - a player's device, user and social accounts, and behavior - are defined and used within Nakama, and how to best layer these concepts into your game for the desired player experience.
+- [Session-Based Multiplayer](https://heroiclabs.com/docs/nakama/concepts/multiplayer/session-based/llm.md): Session-based multiplayer is a gaming model that structures gameplay into distinct sessions, each running on a dedicated server. Nakama can be used to manage these game server fleets.
+- [Sessions](https://heroiclabs.com/docs/nakama/concepts/session/llm.md): A session represents a period during which a user is authenticated with the server. This session is represented with a client-side object that proves the client was authenticated. Sessions expire and become invalid after a period set in your server configuration.
+- [Sockets](https://heroiclabs.com/docs/nakama/concepts/sockets/llm.md): Sockets are used to establish connections between the server and clients. This allows the server to send data to and receive data from clients, enabling real-time communication and gameplay.
+- [Status](https://heroiclabs.com/docs/nakama/concepts/status/llm.md): Nakama users can set a status message when they connect and update it while they're online. The status is set for each connection, and is erased when the user disconnects. Users can follow each other to be notified of status changes. This is ideal to know when their friends are online and what they're up to.
+- [Storage](https://heroiclabs.com/docs/nakama/tutorials/unity/pirate-panic/storage/llm.md): Learn how to use the Nakama Storage Engine in the Pirate Panic tutorial game.
+- [Storage Engine](https://heroiclabs.com/docs/nakama/concepts/storage/llm.md): Nakama incorporates a storage engine for project-specific data, such as user accounts. The storage engine design is optimized for object ownership, access permissions, and batch operations. Data is stored in collections with one or more objects which contain a unique key with JSON content.
+- [Storage Search](https://heroiclabs.com/docs/nakama/concepts/storage/search/llm.md): The storage engine supports configurable indexing of storage objects enabling search queries over these indices.
+- [Streams](https://heroiclabs.com/docs/nakama/server-framework/streams/llm.md): Nakama's real-time message routing and delivery subsystem is organized into streams. Streams tie together clients interested in certain message types and allow Nakama's internal components to deliver messages to relevant users.
+- [Swift](https://heroiclabs.com/docs/nakama/client-libraries/swift/llm.md): The official Swift client handles all communication in real-time with the server and is optimized for all Apple platforms. It implements all features in the server and is compatible with Swift 3.1+.
+- [Testing TypeScript Server Runtime Code with Jest](https://heroiclabs.com/docs/nakama/guides/server-framework/typescript-testing/llm.md): Summary
+- [Tic-Tac-Toe PhaserJS](https://heroiclabs.com/docs/nakama/tutorials/javascript/xoxo/llm.md): End to end tutorial for creating a tic-tac-toe game using Nakama and PhaserJS.
+- [Tiered Leagues](https://heroiclabs.com/docs/nakama/guides/concepts/tiered-leagues/llm.md): Guide for implementing tiered league gameplay. A league functions as a set of linked leaderboards where each leaderboard represents a particular “tier” of your league’s hierarchy. Players compete in their tiers, with top players promoted and bottom ranked players demoted.
+- [Tournaments](https://heroiclabs.com/docs/nakama/concepts/tournaments/llm.md): Tournaments are competitions which span a short period where opponents compete over a prize. Each tournament can be created with a custom duration or reset schedule, restricted entry or number of participants, and played by individual users and groups.
+- [Tutorials](https://heroiclabs.com/docs/nakama/tutorials/llm.md): Learn how to build complete games by following the end-to-end examples provided here.
+- [TypeScript Runtime](https://heroiclabs.com/docs/nakama/server-framework/typescript-runtime/llm.md): Learn how to configure and develop your project using JavaScript for your game backend custom logic.
+- [Unity/.Net](https://heroiclabs.com/docs/nakama/client-libraries/unity/llm.md): The official Unity client handles all communication in real-time with the server. It implements all features in the server. This guide will show you how to use the core Nakama features in Unity by showing you how to develop the Nakama specific parts of a game.
+- [Unread Chat Messages](https://heroiclabs.com/docs/nakama/guides/concepts/unread-messages/llm.md): A guide to retrieving unread chat messages and counts on the client.
+- [Unreal](https://heroiclabs.com/docs/nakama/client-libraries/unreal/llm.md): The official C++ client handles all communication in real-time with the server. It implements all features in the server. This guide will show you how to use the core Nakama features in Unreal by showing you how to develop the Nakama specific parts of a game.
+- [Updating Group Metadata](https://heroiclabs.com/docs/nakama/client-libraries/snippets/group-metadata/llm.md): An examplr of how to update group metadata to store a group's interests, active times and languages spoken.
+- [Updating User Metadata](https://heroiclabs.com/docs/nakama/client-libraries/snippets/user-metadata/llm.md): An example of how you can use an RPC to update a player's metadata authoritatively.
+- [Upgrading](https://heroiclabs.com/docs/nakama/getting-started/upgrade/llm.md): How to upgrade your Nakama server to a new version.
+- [User accounts](https://heroiclabs.com/docs/nakama/concepts/user-accounts/llm.md): A user represents an identity within the server. Every user is registered and has a profile for other users to find and become friends with or join groups and chat.A user can own records, share public information with other users, and authenticate via a variety of social providers.
+- [Using Goland Debugger](https://heroiclabs.com/docs/nakama/guides/server-framework/debugging-with-delve/goland-debugger/llm.md): Companion guide to Debugging with Delve showing  how you can debug your custom Go server runtime code using Delve inside a Docker container via Goland.
+- [Using Hooks](https://heroiclabs.com/docs/nakama/guides/server-framework/using-hooks/llm.md): Summary
+- [Using VSCode Debugger](https://heroiclabs.com/docs/nakama/guides/server-framework/debugging-with-delve/vscode-debugger/llm.md): Companion guide to Debugging with Delve showing  how you can debug your custom Go server runtime code using Delve inside a Docker container via Visual Studio Code.
+- [Validate Apple App Store purchases](https://heroiclabs.com/docs/nakama/concepts/iap-validation/apple/llm.md): Step-by-step guide to configuring and validating Apple App Store purchases and subscriptions with Nakama, including handling refunds and subscription changes through notifications.
+- [Validate Google Play purchases](https://heroiclabs.com/docs/nakama/concepts/iap-validation/google/llm.md): Step-by-step guide to configuring and validating Google Play purchases and subscriptions with Nakama, including handling refunds and subscription changes through real-time notifications.
+- [Windows](https://heroiclabs.com/docs/nakama/getting-started/install/windows/llm.md): How to setup and run Nakama binary and its prerequisites on Windows. The binary setup allows you to install and manage Nakama without Docker.
+
+## Sample Projects
+- [Hiro Achievements Sample Project](https://heroiclabs.com/docs/sample-projects/unity/hiro-achievements/llm.md): Achievements, quests, and reward-claiming sample project for Unity games
+- [Hiro Challenges Sample Project](https://heroiclabs.com/docs/sample-projects/unity/hiro-challenges/llm.md): Challenge and competition system sample project for Unity games
+- [Hiro Event Leaderboards Sample Project](https://heroiclabs.com/docs/sample-projects/unity/hiro-event-leaderboards/llm.md): Cohort and tier-based competitive leaderboards for Unity games
+- [Hiro Inventory Sample Project](https://heroiclabs.com/docs/sample-projects/unity/hiro-inventory/llm.md): Player inventory system sample project for Unity games
+- [Hiro Store Sample Project](https://heroiclabs.com/docs/sample-projects/unity/hiro-store/llm.md): Player Store system sample project for Unity games
+- [Hiro Teams Sample Project](https://heroiclabs.com/docs/sample-projects/unity/hiro-teams/llm.md): Team management sample project for Unity games
+- [Mage Mayhem](https://heroiclabs.com/docs/sample-projects/games/mage-mayhem/llm.md)
+- [Nakama Cloud Save Sample Project](https://heroiclabs.com/docs/sample-projects/unity/nakama-cloud-save/llm.md): Cloud save sample project for Unity games
+- [Nakama Friends Sample Project](https://heroiclabs.com/docs/sample-projects/unity/nakama-friends/llm.md): Friends management sample project for Unity games
+- [Nakama Groups Sample Project](https://heroiclabs.com/docs/sample-projects/unity/nakama-groups/llm.md): Groups discovery and management sample project for Unity games
+- [Nakama Leaderboards Sample Project](https://heroiclabs.com/docs/sample-projects/unity/nakama-leaderboards/llm.md): Weekly and global leaderboards implementation for Unity games
+- [Nakama Tournaments Sample Project](https://heroiclabs.com/docs/sample-projects/unity/nakama-tournaments/llm.md): Nakama Tournaments sample project for Unity games
+- [Sample Projects](https://heroiclabs.com/docs/sample-projects/llm.md)
+- [Unity](https://heroiclabs.com/docs/sample-projects/unity/llm.md)
+
+## Satori
+- [About player properties](https://heroiclabs.com/docs/satori/concepts/segmentation/understand-player-properties/llm.md): Satori provides a robust player properties system, ready to use without additional setup and easy to extend with custom data from your game.
+- [Analyze retention](https://heroiclabs.com/docs/satori/concepts/performance-monitoring/analyse-retention/llm.md): Satori provides ready-to-use reports for game teams to track retention across Day 1 through Day 30, filterable by country, platform, game version, and operation.
+- [Analyze RoAS](https://heroiclabs.com/docs/satori/concepts/performance-monitoring/analyse-roas/llm.md): Measure how effectively your user acquisition spend converts into revenue, by player cohort, from Day 0 through Day 30.
+- [Attach player messages](https://heroiclabs.com/docs/satori/concepts/live-events/attach-player-messages/llm.md): Send messages to players before, during, and after a live event to drive awareness and participation.
+- [Automate message delivery](https://heroiclabs.com/docs/satori/concepts/player-messaging/automate-a-message/llm.md): Define when and how message templates are delivered using time-based or live event-based scheduling.
+- [BigQuery](https://heroiclabs.com/docs/satori/concepts/performance-monitoring/export-to-data-lakes/bigquery/llm.md): Configure and manage GCP BigQuery connection to Satori.
+- [Category labels](https://heroiclabs.com/docs/satori/concepts/category-labels/llm.md): Organize your data in Satori using Category Labels
+- [Create message templates](https://heroiclabs.com/docs/satori/concepts/player-messaging/create-message-templates/llm.md): Define the content, format, and personalisation of messages that Satori sends to players.
+- [Customize enrollment](https://heroiclabs.com/docs/satori/concepts/live-events/customize-enrollment/llm.md): Control how players enter and remain in live events using implicit or explicit enrollment and sticky membership.
+- [Dart (Flutter)](https://heroiclabs.com/docs/satori/client-libraries/dart/llm.md): The official Dart client handles all communication with the Satori server, enabling management of your live game via sending analytics events, updating properties, getting feature flags and experiments, and more.
+- [Data management](https://heroiclabs.com/docs/satori/concepts/data-management/llm.md): Describes the concept of data management in Satori, including capabilities for importing, exporting, syncing, deleting, and initializing configuration data to support various development and operational workflows.
+- [Defold](https://heroiclabs.com/docs/satori/client-libraries/defold/llm.md): The official Defold client handles all communication with the Satori server, enabling management of your live game via sending analytics events, updating properties, getting feature flags and experiments, and more.
+- [Experiment with audiences](https://heroiclabs.com/docs/satori/concepts/experiments/experimenting-with-audiences/llm.md): A guide for configuring and using audience filtering in Satori
+- [Experiments](https://heroiclabs.com/docs/satori/concepts/experiments/llm.md): Satori experiments let you deliver different feature configurations to defined player segments and measure how each performs against your goal metrics.
+- [Explore audience use cases](https://heroiclabs.com/docs/satori/concepts/segmentation/explore-use-cases/llm.md): LiveOps teams use Satori audiences in many different ways to suit their game and their players.
+- [Export to data lakes](https://heroiclabs.com/docs/satori/concepts/performance-monitoring/export-to-data-lakes/llm.md): Data lake integrations send your player and event data to your existing data warehouse on a continuous basis.
+- [Get started](https://heroiclabs.com/docs/satori/concepts/introduction/get-started/llm.md): Connect your game to Satori, send player events, and read LiveOps data from your client.
+- [Godot](https://heroiclabs.com/docs/satori/client-libraries/godot/llm.md): The official Godot client handles all communication with the Satori server, enabling management of your live game via sending analytics events, updating properties, getting feature flags and experiments, and more.
+- [How audiences recompute](https://heroiclabs.com/docs/satori/concepts/segmentation/recompute-audience/llm.md): Satori combines scheduled recomputation with on-the-fly evaluation at request time to ensure players always receive the content they qualify for, without stale data creating targeting gaps.
+- [How to debug invalid analytic events](https://heroiclabs.com/docs/satori/guides/debug-invalid-events/llm.md): Use the Taxonomy Debugger in the Satori console to identify, inspect, and fix events rejected at ingestion.
+- [How to Use Satori & Databricks to Predict and Prevent Player Churn](https://heroiclabs.com/docs/satori/guides/satori-databricks/llm.md): Guide to integrate Satori and Databricks to predict and prevent churn
+- [Integrate webhooks](https://heroiclabs.com/docs/satori/concepts/integrate-webhooks/llm.md)
+- [Integrate with Hiro](https://heroiclabs.com/docs/satori/concepts/remote-configuration/integrate-with-hiro/llm.md): Connect Hiro's metagame framework to Satori so that every Hiro system becomes remotely configurable through the Satori console, with no additional client code required.
+- [Introduction](https://heroiclabs.com/docs/satori/concepts/introduction/llm.md): Satori is the all-in-one LiveOps solution from Heroic Labs, designed to help game studios gain valuable insights into their player base and identify actionable opportunities to grow their audience and revenue.
+- [Java/Android](https://heroiclabs.com/docs/satori/client-libraries/java/llm.md): The official Java client handles all communication with the Satori server, enabling management of your live game via sending analytics events, updating properties, getting feature flags and experiments, and more.
+- [JavaScript](https://heroiclabs.com/docs/satori/client-libraries/javascript/llm.md): The official JavaScript client handles all communication with the Satori server, enabling management of your live game via sending analytics events, updating properties, getting feature flags and experiments, and more.
+- [Live events](https://heroiclabs.com/docs/satori/concepts/live-events/llm.md): Live events are time-bound player experiences designed to repeat, driving engagement across different player segments.
+- [Manage audiences](https://heroiclabs.com/docs/satori/concepts/segmentation/understand-audiences/llm.md): Build and manage player audiences in Satori using default authentication data, custom event properties, or imported segments from your existing analytics stack.
+- [Manage experiments](https://heroiclabs.com/docs/satori/concepts/experiments/manage-experiments/llm.md): Plan, configure, test, launch, and monitor experiments in Satori across the full operational sequence.
+- [Manage feature flags](https://heroiclabs.com/docs/satori/concepts/remote-configuration/manage-feature-flags/llm.md): Create, update, and delete feature flags in the Satori console, manage their variants, and fetch resolved flag values from your game client or Nakama server runtime.
+- [Manage live events](https://heroiclabs.com/docs/satori/concepts/live-events/manage-live-event-lifecycle/llm.md): Run live events across the full operational cycle. Plan, configure, test, launch, tune, monitor, and analyze live events using the Satori console.
+- [Perform funnel analysis](https://heroiclabs.com/docs/satori/concepts/performance-monitoring/build-funnel-analysis/llm.md): Track how many players complete each step in a sequence of in-game actions and identify exactly where they drop off.
+- [Performance monitoring](https://heroiclabs.com/docs/satori/concepts/performance-monitoring/llm.md): Track player engagement, measure retention, and monitor game health from the Satori console.
+- [Personalize content](https://heroiclabs.com/docs/satori/concepts/remote-configuration/personalize-content/llm.md): Audiences define who receives content. Feature flags define what they receive. Together, they let you customize the player experience for any segment, at any time, without a new build or code deployment.
+- [Personalized Content](https://heroiclabs.com/docs/satori/guides/personalization/llm.md): A guide for creating personalized content with Satori
+- [Player messaging](https://heroiclabs.com/docs/satori/concepts/player-messaging/llm.md): Send targeted announcements, promotions, and event notifications to your players from a single system connected to your live events and player segments.
+- [Release notes](https://heroiclabs.com/docs/satori/concepts/introduction/release-notes/llm.md): The latest Satori release and included features, improvements, and fixes.
+- [Remote configuration](https://heroiclabs.com/docs/satori/concepts/remote-configuration/llm.md): Control game behaviour from the server by storing configurable values as feature flags that your game reads at runtime — no client update required.
+- [Return incentives](https://heroiclabs.com/docs/satori/guides/return-incentives/llm.md): A guide for using audience targeting to incentivize players to return to your game.
+- [Run A/B testing](https://heroiclabs.com/docs/satori/concepts/experiments/ab-testing/llm.md): A guide for using Satori to run A/B tests
+- [Segmentation](https://heroiclabs.com/docs/satori/concepts/segmentation/llm.md): Satori organizes your player base into dynamic segments you define once and reuse across every live event, experiment, feature flag, and message in your game.
+- [Send batch and non-player events from your server](https://heroiclabs.com/docs/satori/guides/server-events/llm.md): Use Satori's Server-Event API to send batched events for many identities, or none, from your server, without a player session.
+- [Send direct messages](https://heroiclabs.com/docs/satori/concepts/player-messaging/direct-messages/llm.md): Send a message to one or more specific players outside of a schedule, via the Console API or the dashboard.
+- [Sequence phases](https://heroiclabs.com/docs/satori/concepts/experiments/sequence-phases/llm.md): Use phases to continue iterating on existing experiments and run multi-phase rollouts in Satori.
+- [Session Management](https://heroiclabs.com/docs/satori/concepts/sessions/session-management/llm.md): How to manage Satori sessions and send events for each integration path, including client SDK session configuration.
+- [Sessions](https://heroiclabs.com/docs/satori/concepts/sessions/llm.md): Understand how Satori sessions group player events into play sessions, how they differ from Nakama sessions, and how to set up session creation for your integration path.
+- [Set up message integrations](https://heroiclabs.com/docs/satori/concepts/player-messaging/message-integrations/llm.md): Configure external integrations to deliver messages to players while they aren't in the game.
+- [Settings](https://heroiclabs.com/docs/satori/concepts/settings/llm.md): Manage Satori users and configuration settings.
+- [Snowflake](https://heroiclabs.com/docs/satori/concepts/performance-monitoring/export-to-data-lakes/snowflake/llm.md): Configure and manage your Snowflake connection to Satori.
+- [Swift](https://heroiclabs.com/docs/satori/client-libraries/swift/llm.md): The official Swift client handles all communication with the Satori server, enabling management of your live game via sending analytics events, updating properties, getting feature flags and experiments, and more.
+- [Targeting Lapsed Spenders](https://heroiclabs.com/docs/satori/guides/target-lapsed-spenders/llm.md): A guide for targeting lapsed spenders in your game.
+- [Track custom metrics](https://heroiclabs.com/docs/satori/concepts/performance-monitoring/track-custom-metrics/llm.md): Measure any player behavior your game tracks and compare results across your experiments, feature flags, and live events.
+- [Understand events](https://heroiclabs.com/docs/satori/concepts/performance-monitoring/understand-events/llm.md): Events are the behavioral signal Satori uses to build player profiles, compute properties, and populate every metric, report, and audience in your project.
+- [Understand feature flags](https://heroiclabs.com/docs/satori/concepts/remote-configuration/understand-feature-flags/llm.md): Feature flags are named settings your game reads from Satori at runtime. Learn how defaults, variants, and overrides work together to determine the value each player receives.
+- [Understand player identities](https://heroiclabs.com/docs/satori/concepts/segmentation/understand-player-identities/llm.md): Every player in your game has an identity in Satori: a persistent behavioral profile that accumulates session history, in-game events, and computed properties over time.
+- [Unity/.Net](https://heroiclabs.com/docs/satori/client-libraries/unity/llm.md): The official Unity client handles all communication with the Satori server, enabling management of your live game via sending analytics events, updating properties, getting feature flags and experiments, and more.

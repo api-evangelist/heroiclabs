@@ -1,0 +1,16 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/heroic-labs-nakama-openapi-original.json
+skills:
+- file: heroic-labs-authenticate-and-get-account.md
+  name: Authenticate a player and read their account
+  api: openapi/heroic-labs-nakama-openapi-original.json
+  operations: [Nakama_AuthenticateEmail, Nakama_AuthenticateDevice, Nakama_GetAccount, Nakama_SessionRefresh]
+- file: heroic-labs-submit-leaderboard-score.md
+  name: Submit and read a leaderboard score
+  api: openapi/heroic-labs-nakama-openapi-original.json
+  operations: [Nakama_WriteLeaderboardRecord, Nakama_ListLeaderboardRecords, Nakama_ListLeaderboardRecordsAroundOwner]
+- file: heroic-labs-read-write-storage.md
+  name: Read and write player storage objects
+  api: openapi/heroic-labs-nakama-openapi-original.json
+  operations: [Nakama_WriteStorageObjects, Nakama_ReadStorageObjects, Nakama_ListStorageObjects, Nakama_DeleteStorageObjects]

@@ -1,0 +1,68 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/heroic-labs-nakama-openapi-original.json
+format: grpc-status
+envelope:
+  schema: rpcStatus
+  description: >-
+    Nakama is a gRPC service exposed over HTTP via grpc-gateway. Every operation
+    returns either a 200 success or a `default` error whose body is a google.rpc.Status
+    (rpcStatus) object with `code` (int32, canonical gRPC status code), `message`
+    (string), and `details` (array of Any). HTTP status is mapped from the gRPC code
+    by the gateway.
+  fields:
+  - name: code
+    type: integer
+    description: Canonical gRPC status code (0 OK, 3 INVALID_ARGUMENT, 5 NOT_FOUND, 7 PERMISSION_DENIED, 16 UNAUTHENTICATED, 13 INTERNAL, ...).
+  - name: message
+    type: string
+    description: Human-readable error message.
+  - name: details
+    type: array
+    description: Array of google.protobuf.Any with additional machine-readable detail.
+problems:
+- grpc_code: 3
+  name: INVALID_ARGUMENT
+  http: 400
+  title: Invalid request argument
+  remediation: Validate request body/parameters against the schema before retrying.
+- grpc_code: 16
+  name: UNAUTHENTICATED
+  http: 401
+  title: Missing or invalid credentials
+  remediation: Provide a valid Bearer session token, HTTP key, or Basic server-key credentials.
+- grpc_code: 7
+  name: PERMISSION_DENIED
+  http: 403
+  title: Caller not permitted
+  remediation: The authenticated user lacks permission for this resource or operation.
+- grpc_code: 5
+  name: NOT_FOUND
+  http: 404
+  title: Resource not found
+  remediation: Confirm the id (account, group, leaderboard, storage object) exists.
+- grpc_code: 6
+  name: ALREADY_EXISTS
+  http: 409
+  title: Resource already exists
+  remediation: The entity being created already exists (e.g. linking an already-linked identity).
+- grpc_code: 8
+  name: RESOURCE_EXHAUSTED
+  http: 429
+  title: Rate limit / quota exceeded
+  remediation: Back off and retry; reduce request rate.
+- grpc_code: 13
+  name: INTERNAL
+  http: 500
+  title: Internal server error
+  remediation: Retry with backoff; if persistent, inspect server logs / contact support.
+- grpc_code: 14
+  name: UNAVAILABLE
+  http: 503
+  title: Service unavailable
+  remediation: Transient; retry with exponential backoff.
+notes: >-
+  The generated swagger declares only `200` and a single `default` error response per
+  operation (standard grpc-gateway output), so per-operation problem types are not
+  enumerated in the spec. The codes above are the canonical gRPC status set Nakama
+  returns via the gateway.

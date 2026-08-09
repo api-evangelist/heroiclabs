@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/heroiclabs/nakama/blob/master/CHANGELOG.md
+versioning:
+  api_scheme: uri-path
+  api_current: v2
+  server_scheme: semver
+  server_current: 3.40.0
+  docs: https://heroiclabs.com/docs/
+  notes: >-
+    The HTTP/gRPC API is versioned in the path as /v2 and has been stable across
+    server releases. The Nakama server itself follows semantic versioning
+    (keep-a-changelog); breaking changes are called out in the changelog.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: >-
+    No formal RFC 8594 Sunset/Deprecation-header policy is published. Deprecations are
+    communicated through the semver changelog. A few operations are duplicated across
+    verbs for backward compatibility (e.g. WriteTournamentRecord PUT vs
+    WriteTournamentRecord2 POST).
+changelog: changelog/heroic-labs-changelog.yml
+status_page: null
+sla:
+  url: null
+  notes: >-
+    Production SLAs (HA, uptime) are offered through Heroic Cloud enterprise plans
+    rather than a single public status page.
+deprecated_operations: []

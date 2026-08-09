@@ -1,0 +1,18 @@
+generated: '2026-07-19'
+method: searched
+host: https://heroiclabs.com
+documents:
+- path: /.well-known/security.txt
+  status: 404
+- path: /.well-known/openid-configuration
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  status: 404
+- path: /.well-known/api-catalog
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404
+notes: >-
+  No /.well-known/ discovery documents are published on heroiclabs.com. Nakama is a
+  self-hosted / Heroic-Cloud-hosted game server whose API host is per-deployment
+  (default 127.0.0.1:7350), so there is no single public API host to probe.

@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: searched
+source: https://heroiclabs.com/docs/ and openapi/heroic-labs-nakama-openapi-original.json
+authentication:
+  styles:
+  - Bearer session token (JWT) in Authorization header for authenticated client calls
+  - HTTP key (http_key query/header) for server key on the authenticate endpoints
+  - HTTP Basic (server key as username) to obtain a session
+  session_refresh: Refresh tokens rotate via /v2/account/session/refresh; sessions expire and are renewed client-side.
+  reference: authentication/heroic-labs-authentication.yml
+idempotency:
+  supported: false
+  notes: >-
+    Nakama does not document an Idempotency-Key header. Write semantics are made safe
+    by design instead: storage writes use optional op-code / version (OCC) checks via
+    the `version` field on StorageObject to guard against conflicting concurrent writes,
+    and most mutations are naturally idempotent by resource id (link/unlink identity,
+    join group). There is no request-replay idempotency contract.
+pagination:
+  style: cursor
+  request_params:
+  - limit (page size)
+  - cursor (opaque forward cursor)
+  response_fields:
+  - cursor (next-page cursor; empty when exhausted)
+  - prev_cursor (on some list endpoints)
+  notes: List endpoints (friends, groups, leaderboards, storage, matches, notifications, tournaments) use opaque cursor paging.
+versioning:
+  scheme: uri-path
+  current: v2
+  notes: API paths are prefixed /v2. The realtime socket protocol versions alongside the server release.
+error_envelope:
+  format: grpc-status
+  schema: rpcStatus (google.rpc.Status; code/message/details)
+  reference: errors/heroic-labs-problem-types.yml
+realtime:
+  protocol: WebSocket (and rUDP) socket with a protobuf/JSON Envelope
+  reference: asyncapi/heroic-labs-nakama-realtime-asyncapi.yml
+  notes: >-
+    Real-time features (chat, multiplayer match data, parties, notifications, status
+    presence, streams) are delivered over a persistent socket, not the REST API.
+rate_limiting:
+  notes: >-
+    Rate limiting is operator-configurable per Nakama deployment / Heroic Cloud title
+    rather than a fixed public quota; exceeded limits surface as gRPC RESOURCE_EXHAUSTED.
+content_type: application/json
+cross_references:
+  authentication: authentication/heroic-labs-authentication.yml
+  errors: errors/heroic-labs-problem-types.yml
+  lifecycle: lifecycle/heroic-labs-lifecycle.yml

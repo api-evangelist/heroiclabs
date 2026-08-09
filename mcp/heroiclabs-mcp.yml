@@ -1,0 +1,58 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/heroic-labs-nakama-openapi-original.json
+server:
+  name: heroic-labs-nakama
+  transport: http
+  note: >-
+    No official hosted/remote MCP server is published by Heroic Labs as of this pass.
+    Tools below are a candidate list derived one-per-operation from the Nakama API v2
+    OpenAPI so an MCP server could be generated. Nakama is self-hosted / per-deployment,
+    so any MCP server would target a caller-supplied Nakama host + credentials.
+tools:
+- name: get_account
+  description: Retrieve current user account details.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_GetAccount
+- name: update_account
+  description: Modify account information fields.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_UpdateAccount
+- name: authenticate_email
+  description: Sign in with email and password.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_AuthenticateEmail
+- name: authenticate_custom
+  description: Sign in with a custom identifier.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_AuthenticateCustom
+- name: list_friends
+  description: Retrieve the user's friend list.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_ListFriends
+- name: add_friends
+  description: Add friends to the account.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_AddFriends
+- name: list_groups
+  description: Search groups by criteria.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_ListGroups
+- name: create_group
+  description: Establish a new group with the user as owner.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_CreateGroup
+- name: list_leaderboard_records
+  description: Fetch leaderboard standings.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_ListLeaderboardRecords
+- name: write_leaderboard_record
+  description: Submit a leaderboard score.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_WriteLeaderboardRecord
+- name: read_storage_objects
+  description: Retrieve stored data objects.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_ReadStorageObjects
+- name: write_storage_objects
+  description: Persist data objects to storage.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_WriteStorageObjects
+- name: list_matches
+  description: Query active matches by filter.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_ListMatches
+- name: list_notifications
+  description: Retrieve user notifications.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_ListNotifications
+- name: rpc
+  description: Execute a server-side registered RPC function.
+  source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_RpcFunc

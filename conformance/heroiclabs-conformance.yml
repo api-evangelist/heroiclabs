@@ -1,0 +1,43 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://heroiclabs.com/docs/heroic-cloud/enterprise/privacy-compliance/ ,
+  https://heroiclabs.com/docs/heroic-cloud/enterprise/enterprise-sso/ ,
+  openapi/heroic-labs-nakama-openapi-original.json
+standards:
+- id: gdpr
+  conforms: true
+  evidence: >-
+    Heroic Cloud and Nakama documented as "fully GDPR compliant"; Heroic Labs acts as
+    data processor with DPAs and subprocessor disclosure.
+- id: saml-2.0-sso
+  conforms: true
+  evidence: Heroic Cloud enterprise supports SAML-based Single Sign-On.
+- id: scim-2.0
+  conforms: true
+  evidence: Heroic Cloud enterprise supports SCIM directory sync for user provisioning.
+- id: tls-1.2-plus
+  conforms: true
+  evidence: All connections to Heroic Cloud enforce TLS 1.2 or higher; encryption at rest always on.
+- id: oauth2
+  conforms: false
+  evidence: API auth uses HTTP Basic (server key), Bearer JWT session tokens, and HTTP key — not OAuth2.
+- id: oidc
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use the gRPC/google.rpc.Status (rpcStatus) envelope, not application/problem+json.
+- id: grpc
+  conforms: true
+  evidence: Nakama is a gRPC service exposed over HTTP via grpc-gateway; protobufs published.
+- id: cursor-pagination
+  conforms: true
+  evidence: List endpoints use opaque cursor pagination.
+compliance_program:
+  published: true
+  url: https://heroiclabs.com/docs/heroic-cloud/enterprise/privacy-compliance/
+  posture: [GDPR, encryption-at-rest, TLS 1.2+, data-processor, DPA, subprocessor-disclosure]
+  notes: >-
+    Published compliance program centered on GDPR + data security; the page references
+    "security certifications" but does not name specific audit reports (SOC 2 / ISO 27001)
+    in public docs. Named audit certifications not captured (none verified publicly).

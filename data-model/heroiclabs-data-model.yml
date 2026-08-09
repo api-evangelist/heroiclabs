@@ -1,0 +1,88 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/heroic-labs-nakama-openapi-original.json
+entities:
+- name: Account
+  schema: apiAccount
+  key: user (embedded User)
+  notes: The authenticated user's account (wallet, email, devices, custom id, verify state).
+- name: User
+  schema: apiUser
+  key: id
+  notes: Public user profile (id, username, display_name, avatar, metadata, online).
+- name: Friend
+  schema: apiFriend
+  key: user.id
+  notes: A friendship edge with state (mutual, incoming, outgoing, blocked).
+- name: Group
+  schema: apiGroup
+  key: id
+  notes: A guild/clan owned by a user; has members with roles.
+- name: LeaderboardRecord
+  schema: apiLeaderboardRecord
+  key: [leaderboard_id, owner_id]
+- name: Tournament
+  schema: apiTournament
+  key: id
+- name: StorageObject
+  schema: apiStorageObject
+  key: [collection, key, user_id]
+  notes: Versioned (OCC) JSON document store; permission_read/permission_write.
+- name: Match
+  schema: apiMatch
+  key: match_id
+- name: Party
+  schema: apiParty
+  key: party_id
+- name: Notification
+  schema: apiNotification
+  key: id
+- name: ValidatedSubscription
+  schema: apiValidatedSubscription
+  key: [user_id, product_id]
+- name: ValidatedPurchase
+  schema: apiValidatedPurchase
+  key: transaction_id
+relationships:
+- from: Account
+  to: User
+  type: has_one
+  via: user
+- from: Friend
+  to: User
+  type: belongs_to
+  via: user
+- from: Group
+  to: User
+  type: has_many
+  via: group_users (owner_id + members)
+- from: LeaderboardRecord
+  to: User
+  type: belongs_to
+  via: owner_id
+- from: Tournament
+  to: LeaderboardRecord
+  type: has_many
+  via: tournament_id
+- from: StorageObject
+  to: User
+  type: belongs_to
+  via: user_id
+- from: Match
+  to: User
+  type: has_many
+  via: presences
+- from: Party
+  to: User
+  type: has_many
+  via: presences
+- from: Notification
+  to: User
+  type: belongs_to
+  via: user (recipient)
+- from: ValidatedSubscription
+  to: User
+  type: belongs_to
+  via: user_id
+id_conventions:
+  notes: Ids are UUIDs (user id, group id, match id, party id). Storage objects are keyed by (collection, key, user_id). Leaderboard/tournament records key on (leaderboard_id/tournament_id, owner_id).

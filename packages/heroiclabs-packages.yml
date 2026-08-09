@@ -1,0 +1,68 @@
+generated: '2026-07-19'
+method: searched
+source: https://heroiclabs.com/docs/ and public package registries
+packages:
+- language: javascript
+  registry: npm
+  name: "@heroiclabs/nakama-js"
+  url: https://www.npmjs.com/package/@heroiclabs/nakama-js
+  install: npm install @heroiclabs/nakama-js
+  repository: https://github.com/heroiclabs/nakama-js
+  version: 2.8.0
+  description: JavaScript/TypeScript client for the Nakama server.
+  official: true
+- language: javascript
+  registry: npm
+  name: "@heroiclabs/satori-js"
+  url: https://www.npmjs.com/package/@heroiclabs/satori-js
+  install: npm install @heroiclabs/satori-js
+  repository: https://github.com/heroiclabs/nakama-js
+  version: 2.7.1
+  description: JavaScript/TypeScript client for the Satori LiveOps server.
+  official: true
+- language: go
+  registry: pkg.go.dev
+  name: github.com/heroiclabs/nakama-common
+  url: https://pkg.go.dev/github.com/heroiclabs/nakama-common
+  install: go get github.com/heroiclabs/nakama-common
+  repository: https://github.com/heroiclabs/nakama-common
+  description: Go runtime types and API/realtime protobufs for the Nakama server framework.
+  official: true
+- language: csharp
+  registry: unity
+  name: com.heroiclabs.nakama-unity
+  url: https://github.com/heroiclabs/nakama-unity
+  install: Unity Package Manager (com.heroiclabs.nakama)
+  repository: https://github.com/heroiclabs/nakama-unity
+  description: Unity client SDK for Nakama.
+  official: true
+- language: cpp
+  registry: github
+  name: nakama-cpp
+  url: https://github.com/heroiclabs/nakama-cpp
+  install: See repository build instructions
+  repository: https://github.com/heroiclabs/nakama-cpp
+  description: C/C++ client SDK for Nakama (also used by Unreal Engine).
+  official: true
+- language: gdscript
+  registry: github
+  name: nakama-godot
+  url: https://github.com/heroiclabs/nakama-godot
+  install: Godot Asset Library / add-on
+  repository: https://github.com/heroiclabs/nakama-godot
+  description: Godot Engine client SDK for Nakama.
+  official: true
+- language: dart
+  registry: pub.dev
+  name: nakama
+  url: https://pub.dev/packages/nakama
+  install: dart pub add nakama
+  repository: https://github.com/dram1010/nakama-dart
+  description: Dart/Flutter client for Nakama.
+  official: false
+notes: >-
+  Heroic Labs publishes first-party client SDKs for Unity, Unreal (via nakama-cpp),
+  Godot, JavaScript/TypeScript, C++, Defold, and Cocos2d-x, plus the Go nakama-common
+  runtime module. Server-side runtime code for Nakama is authored in Go, TypeScript,
+  or Lua. Registry membership beyond npm/Go is distributed via GitHub releases and
+  engine-specific package managers rather than language registries.

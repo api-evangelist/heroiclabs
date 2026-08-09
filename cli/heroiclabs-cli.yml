@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: searched
+source: https://heroiclabs.com/docs/nakama/getting-started/configuration/
+name: nakama
+description: >-
+  The Nakama server ships as a single `nakama` binary that also serves as the
+  operational CLI for running, configuring, and migrating a deployment. It is an
+  operator/runtime CLI (not a per-resource API client — resource access is via the
+  client SDKs in packages/).
+install:
+- method: docker
+  command: docker pull heroiclabs/nakama
+- method: binary
+  command: Download from https://github.com/heroiclabs/nakama/releases
+commands:
+- name: migrate
+  summary: Manage the database schema.
+  subcommands: [up, down, redo, status]
+- name: check
+  summary: Validate the server configuration file without starting the server.
+- name: (default run)
+  summary: Start the Nakama server.
+  flags: ["--config <file>", "--database.address", "--socket.server_key", "--console.username", "--console.password"]
+notes: >-
+  Configuration is supplied via a YAML config file and/or command-line flags. There is
+  no separate published Heroic Cloud CLI documented in the public docs; Heroic Cloud is
+  operated through its web dashboard and Git-connected builders.
