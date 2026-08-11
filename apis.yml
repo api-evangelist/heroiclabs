@@ -69,7 +69,7 @@ apis:
   - type: OpenAPI
     url: openapi/heroiclabs-nakama-api-openapi.yml
   - type: OpenAPI
-    url: openapi/heroiclabs-nakama-console-api-openapi.yml
+    url: openapi/_original/heroiclabs-nakama-console-api-openapi.yml
   - type: GitHubRepository
     url: https://github.com/heroiclabs/nakama
   - url: graphql/heroiclabs-graphql.md
@@ -120,6 +120,15 @@ apis:
   - type: GitHubRepository
     url: https://github.com/heroiclabs/hiro
 common:
+- type: Overlay
+  url: overlays/heroiclabs-nakama-overlay.yaml
+- type: IssueTracker
+  url: https://github.com/heroiclabs/nakama/issues
+- type: Releases
+  url: https://github.com/heroiclabs/nakama/releases
+- type: License
+  name: Apache-2.0
+  url: https://github.com/heroiclabs/nakama/blob/master/LICENSE
 - type: AgenticAccess
   url: agentic-access/heroiclabs-agentic-access.yml
 - type: DomainSecurity
