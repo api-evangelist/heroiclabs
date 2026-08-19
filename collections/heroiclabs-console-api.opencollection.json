@@ -1,0 +1,2104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hiro RPC Console API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Console",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List (and optionally filter) accounts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "User ID or username filter."
+              },
+              {
+                "name": "tombstones",
+                "value": "",
+                "type": "query",
+                "description": "Search only recorded deletes."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to start from"
+              }
+            ]
+          },
+          "docs": "List (and optionally filter) accounts."
+        },
+        {
+          "info": {
+            "name": "Import given account export data, creating a new account that fully matches the data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import given account export data, creating a new account that fully matches the data."
+        },
+        {
+          "info": {
+            "name": "Delete (non-recorded) all user accounts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account"
+          },
+          "docs": "Delete (non-recorded) all user accounts."
+        },
+        {
+          "info": {
+            "name": "ListAccountNotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:account_id/note",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account to list notes for."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Response result page limit."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Optional cursor for pagination."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "AddAccountNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:account_id/note",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The account id to add the note for."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteAccountNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:account_id/note/:note_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account owning the notes."
+              },
+              {
+                "name": "note_id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the note."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Get a list of the user's wallet transactions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:account_id/wallet",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of results per page."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to retrieve a page of records from."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Optional timestamp threshold to list wallet ledger records after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Optional timestamp threshold to list wallet ledger records before."
+              }
+            ]
+          },
+          "docs": "Get a list of the user's wallet transactions."
+        },
+        {
+          "info": {
+            "name": "Get detailed account information for a single user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Get detailed account information for a single user."
+        },
+        {
+          "info": {
+            "name": "Update one or more fields on a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update one or more fields on a user account."
+        },
+        {
+          "info": {
+            "name": "Delete all information stored for a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              },
+              {
+                "name": "record_deletion",
+                "value": "",
+                "type": "query",
+                "description": "Record the user deletion - used for GDPR compliance."
+              }
+            ]
+          },
+          "docs": "Delete all information stored for a user account."
+        },
+        {
+          "info": {
+            "name": "Ban a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/ban",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Ban a user."
+        },
+        {
+          "info": {
+            "name": "Export all information stored about a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Export all information stored about a user account."
+        },
+        {
+          "info": {
+            "name": "Get a user's list of friend relationships.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/friend",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Get a user's list of friend relationships."
+        },
+        {
+          "info": {
+            "name": "Delete the friend relationship between two users.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/friend/:friend_id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The user do delete for."
+              },
+              {
+                "name": "friend_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID of the friend to remove."
+              }
+            ]
+          },
+          "docs": "Delete the friend relationship between two users."
+        },
+        {
+          "info": {
+            "name": "Get a list of groups the user is a member of.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/group",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Get a list of groups the user is a member of."
+        },
+        {
+          "info": {
+            "name": "Remove a user from a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/group/:group_id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User to remove."
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the group to remove them from."
+              }
+            ]
+          },
+          "docs": "Remove a user from a group."
+        },
+        {
+          "info": {
+            "name": "Import given account export data, overwriting the user account's current state.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/import",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The user ID to overwrite data for, or blank if the account should be freshly created."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import given account export data, overwriting the user account's current state."
+        },
+        {
+          "info": {
+            "name": "Unban a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unban",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Unban a user."
+        },
+        {
+          "info": {
+            "name": "Unlink the Apple ID from a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unlink/apple",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Unlink the Apple ID from a user account."
+        },
+        {
+          "info": {
+            "name": "Unlink the custom ID from a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unlink/custom",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Unlink the custom ID from a user account."
+        },
+        {
+          "info": {
+            "name": "Unlink the device ID from a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unlink/device",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID to unlink from."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unlink the device ID from a user account."
+        },
+        {
+          "info": {
+            "name": "Unlink the email from a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unlink/email",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Unlink the email from a user account."
+        },
+        {
+          "info": {
+            "name": "Unlink the Facebook ID from a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unlink/facebook",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Unlink the Facebook ID from a user account."
+        },
+        {
+          "info": {
+            "name": "Unlink the Facebook Instant Game ID from a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unlink/facebookinstantgame",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Unlink the Facebook Instant Game ID from a user account."
+        },
+        {
+          "info": {
+            "name": "Unlink the Game Center ID from a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unlink/gamecenter",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Unlink the Game Center ID from a user account."
+        },
+        {
+          "info": {
+            "name": "Unlink the Google ID from a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unlink/google",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Unlink the Google ID from a user account."
+        },
+        {
+          "info": {
+            "name": "Unlink the Steam ID from a user account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/unlink/steam",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user account."
+              }
+            ]
+          },
+          "docs": "Unlink the Steam ID from a user account."
+        },
+        {
+          "info": {
+            "name": "Delete a wallet ledger item.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/account/:id/wallet/:wallet_id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID to remove wallet ledger item from."
+              },
+              {
+                "name": "wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the wallet ledger item to remove."
+              }
+            ]
+          },
+          "docs": "Delete a wallet ledger item."
+        },
+        {
+          "info": {
+            "name": "ListAclTemplates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/acl/template"
+          }
+        },
+        {
+          "info": {
+            "name": "AddAclTemplate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/acl/template",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateAclTemplate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/acl/template/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the ACL template."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteAclTemplate",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/acl/template/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the ACL template."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Deletes all data",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/all"
+          },
+          "docs": "Deletes all data"
+        },
+        {
+          "info": {
+            "name": "API Explorer - list all endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/api/endpoints"
+          },
+          "docs": "API Explorer - list all endpoints"
+        },
+        {
+          "info": {
+            "name": "API Explorer - call a custom RPC endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/api/endpoints/rpc/:method",
+            "params": [
+              {
+                "name": "method",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API Explorer - call a custom RPC endpoint"
+        },
+        {
+          "info": {
+            "name": "API Explorer - call an endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/api/endpoints/:method",
+            "params": [
+              {
+                "name": "method",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "API Explorer - call an endpoint"
+        },
+        {
+          "info": {
+            "name": "List audit log entries with the selected filter",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/audit/log",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of entries to return."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Filter by username."
+              },
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query",
+                "description": "Filter by resource."
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Filter by action."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Optional timestamp threshold to list audit log records after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Optional timestamp threshold to list audit log records before."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to fetch additional."
+              }
+            ]
+          },
+          "docs": "List audit log entries with the selected filter"
+        },
+        {
+          "info": {
+            "name": "List console usernames that can be used to filter the audit logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/audit/log/users"
+          },
+          "docs": "List console usernames that can be used to filter the audit logs"
+        },
+        {
+          "info": {
+            "name": "Authenticate a console user with username and password.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a console user with username and password."
+        },
+        {
+          "info": {
+            "name": "Log out a session and invalidate the session token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/authenticate/logout",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Log out a session and invalidate the session token."
+        },
+        {
+          "info": {
+            "name": "Change an account's MFA using a code, usually delivered over email.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/authenticate/mfa",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change an account's MFA using a code, usually delivered over email."
+        },
+        {
+          "info": {
+            "name": "Change an account's password using a code, usually delivered over email.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/authenticate/password_change",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change an account's password using a code, usually delivered over email."
+        },
+        {
+          "info": {
+            "name": "List channel messages with the selected filter",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/channel",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of the chat channel"
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Label of the channel, if a standard chat room"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "query",
+                "description": "Group ID of the channel, if a group chat"
+              },
+              {
+                "name": "user_id_one",
+                "value": "",
+                "type": "query",
+                "description": "User IDs, if a direct chat"
+              },
+              {
+                "name": "user_id_two",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to start from"
+              }
+            ]
+          },
+          "docs": "List channel messages with the selected filter"
+        },
+        {
+          "info": {
+            "name": "Get server config and configuration warnings.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/config"
+          },
+          "docs": "Get server config and configuration warnings."
+        },
+        {
+          "info": {
+            "name": "RegisteredExtensions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/extensions"
+          }
+        },
+        {
+          "info": {
+            "name": "List (and optionally filter) groups.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/group",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "User ID or username filter."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to start from"
+              }
+            ]
+          },
+          "docs": "List (and optionally filter) groups."
+        },
+        {
+          "info": {
+            "name": "Demote a user from a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/group/:group_id/account/:id/demote",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the group."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User to change state."
+              }
+            ]
+          },
+          "docs": "Demote a user from a group."
+        },
+        {
+          "info": {
+            "name": "Promote a user from a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/group/:group_id/account/:id/promote",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the group."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User to change state."
+              }
+            ]
+          },
+          "docs": "Promote a user from a group."
+        },
+        {
+          "info": {
+            "name": "Add/join members to a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/group/:group_id/add",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the group to add them to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add/join members to a group."
+        },
+        {
+          "info": {
+            "name": "Get detailed group information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/group/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group."
+              }
+            ]
+          },
+          "docs": "Get detailed group information."
+        },
+        {
+          "info": {
+            "name": "Update one or more fields on a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/group/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Group ID to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update one or more fields on a group."
+        },
+        {
+          "info": {
+            "name": "Remove a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/group/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the group to delete."
+              }
+            ]
+          },
+          "docs": "Remove a group."
+        },
+        {
+          "info": {
+            "name": "Export all information stored about a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/group/:id/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group."
+              }
+            ]
+          },
+          "docs": "Export all information stored about a group."
+        },
+        {
+          "info": {
+            "name": "Get a list of members of the group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/group/:id/member",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the group."
+              }
+            ]
+          },
+          "docs": "Get a list of members of the group."
+        },
+        {
+          "info": {
+            "name": "Get purchase by transaction_id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/iap/purchase/:transaction_id",
+            "params": [
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path",
+                "description": "Purchase original transaction id."
+              }
+            ]
+          },
+          "docs": "Get purchase by transaction_id"
+        },
+        {
+          "info": {
+            "name": "Get subscription by original_transaction_id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/iap/subscription/:original_transaction_id",
+            "params": [
+              {
+                "name": "original_transaction_id",
+                "value": "",
+                "type": "path",
+                "description": "Subscription original transaction id."
+              }
+            ]
+          },
+          "docs": "Get subscription by original_transaction_id"
+        },
+        {
+          "info": {
+            "name": "List leaderboards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/leaderboard",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "An optional cursor to paginate from."
+              }
+            ]
+          },
+          "docs": "List leaderboards"
+        },
+        {
+          "info": {
+            "name": "Get leaderboard.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/leaderboard/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Leaderboard ID"
+              }
+            ]
+          },
+          "docs": "Get leaderboard."
+        },
+        {
+          "info": {
+            "name": "Delete leaderboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/leaderboard/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Leaderboard ID"
+              }
+            ]
+          },
+          "docs": "Delete leaderboard"
+        },
+        {
+          "info": {
+            "name": "Delete leaderboard record",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/leaderboard/:id/owner/:owner_id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Leaderboard ID."
+              },
+              {
+                "name": "owner_id",
+                "value": "",
+                "type": "path",
+                "description": "Record owner."
+              }
+            ]
+          },
+          "docs": "Delete leaderboard record"
+        },
+        {
+          "info": {
+            "name": "List leaderboard records.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/leaderboard/:leaderboard_id/records",
+            "params": [
+              {
+                "name": "leaderboard_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the leaderboard to list for."
+              },
+              {
+                "name": "owner_ids",
+                "value": "",
+                "type": "query",
+                "description": "One or more owners to retrieve records for."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A next or previous page cursor."
+              },
+              {
+                "name": "expiry",
+                "value": "",
+                "type": "query",
+                "description": "Expiry in seconds (since epoch) to begin fetching records from. Optional. 0 means from current time."
+              }
+            ]
+          },
+          "docs": "List leaderboard records."
+        },
+        {
+          "info": {
+            "name": "List ongoing matches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/match",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of returned matches."
+              },
+              {
+                "name": "authoritative",
+                "value": "",
+                "type": "query",
+                "description": "Authoritative or relayed matches, or null for both."
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Label filter."
+              },
+              {
+                "name": "min_size",
+                "value": "",
+                "type": "query",
+                "description": "Minimum user count."
+              },
+              {
+                "name": "max_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum user count."
+              },
+              {
+                "name": "match_id",
+                "value": "",
+                "type": "query",
+                "description": "Match ID."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Arbitrary label query."
+              },
+              {
+                "name": "node",
+                "value": "",
+                "type": "query",
+                "description": "Node name filter, optional."
+              }
+            ]
+          },
+          "docs": "List ongoing matches"
+        },
+        {
+          "info": {
+            "name": "Get current state of a running match",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/match/:id/state",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Match ID"
+              }
+            ]
+          },
+          "docs": "Get current state of a running match"
+        },
+        {
+          "info": {
+            "name": "Delete messages.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/message",
+            "params": [
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp before which messages will be deleted."
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "IDs of the messages to delete."
+              }
+            ]
+          },
+          "docs": "Delete messages."
+        },
+        {
+          "info": {
+            "name": "List notifications.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/notification",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to filter purchases for"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of notifications to get."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor to page through notifications."
+              }
+            ]
+          },
+          "docs": "List notifications."
+        },
+        {
+          "info": {
+            "name": "Send a notification.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/notification",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a notification."
+        },
+        {
+          "info": {
+            "name": "Get a notification by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/notification/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification id."
+              }
+            ]
+          },
+          "docs": "Get a notification by id."
+        },
+        {
+          "info": {
+            "name": "Delete notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/notification/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification ID."
+              }
+            ]
+          },
+          "docs": "Delete notification"
+        },
+        {
+          "info": {
+            "name": "List validated purchases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/purchase",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to filter purchases for"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of results per page"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to retrieve a page of records from"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Optional timestamp threshold to list purchases after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Optional timestamp threshold to list purchases before."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter to use when searching for specific purchases."
+              }
+            ]
+          },
+          "docs": "List validated purchases"
+        },
+        {
+          "info": {
+            "name": "Get runtime info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/runtime"
+          },
+          "docs": "Get runtime info"
+        },
+        {
+          "info": {
+            "name": "SatoriSendDirectMessage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/satori/direct-message",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "SatoriListTemplates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/satori/template",
+            "params": [
+              {
+                "name": "search.name.or",
+                "value": "",
+                "type": "query",
+                "description": "Filter by elements matching one of the parameters."
+              },
+              {
+                "name": "search.name.exact",
+                "value": "",
+                "type": "query",
+                "description": "Filter by elements matching exactly the value."
+              },
+              {
+                "name": "search.name.like",
+                "value": "",
+                "type": "query",
+                "description": "Filter by elements matching the pattern."
+              },
+              {
+                "name": "search.label_name.or",
+                "value": "",
+                "type": "query",
+                "description": "Filter by elements matching one of the parameters."
+              },
+              {
+                "name": "search.label_name.and",
+                "value": "",
+                "type": "query",
+                "description": "Filter by elements matching all parameters."
+              },
+              {
+                "name": "pagination.limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit of results to return."
+              },
+              {
+                "name": "pagination.cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to the next page."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "List settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/setting",
+            "params": [
+              {
+                "name": "names",
+                "value": "",
+                "type": "query",
+                "description": "The list of setting names, if empty all settings are returned."
+              }
+            ]
+          },
+          "docs": "List settings"
+        },
+        {
+          "info": {
+            "name": "Get console settings.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/setting/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the setting"
+              }
+            ]
+          },
+          "docs": "Get console settings."
+        },
+        {
+          "info": {
+            "name": "Update an existing setting.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/setting/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing setting."
+        },
+        {
+          "info": {
+            "name": "Get current status data for all nodes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/status"
+          },
+          "docs": "Get current status data for all nodes."
+        },
+        {
+          "info": {
+            "name": "List (and optionally filter) storage data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/storage",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "User ID to filter objects for."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Key to filter objects for"
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "query",
+                "description": "Collection name to filter objects for"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to retrieve a page of records from"
+              }
+            ]
+          },
+          "docs": "List (and optionally filter) storage data."
+        },
+        {
+          "info": {
+            "name": "Delete all storage data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/storage"
+          },
+          "docs": "Delete all storage data."
+        },
+        {
+          "info": {
+            "name": "List storage collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/storage/collections"
+          },
+          "docs": "List storage collections"
+        },
+        {
+          "info": {
+            "name": "Get a storage object.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/storage/:collection/:key/:user_id",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection which stores the object."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The key of the object within the collection."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user owner of the object."
+              }
+            ]
+          },
+          "docs": "Get a storage object."
+        },
+        {
+          "info": {
+            "name": "Write a new storage object or replace an existing one.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/storage/:collection/:key/:user_id",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Key."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Owner user ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Write a new storage object or replace an existing one."
+        },
+        {
+          "info": {
+            "name": "Delete a storage object.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/storage/:collection/:key/:user_id",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Key."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Owner user ID."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version for OCC."
+              }
+            ]
+          },
+          "docs": "Delete a storage object."
+        },
+        {
+          "info": {
+            "name": "Delete a storage object.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/storage/:collection/:key/:user_id/:version",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "Collection."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Key."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Owner user ID."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version for OCC."
+              }
+            ]
+          },
+          "docs": "Delete a storage object."
+        },
+        {
+          "info": {
+            "name": "List validated subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/subscription",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "UserID to filter subscriptions for"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of results per page"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor to retrieve a page of records from"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Optional timestamp threshold to list subscriptions after."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Optional timestamp threshold to list subscriptions before."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter to use when searching for specific subscriptions."
+              }
+            ]
+          },
+          "docs": "List validated subscriptions"
+        },
+        {
+          "info": {
+            "name": "List (and optionally filter) users.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/user"
+          },
+          "docs": "List (and optionally filter) users."
+        },
+        {
+          "info": {
+            "name": "Add a new console user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new console user."
+        },
+        {
+          "info": {
+            "name": "Delete console user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/user",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "The unique username of the user account."
+              }
+            ]
+          },
+          "docs": "Delete console user."
+        },
+        {
+          "info": {
+            "name": "GetUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/user/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "The unique username of the user account."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Update a console user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/user/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "User username."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a console user."
+        },
+        {
+          "info": {
+            "name": "Sets the user's MFA as required or not required.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/user/:username/mfa/require",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "User username."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the user's MFA as required or not required."
+        },
+        {
+          "info": {
+            "name": "Reset a user's multi-factor authentication credentials.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/user/:username/mfa/reset",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "User username."
+              }
+            ]
+          },
+          "docs": "Reset a user's multi-factor authentication credentials."
+        },
+        {
+          "info": {
+            "name": "Reset a user's password.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/console/user/:username/reset/password",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path",
+                "description": "The unique username of the user account."
+              }
+            ]
+          },
+          "docs": "Reset a user's password."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

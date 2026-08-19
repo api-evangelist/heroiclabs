@@ -5,11 +5,10 @@ source: openapi/heroic-labs-nakama-openapi-original.json
 server:
   name: heroic-labs-nakama
   transport: http
-  note: >-
-    No official hosted/remote MCP server is published by Heroic Labs as of this pass.
-    Tools below are a candidate list derived one-per-operation from the Nakama API v2
-    OpenAPI so an MCP server could be generated. Nakama is self-hosted / per-deployment,
-    so any MCP server would target a caller-supplied Nakama host + credentials.
+  note: No official hosted/remote MCP server is published by Heroic Labs as of this pass. Tools below
+    are a candidate list derived one-per-operation from the Nakama API v2 OpenAPI so an MCP server could
+    be generated. Nakama is self-hosted / per-deployment, so any MCP server would target a caller-supplied
+    Nakama host + credentials.
 tools:
 - name: get_account
   description: Retrieve current user account details.
@@ -56,3 +55,9 @@ tools:
 - name: rpc
   description: Execute a server-side registered RPC function.
   source_operation: openapi/heroic-labs-nakama-openapi-original.json#Nakama_RpcFunc
+deployment:
+  mode: none
+  verified: derived
+  tools: 15
+  checked: '2026-08-12'
+  source: catalog MCP census

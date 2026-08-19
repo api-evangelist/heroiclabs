@@ -1,0 +1,2053 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hiro RPC Console Nakama API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Nakama",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "A healthcheck which load balancers can use to check the service.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/healthcheck"
+          },
+          "docs": "A healthcheck which load balancers can use to check the service."
+        },
+        {
+          "info": {
+            "name": "Fetch the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/account"
+          },
+          "docs": "Fetch the current user's account."
+        },
+        {
+          "info": {
+            "name": "Update fields in the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{hostAddr}:{port}/v2/v2/account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update fields in the current user's account."
+        },
+        {
+          "info": {
+            "name": "Delete the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/account"
+          },
+          "docs": "Delete the current user's account."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user with an Apple ID against the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/authenticate/apple",
+            "params": [
+              {
+                "name": "create",
+                "value": "",
+                "type": "query",
+                "description": "Register the account if the user does not already exist."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Set the username on the account at register. Must be unique."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with an Apple ID against the server."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user with a custom id against the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/authenticate/custom",
+            "params": [
+              {
+                "name": "create",
+                "value": "",
+                "type": "query",
+                "description": "Register the account if the user does not already exist."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Set the username on the account at register. Must be unique."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with a custom id against the server."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user with a device id against the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/authenticate/device",
+            "params": [
+              {
+                "name": "create",
+                "value": "",
+                "type": "query",
+                "description": "Register the account if the user does not already exist."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Set the username on the account at register. Must be unique."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with a device id against the server."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user with an email+password against the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/authenticate/email",
+            "params": [
+              {
+                "name": "create",
+                "value": "",
+                "type": "query",
+                "description": "Register the account if the user does not already exist."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Set the username on the account at register. Must be unique."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with an email+password against the server."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user with a Facebook OAuth token against the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/authenticate/facebook",
+            "params": [
+              {
+                "name": "create",
+                "value": "",
+                "type": "query",
+                "description": "Register the account if the user does not already exist."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Set the username on the account at register. Must be unique."
+              },
+              {
+                "name": "sync",
+                "value": "",
+                "type": "query",
+                "description": "Import Facebook friends for the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with a Facebook OAuth token against the server."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user with a Facebook Instant Game token against the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/authenticate/facebookinstantgame",
+            "params": [
+              {
+                "name": "create",
+                "value": "",
+                "type": "query",
+                "description": "Register the account if the user does not already exist."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Set the username on the account at register. Must be unique."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with a Facebook Instant Game token against the server."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user with Apple's GameCenter against the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/authenticate/gamecenter",
+            "params": [
+              {
+                "name": "create",
+                "value": "",
+                "type": "query",
+                "description": "Register the account if the user does not already exist."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Set the username on the account at register. Must be unique."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with Apple's GameCenter against the server."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user with Google against the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/authenticate/google",
+            "params": [
+              {
+                "name": "create",
+                "value": "",
+                "type": "query",
+                "description": "Register the account if the user does not already exist."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Set the username on the account at register. Must be unique."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with Google against the server."
+        },
+        {
+          "info": {
+            "name": "Authenticate a user with Steam against the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/authenticate/steam",
+            "params": [
+              {
+                "name": "create",
+                "value": "",
+                "type": "query",
+                "description": "Register the account if the user does not already exist."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Set the username on the account at register. Must be unique."
+              },
+              {
+                "name": "sync",
+                "value": "",
+                "type": "query",
+                "description": "Import Steam friends for the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with Steam against the server."
+        },
+        {
+          "info": {
+            "name": "Add an Apple ID to the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/link/apple",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add an Apple ID to the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Add a custom ID to the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/link/custom",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a custom ID to the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Add a device ID to the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/link/device",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a device ID to the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Add an email+password to the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/link/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add an email+password to the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Add Facebook to the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/link/facebook",
+            "params": [
+              {
+                "name": "sync",
+                "value": "",
+                "type": "query",
+                "description": "Import Facebook friends for the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add Facebook to the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Add Facebook Instant Game to the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/link/facebookinstantgame",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add Facebook Instant Game to the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Add Apple's GameCenter to the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/link/gamecenter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add Apple's GameCenter to the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Add Google to the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/link/google",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add Google to the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Add Steam to the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/link/steam",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add Steam to the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Refresh a user's session using a refresh token retrieved from a previous authentication request.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/session/refresh",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Refresh a user's session using a refresh token retrieved from a previous authentication request."
+        },
+        {
+          "info": {
+            "name": "Remove the Apple ID from the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/unlink/apple",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove the Apple ID from the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Remove the custom ID from the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/unlink/custom",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove the custom ID from the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Remove the device ID from the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/unlink/device",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove the device ID from the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Remove the email+password from the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/unlink/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove the email+password from the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Remove Facebook from the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/unlink/facebook",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove Facebook from the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Remove Facebook Instant Game profile from the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/unlink/facebookinstantgame",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove Facebook Instant Game profile from the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Remove Apple's GameCenter from the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/unlink/gamecenter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove Apple's GameCenter from the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Remove Google from the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/unlink/google",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove Google from the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "Remove Steam from the social profiles on the current user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/account/unlink/steam",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove Steam from the social profiles on the current user's account."
+        },
+        {
+          "info": {
+            "name": "List a channel's message history.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/channel/:channelId",
+            "params": [
+              {
+                "name": "channelId",
+                "value": "",
+                "type": "path",
+                "description": "The channel ID to list from."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "forward",
+                "value": "",
+                "type": "query",
+                "description": "True if listing should be older messages to newer, false if reverse."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A pagination cursor, if any."
+              }
+            ]
+          },
+          "docs": "List a channel's message history."
+        },
+        {
+          "info": {
+            "name": "Submit an event for processing in the server's registered runtime custom events handler.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/event",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an event for processing in the server's registered runtime custom events handler."
+        },
+        {
+          "info": {
+            "name": "List all friends for the current user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/friend",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "The friend state to list."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "An optional next page cursor."
+              }
+            ]
+          },
+          "docs": "List all friends for the current user."
+        },
+        {
+          "info": {
+            "name": "Add friends by ID or username to a user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/friend",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "The account id of a user."
+              },
+              {
+                "name": "usernames",
+                "value": "",
+                "type": "query",
+                "description": "The account username of a user."
+              },
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Optional metadata to add to friends."
+              }
+            ]
+          },
+          "docs": "Add friends by ID or username to a user's account."
+        },
+        {
+          "info": {
+            "name": "Delete one or more users by ID or username.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/friend",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "The account id of a user."
+              },
+              {
+                "name": "usernames",
+                "value": "",
+                "type": "query",
+                "description": "The account username of a user."
+              }
+            ]
+          },
+          "docs": "Delete one or more users by ID or username."
+        },
+        {
+          "info": {
+            "name": "Block one or more users by ID or username.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/friend/block",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "The account id of a user."
+              },
+              {
+                "name": "usernames",
+                "value": "",
+                "type": "query",
+                "description": "The account username of a user."
+              }
+            ]
+          },
+          "docs": "Block one or more users by ID or username."
+        },
+        {
+          "info": {
+            "name": "Import Facebook friends and add them to a user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/friend/facebook",
+            "params": [
+              {
+                "name": "reset",
+                "value": "",
+                "type": "query",
+                "description": "Reset the current user's friends list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import Facebook friends and add them to a user's account."
+        },
+        {
+          "info": {
+            "name": "List friends of friends for the current user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/friend/friends",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "An optional next page cursor."
+              }
+            ]
+          },
+          "docs": "List friends of friends for the current user."
+        },
+        {
+          "info": {
+            "name": "Import Steam friends and add them to a user's account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/friend/steam",
+            "params": [
+              {
+                "name": "reset",
+                "value": "",
+                "type": "query",
+                "description": "Reset the current user's friends list."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Import Steam friends and add them to a user's account."
+        },
+        {
+          "info": {
+            "name": "List groups based on given filters.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/group",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "List groups that contain this value in their names."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Optional pagination cursor."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of groups to return. Between 1 and 100."
+              },
+              {
+                "name": "langTag",
+                "value": "",
+                "type": "query",
+                "description": "Language tag filter"
+              },
+              {
+                "name": "members",
+                "value": "",
+                "type": "query",
+                "description": "Number of group members"
+              },
+              {
+                "name": "open",
+                "value": "",
+                "type": "query",
+                "description": "Optional Open/Closed filter."
+              }
+            ]
+          },
+          "docs": "List groups based on given filters."
+        },
+        {
+          "info": {
+            "name": "Create a new group with the current user as the owner.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/group",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new group with the current user as the owner."
+        },
+        {
+          "info": {
+            "name": "Update fields in a given group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update fields in a given group."
+        },
+        {
+          "info": {
+            "name": "Delete a group by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The id of a group."
+              }
+            ]
+          },
+          "docs": "Delete a group by ID."
+        },
+        {
+          "info": {
+            "name": "Add users to a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId/add",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group to add users to."
+              },
+              {
+                "name": "userIds",
+                "value": "",
+                "type": "query",
+                "description": "The users to add."
+              }
+            ]
+          },
+          "docs": "Add users to a group."
+        },
+        {
+          "info": {
+            "name": "Ban a set of users from a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId/ban",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group to ban users from."
+              },
+              {
+                "name": "userIds",
+                "value": "",
+                "type": "query",
+                "description": "The users to ban."
+              }
+            ]
+          },
+          "docs": "Ban a set of users from a group."
+        },
+        {
+          "info": {
+            "name": "Demote a set of users in a group to the next role down.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId/demote",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID to demote in."
+              },
+              {
+                "name": "userIds",
+                "value": "",
+                "type": "query",
+                "description": "The users to demote."
+              }
+            ]
+          },
+          "docs": "Demote a set of users in a group to the next role down."
+        },
+        {
+          "info": {
+            "name": "Immediately join an open group, or request to join a closed one.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId/join",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID to join. The group must already exist."
+              }
+            ]
+          },
+          "docs": "Immediately join an open group, or request to join a closed one."
+        },
+        {
+          "info": {
+            "name": "Kick a set of users from a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId/kick",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID to kick from."
+              },
+              {
+                "name": "userIds",
+                "value": "",
+                "type": "query",
+                "description": "The users to kick."
+              }
+            ]
+          },
+          "docs": "Kick a set of users from a group."
+        },
+        {
+          "info": {
+            "name": "Leave a group the user is a member of.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId/leave",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID to leave."
+              }
+            ]
+          },
+          "docs": "Leave a group the user is a member of."
+        },
+        {
+          "info": {
+            "name": "Promote a set of users in a group to the next role up.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId/promote",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID to promote in."
+              },
+              {
+                "name": "userIds",
+                "value": "",
+                "type": "query",
+                "description": "The users to promote."
+              }
+            ]
+          },
+          "docs": "Promote a set of users in a group to the next role up."
+        },
+        {
+          "info": {
+            "name": "List all users that are part of a group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/group/:groupId/user",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID to list from."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "The group user state to list."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "An optional next page cursor."
+              }
+            ]
+          },
+          "docs": "List all users that are part of a group."
+        },
+        {
+          "info": {
+            "name": "Validate Apple IAP Receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/iap/purchase/apple",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate Apple IAP Receipt"
+        },
+        {
+          "info": {
+            "name": "Validate FB Instant IAP Receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/iap/purchase/facebookinstant",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate FB Instant IAP Receipt"
+        },
+        {
+          "info": {
+            "name": "Validate Google IAP Receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/iap/purchase/google",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate Google IAP Receipt"
+        },
+        {
+          "info": {
+            "name": "Validate Huawei IAP Receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/iap/purchase/huawei",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate Huawei IAP Receipt"
+        },
+        {
+          "info": {
+            "name": "List user's subscriptions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/iap/subscription",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List user's subscriptions."
+        },
+        {
+          "info": {
+            "name": "Validate Apple Subscription Receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/iap/subscription/apple",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate Apple Subscription Receipt"
+        },
+        {
+          "info": {
+            "name": "Validate Google Subscription Receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/iap/subscription/google",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate Google Subscription Receipt"
+        },
+        {
+          "info": {
+            "name": "Get subscription by product id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/iap/subscription/:productId",
+            "params": [
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path",
+                "description": "Product id of the subscription"
+              }
+            ]
+          },
+          "docs": "Get subscription by product id."
+        },
+        {
+          "info": {
+            "name": "List leaderboard records.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/leaderboard/:leaderboardId",
+            "params": [
+              {
+                "name": "leaderboardId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the leaderboard to list for."
+              },
+              {
+                "name": "ownerIds",
+                "value": "",
+                "type": "query",
+                "description": "One or more owners to retrieve records for."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A next or previous page cursor."
+              },
+              {
+                "name": "expiry",
+                "value": "",
+                "type": "query",
+                "description": "Expiry in seconds (since epoch) to begin fetching records from. Optional. 0 means from current time."
+              }
+            ]
+          },
+          "docs": "List leaderboard records."
+        },
+        {
+          "info": {
+            "name": "Write a record to a leaderboard.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/leaderboard/:leaderboardId",
+            "params": [
+              {
+                "name": "leaderboardId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the leaderboard to write to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Write a record to a leaderboard."
+        },
+        {
+          "info": {
+            "name": "Delete a leaderboard record.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/leaderboard/:leaderboardId",
+            "params": [
+              {
+                "name": "leaderboardId",
+                "value": "",
+                "type": "path",
+                "description": "The leaderboard ID to delete from."
+              }
+            ]
+          },
+          "docs": "Delete a leaderboard record."
+        },
+        {
+          "info": {
+            "name": "List leaderboard records around the target ownerId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/leaderboard/:leaderboardId/owner/:ownerId",
+            "params": [
+              {
+                "name": "leaderboardId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the tournament to list for."
+              },
+              {
+                "name": "ownerId",
+                "value": "",
+                "type": "path",
+                "description": "The owner to retrieve records around."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "expiry",
+                "value": "",
+                "type": "query",
+                "description": "Expiry in seconds (since epoch) to begin fetching records from."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A next or previous page cursor."
+              }
+            ]
+          },
+          "docs": "List leaderboard records around the target ownerId."
+        },
+        {
+          "info": {
+            "name": "List running matches and optionally filter by matching criteria.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/match",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of returned matches."
+              },
+              {
+                "name": "authoritative",
+                "value": "",
+                "type": "query",
+                "description": "Authoritative or relayed matches."
+              },
+              {
+                "name": "label",
+                "value": "",
+                "type": "query",
+                "description": "Label filter."
+              },
+              {
+                "name": "minSize",
+                "value": "",
+                "type": "query",
+                "description": "Minimum user count."
+              },
+              {
+                "name": "maxSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum user count."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Arbitrary label query."
+              }
+            ]
+          },
+          "docs": "List running matches and optionally filter by matching criteria."
+        },
+        {
+          "info": {
+            "name": "Get matchmaker stats.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/matchmaker/stats"
+          },
+          "docs": "Get matchmaker stats."
+        },
+        {
+          "info": {
+            "name": "Fetch list of notifications.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/notification",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of notifications to get. Between 1 and 100."
+              },
+              {
+                "name": "cacheableCursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor to page through notifications. May be cached by clients to get from point in time forwards.\n\nvalue from NotificationList.cacheable_cursor."
+              }
+            ]
+          },
+          "docs": "Fetch list of notifications."
+        },
+        {
+          "info": {
+            "name": "Delete one or more notifications for the current user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/notification",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "The id of notifications."
+              }
+            ]
+          },
+          "docs": "Delete one or more notifications for the current user."
+        },
+        {
+          "info": {
+            "name": "List parties and optionally filter by matching criteria.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/party",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of returned parties."
+              },
+              {
+                "name": "open",
+                "value": "",
+                "type": "query",
+                "description": "Optionally filter by open/closed parties."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Arbitrary label query."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for the next page of results, if any."
+              }
+            ]
+          },
+          "docs": "List parties and optionally filter by matching criteria."
+        },
+        {
+          "info": {
+            "name": "Execute a Lua function on the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/rpc/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the function."
+              },
+              {
+                "name": "payload",
+                "value": "",
+                "type": "query",
+                "description": "The payload of the function which must be a JSON object."
+              },
+              {
+                "name": "httpKey",
+                "value": "",
+                "type": "query",
+                "description": "The authentication key used when executed as a non-client HTTP request."
+              }
+            ]
+          },
+          "docs": "Execute a Lua function on the server."
+        },
+        {
+          "info": {
+            "name": "Execute a Lua function on the server.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/rpc/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the function."
+              },
+              {
+                "name": "httpKey",
+                "value": "",
+                "type": "query",
+                "description": "The authentication key used when executed as a non-client HTTP request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a Lua function on the server."
+        },
+        {
+          "info": {
+            "name": "Log out a session, invalidate a refresh token, or log out all sessions/refresh tokens for a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/session/logout",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Log out a session, invalidate a refresh token, or log out all sessions/refresh tokens for a user."
+        },
+        {
+          "info": {
+            "name": "Get storage objects.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/storage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get storage objects."
+        },
+        {
+          "info": {
+            "name": "Write objects into the storage engine.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{hostAddr}:{port}/v2/v2/storage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Write objects into the storage engine."
+        },
+        {
+          "info": {
+            "name": "Delete one or more objects by ID or username.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{hostAddr}:{port}/v2/v2/storage/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete one or more objects by ID or username."
+        },
+        {
+          "info": {
+            "name": "List publicly readable storage objects in a given collection.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/storage/:collection",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection which stores the object."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "ID of the user."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of storage objects to list. Between 1 and 100."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to page through results from.\n\nvalue from StorageObjectList.cursor."
+              }
+            ]
+          },
+          "docs": "List publicly readable storage objects in a given collection."
+        },
+        {
+          "info": {
+            "name": "List publicly readable storage objects in a given collection.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/storage/:collection/:userId",
+            "params": [
+              {
+                "name": "collection",
+                "value": "",
+                "type": "path",
+                "description": "The collection which stores the object."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the user."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of storage objects to list. Between 1 and 100."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to page through results from.\n\nvalue from StorageObjectList.cursor."
+              }
+            ]
+          },
+          "docs": "List publicly readable storage objects in a given collection."
+        },
+        {
+          "info": {
+            "name": "List current or upcoming tournaments.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/tournament",
+            "params": [
+              {
+                "name": "categoryStart",
+                "value": "",
+                "type": "query",
+                "description": "The start of the categories to include. Defaults to 0."
+              },
+              {
+                "name": "categoryEnd",
+                "value": "",
+                "type": "query",
+                "description": "The end of the categories to include. Defaults to 128."
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "The start time for tournaments. Defaults to epoch."
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "The end time for tournaments. Defaults to +1 year from current Unix time."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A next page cursor for listings (optional)."
+              }
+            ]
+          },
+          "docs": "List current or upcoming tournaments."
+        },
+        {
+          "info": {
+            "name": "List tournament records.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/tournament/:tournamentId",
+            "params": [
+              {
+                "name": "tournamentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the tournament to list for."
+              },
+              {
+                "name": "ownerIds",
+                "value": "",
+                "type": "query",
+                "description": "One or more owners to retrieve records for."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A next or previous page cursor."
+              },
+              {
+                "name": "expiry",
+                "value": "",
+                "type": "query",
+                "description": "Expiry in seconds (since epoch) to begin fetching records from."
+              }
+            ]
+          },
+          "docs": "List tournament records."
+        },
+        {
+          "info": {
+            "name": "Write a record to a tournament.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/tournament/:tournamentId",
+            "params": [
+              {
+                "name": "tournamentId",
+                "value": "",
+                "type": "path",
+                "description": "The tournament ID to write the record for."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Write a record to a tournament."
+        },
+        {
+          "info": {
+            "name": "Write a record to a tournament.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{hostAddr}:{port}/v2/v2/tournament/:tournamentId",
+            "params": [
+              {
+                "name": "tournamentId",
+                "value": "",
+                "type": "path",
+                "description": "The tournament ID to write the record for."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Write a record to a tournament."
+        },
+        {
+          "info": {
+            "name": "Delete a tournament record.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://{hostAddr}:{port}/v2/v2/tournament/:tournamentId",
+            "params": [
+              {
+                "name": "tournamentId",
+                "value": "",
+                "type": "path",
+                "description": "The tournament ID to delete from."
+              }
+            ]
+          },
+          "docs": "Delete a tournament record."
+        },
+        {
+          "info": {
+            "name": "Attempt to join an open and running tournament.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://{hostAddr}:{port}/v2/v2/tournament/:tournamentId/join",
+            "params": [
+              {
+                "name": "tournamentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the tournament to join. The tournament must already exist."
+              }
+            ]
+          },
+          "docs": "Attempt to join an open and running tournament."
+        },
+        {
+          "info": {
+            "name": "List tournament records for a given owner.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/tournament/:tournamentId/owner/:ownerId",
+            "params": [
+              {
+                "name": "tournamentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the tournament to list for."
+              },
+              {
+                "name": "ownerId",
+                "value": "",
+                "type": "path",
+                "description": "The owner to retrieve records around."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "expiry",
+                "value": "",
+                "type": "query",
+                "description": "Expiry in seconds (since epoch) to begin fetching records from."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A next or previous page cursor."
+              }
+            ]
+          },
+          "docs": "List tournament records for a given owner."
+        },
+        {
+          "info": {
+            "name": "Fetch zero or more users by ID and/or username.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/user",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "The account id of a user."
+              },
+              {
+                "name": "usernames",
+                "value": "",
+                "type": "query",
+                "description": "The account username of a user."
+              },
+              {
+                "name": "facebookIds",
+                "value": "",
+                "type": "query",
+                "description": "The Facebook ID of a user."
+              }
+            ]
+          },
+          "docs": "Fetch zero or more users by ID and/or username."
+        },
+        {
+          "info": {
+            "name": "List groups the current user belongs to.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{hostAddr}:{port}/v2/v2/user/:userId/group",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the user."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Between 1 and 100."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "The user group state to list."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "An optional next page cursor."
+              }
+            ]
+          },
+          "docs": "List groups the current user belongs to."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
