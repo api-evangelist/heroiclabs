@@ -36,6 +36,17 @@ tags:
 - Matchmaking
 - Leaderboards
 - Social Gaming
+- Open-Source
+- LiveOps
+- gRPC
+tags_raw:
+- Game Backend
+- Multiplayer
+- Real-Time
+- WebSocket
+- Matchmaking
+- Leaderboards
+- Social Gaming
 - Open Source
 - LiveOps
 - gRPC
@@ -113,6 +124,8 @@ apis:
   humanURL: https://heroiclabs.com/nakama/
   baseURL: https://127.0.0.1:7350
   tags:
+  - RPC
+  tags_raw:
   - Rpc
   properties:
   - type: OpenAPI
