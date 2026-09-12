@@ -2,20 +2,18 @@
   "repo": "heroiclabs",
   "feeds": [
     {
+      "source": "https://www.linkedin.com/company/heroic-labs",
+      "error": "HTTPError"
+    },
+    {
       "source": "https://heroiclabs.com/blog/index.xml",
       "feed_url": "https://heroiclabs.com/blog/index.xml",
       "title": "",
       "saved": 0,
-      "method": "feed",
-      "nature": "vendor-blog",
-      "nature_basis": "path_blog"
-    },
-    {
-      "source": "https://www.linkedin.com/company/heroic-labs",
-      "error": "HTTPError"
+      "method": "feed"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
+  "fetched": "2026-09-06T19:17:18Z",
   "post_count": 64,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",
