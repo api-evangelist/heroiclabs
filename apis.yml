@@ -92,9 +92,9 @@ apis:
   - type: Documentation
     url: https://heroiclabs.com/docs/nakama/
   - type: OpenAPI
-    url: https://heroiclabs.github.io/nakama-docs/
-  - type: OpenAPI
     url: openapi/heroiclabs-nakama-api-openapi.yml
+  - type: OpenAPI
+    url: https://heroiclabs.github.io/nakama-docs/
   - type: OpenAPI
     url: openapi/_original/heroiclabs-nakama-console-api-openapi.yml
   - type: GitHubRepository
