@@ -3,7 +3,6 @@
   "sources": [
     "_original/heroiclabs-hiro-rpc-api-openapi.yml",
     "_original/heroiclabs-nakama-console-api-openapi.yml",
-    "_original/heroiclabs-nakama-console-openapi-original.json",
     "_original/heroiclabs-nakama-openapi-original.json"
   ],
   "outputs": [
@@ -15,7 +14,8 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "sourced from openapi/_original/ (4 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "heroiclabs-hiro-rpc-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
     "heroiclabs-hiro-rpc-api-openapi.yml: tagged paths POST /rpc/RPC_ID_INVENTORY_LIST?unwrap -> Rpc",
     "heroiclabs-hiro-rpc-api-openapi.yml: tagged paths POST /rpc/RPC_ID_INVENTORY_LIST_INVENTORY?unwrap -> Rpc",
@@ -150,11 +150,11 @@
     "heroiclabs-hiro-rpc-api-openapi.yml: tagged paths POST /rpc/RPC_ID_STORAGE_PERSONALIZER_UPLOAD?unwrap -> Rpc",
     "heroiclabs-hiro-rpc-api-openapi.yml: declared missing tag: Rpc",
     "heroiclabs-nakama-console-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
-    "heroiclabs-nakama-console-openapi-original.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
     "heroiclabs-nakama-openapi-original.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "tag 'Console' spans 2 source specs (heroiclabs-nakama-console-api-openapi.yml, heroiclabs-nakama-console-openapi-original.json): per-path servers applied"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
+    "_original/heroiclabs-nakama-console-openapi-original.json: archived document superseded by a larger archived document",
     "heroiclabs-console-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "heroiclabs-nakama-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "heroiclabs-rpc-api-openapi.yml: previously refined output, superseded by openapi/_original/"
