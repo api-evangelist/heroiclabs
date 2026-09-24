@@ -52,7 +52,7 @@ tags:
 - Matchmaking
 - Leaderboards
 - Social Gaming
-- Open-Source
+- Open Source
 - LiveOps
 - gRPC
 tags_raw:
@@ -66,6 +66,7 @@ tags_raw:
 - Open Source
 - LiveOps
 - gRPC
+- Open-Source
 apis:
 - aid: heroiclabs:nakama-api
   name: Nakama API
@@ -99,8 +100,6 @@ apis:
     url: openapi/_original/heroiclabs-nakama-console-api-openapi.yml
   - type: GitHubRepository
     url: https://github.com/heroiclabs/nakama
-  - url: graphql/heroiclabs-graphql.md
-    type: GraphQL
 - aid: heroiclabs:satori-api
   name: Satori API
   description: 'The Satori API is Heroic Labs'' LiveOps platform API enabling game developers to manage
