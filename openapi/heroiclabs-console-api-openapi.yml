@@ -2911,47 +2911,232 @@ paths:
       - Console
 components:
   schemas:
-    AccountExport:
+    Permissions:
       type: object
       properties:
-        account:
-          $ref: '#/components/schemas/api.Account'
-        objects:
+        read:
+          type: boolean
+          description: Read a resource.
+        write:
+          type: boolean
+          description: Create and/or modify a resource.
+        delete:
+          type: boolean
+          description: Delete a resource.
+      description: The possible actions that can done over a resource.
+    ConsoleSession:
+      type: object
+      properties:
+        token:
+          type: string
+          description: A session token (JWT) for the console user.
+        mfa_code:
+          type: string
+          description: MFA code required to setup the MFA mechanism.
+      description: A console user session.
+    ListAccountNotesResponse:
+      type: object
+      properties:
+        notes:
           type: array
           items:
-            $ref: '#/components/schemas/StorageObject'
-          description: The user's storage.
-        friends:
+            $ref: '#/components/schemas/AccountNote'
+          description: The list of notes.
+        cursor:
+          type: string
+          description: Cursor for retrieving the next page, if any.
+      description: Response to list user notes.
+    ValidatedPurchase:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: Purchase User ID.
+        product_id:
+          type: string
+          description: Purchase Product ID.
+        transaction_id:
+          type: string
+          description: Purchase Transaction ID.
+        store:
+          $ref: '#/components/schemas/StoreProvider'
+        purchase_time:
+          type: string
+          format: date-time
+          description: Timestamp when the purchase was done.
+        create_time:
+          type: string
+          format: date-time
+          description: Timestamp when the receipt validation was stored in DB.
+        update_time:
+          type: string
+          format: date-time
+          description: Timestamp when the receipt validation was updated in DB.
+        refund_time:
+          type: string
+          format: date-time
+          title: Timestamp when the purchase was refunded. Set to UNIX
+        provider_response:
+          type: string
+          description: Raw provider validation response.
+        environment:
+          $ref: '#/components/schemas/StoreEnvironment'
+        seen_before:
+          type: boolean
+          description: Whether the purchase had already been validated by Nakama before.
+      description: Validated Purchase stored by Nakama.
+    RuntimeInfo:
+      type: object
+      properties:
+        lua_rpc_functions:
           type: array
           items:
-            $ref: '#/components/schemas/Friend'
-          description: The user's friends.
-        groups:
+            type: string
+          title: Lua registered RPC functions
+        go_rpc_functions:
           type: array
           items:
-            $ref: '#/components/schemas/Group'
-          description: The user's groups.
-        messages:
+            type: string
+          title: Go registered RPC functions
+        js_rpc_functions:
           type: array
           items:
-            $ref: '#/components/schemas/ChannelMessage'
-          description: The user's chat messages.
-        leaderboard_records:
+            type: string
+          title: JavaScript registered RPC functions
+        go_modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInfo'
+          title: Go loaded modules
+        lua_modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInfo'
+          title: Lua loaded modules
+        js_modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInfo'
+          title: JavaScript loaded modules
+      title: Runtime information
+    StorageListObject:
+      type: object
+      properties:
+        collection:
+          type: string
+          description: The collection which stores the object.
+        key:
+          type: string
+          description: The key of the object within the collection.
+        user_id:
+          type: string
+          description: The user owner of the object.
+        version:
+          type: string
+          description: The version hash of the object.
+        permission_read:
+          type: integer
+          format: int32
+          description: The read access permissions for the object.
+        permission_write:
+          type: integer
+          format: int32
+          description: The write access permissions for the object.
+        create_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
+        update_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
+      description: An object within the storage engine.
+    UpdateAccountBody:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username.
+        display_name:
+          type: string
+          description: Display name.
+        metadata:
+          type: string
+          description: Metadata.
+        avatar_url:
+          type: string
+          description: Avatar URL.
+        lang_tag:
+          type: string
+          description: Langtag.
+        location:
+          type: string
+          description: Location.
+        timezone:
+          type: string
+          description: Timezone.
+        custom_id:
+          type: string
+          description: Custom ID.
+        email:
+          type: string
+          description: Email.
+        password:
+          type: string
+          description: Password.
+        device_ids:
+          type: object
+          additionalProperties:
+            type: string
+          description: Device ID modifications.
+        wallet:
+          type: string
+          description: Wallet.
+      description: Update user account information.
+    LeaderboardRecordList:
+      type: object
+      properties:
+        records:
           type: array
           items:
             $ref: '#/components/schemas/LeaderboardRecord'
-          description: The user's leaderboard records.
-        notifications:
+          description: A list of leaderboard records.
+        owner_records:
           type: array
           items:
-            $ref: '#/components/schemas/api.Notification'
-          description: The user's notifications.
-        wallet_ledgers:
-          type: array
-          items:
-            $ref: '#/components/schemas/WalletLedger'
-          description: The user's wallet ledger items.
-      description: An export of all information stored for a user account.
+            $ref: '#/components/schemas/LeaderboardRecord'
+          description: A batched set of leaderboard records belonging to specified owners.
+        next_cursor:
+          type: string
+          description: The cursor to send when retrieving the next page, if any.
+        prev_cursor:
+          type: string
+          description: The cursor to send when retrieving the previous page, if any.
+        rank_count:
+          type: string
+          format: int64
+          description: The total number of ranks available.
+      description: A set of leaderboard records, may be part of a leaderboard records page or a batch of individual records.
+    AuthenticateRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username of the user.
+        password:
+          type: string
+          description: The password of the user.
+        mfa:
+          type: string
+          description: Multi-factor authentication code.
+      description: Authenticate a console user with username and password.
+    RequireUserMfaBody:
+      type: object
+      properties:
+        required:
+          type: boolean
+          description: Required.
+      description: Make a user's mfa required or not.
     console.Leaderboard:
       type: object
       properties:
@@ -3036,6 +3221,189 @@ components:
           format: int64
           description: The UNIX time when the tournament is next playable. A computed value.
       description: A leaderboard.
+    ChannelMessage:
+      type: object
+      properties:
+        channel_id:
+          type: string
+          description: The channel this message belongs to.
+        message_id:
+          type: string
+          description: The unique ID of this message.
+        code:
+          type: integer
+          format: int32
+          description: The code representing a message type or category.
+        sender_id:
+          type: string
+          description: Message sender, usually a user ID.
+        username:
+          type: string
+          description: The username of the message sender, if any.
+        content:
+          type: string
+          description: The content payload.
+        create_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was created.
+        update_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was last updated.
+        persistent:
+          type: boolean
+          description: True if the message was persisted to the channel's history, false otherwise.
+        room_name:
+          type: string
+          description: The name of the chat room, or an empty string if this message was not sent through a chat room.
+        group_id:
+          type: string
+          description: The ID of the group, or an empty string if this message was not sent through a group channel.
+        user_id_one:
+          type: string
+          description: The ID of the first DM user, or an empty string if this message was not sent through a DM chat.
+        user_id_two:
+          type: string
+          description: The ID of the second DM user, or an empty string if this message was not sent through a DM chat.
+      description: A message sent on a channel.
+    ImportAccountBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountExport'
+      description: Request to import user account data.
+    SettingList:
+      type: object
+      properties:
+        settings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Setting'
+          description: A list of settings.
+        acl_resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/AclResources'
+          description: This field is only used to allow the swagger generator to output the enum values.
+      description: A list of settings.
+    AuthenticateLogoutRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Session token to log out.
+      description: Log out a session and invalidate a session token.
+    ListResponse:
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Template.View'
+          description: A list of templates.
+        page_options:
+          $ref: '#/components/schemas/PageOptions'
+      description: A list of templates.
+    AccountList:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.User'
+          description: A list of users.
+        total_count:
+          type: integer
+          format: int32
+          description: Approximate total number of users.
+        next_cursor:
+          type: string
+          description: Next cursor.
+      description: A list of users.
+    Setting:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name identifier.
+        value:
+          type: string
+          description: Setting value.
+        update_time_sec:
+          type: string
+          format: int64
+          description: Update time.
+      description: A single setting.
+    Category.View:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier.
+        name:
+          type: string
+          description: Name.
+        color:
+          type: string
+          description: Color hex for the label.
+      description: A summary of a Category.
+    AuditLog:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the entry.
+        timestamp:
+          type: string
+          format: date-time
+          description: The time the action occurred.
+        user_id:
+          type: string
+          description: The console user id that performed the action.
+        username:
+          type: string
+          description: The console user username that performed the action.
+        email:
+          type: string
+          description: The console user email that performed the action.
+        resource:
+          $ref: '#/components/schemas/AclResources'
+        action:
+          $ref: '#/components/schemas/AuditLogAction'
+        message:
+          type: string
+          description: Log message.
+        metadata:
+          type: string
+          description: Additional details about the action.
+    UserGroupList:
+      type: object
+      properties:
+        user_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserGroup'
+          description: Group-role pairs for a user.
+        cursor:
+          type: string
+          description: Cursor for the next page of results, if any.
+      description: A list of groups belonging to a user, along with the user's role in each group.
+    AuditLogList:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLog'
+          description: A list of audit log entries.
+        next_cursor:
+          type: string
+          description: Cursor to fetch next page of results.
+        prev_cursor:
+          type: string
+          description: Cursor to fetch prev page of results.
+      description: Audit log entries.
     api.Match:
       type: object
       properties:
@@ -3060,68 +3428,345 @@ components:
           type: string
           title: Handler name
       description: Represents a realtime match.
-    RuntimeInfo:
-      type: object
-      properties:
-        lua_rpc_functions:
-          type: array
-          items:
-            type: string
-          title: Lua registered RPC functions
-        go_rpc_functions:
-          type: array
-          items:
-            type: string
-          title: Go registered RPC functions
-        js_rpc_functions:
-          type: array
-          items:
-            type: string
-          title: JavaScript registered RPC functions
-        go_modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleInfo'
-          title: Go loaded modules
-        lua_modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleInfo'
-          title: Lua loaded modules
-        js_modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleInfo'
-          title: JavaScript loaded modules
-      title: Runtime information
-    PurchaseList:
-      type: object
-      properties:
-        validated_purchases:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidatedPurchase'
-          description: Stored validated purchases.
-        cursor:
-          type: string
-          description: The cursor to send when retrieving the next page, if any.
-        prev_cursor:
-          type: string
-          description: The cursor to send when retrieving the previous page, if any.
-      description: A list of validated purchases stored by Nakama.
-    Category.View:
+    WalletLedger:
       type: object
       properties:
         id:
           type: string
-          description: Identifier.
-        name:
+          description: The identifier of this wallet change.
+        user_id:
           type: string
-          description: Name.
-        color:
+          description: The user ID this wallet ledger item belongs to.
+        changeset:
           type: string
-          description: Color hex for the label.
-      description: A summary of a Category.
+          description: The changeset.
+        metadata:
+          type: string
+          description: Any associated metadata.
+        create_time:
+          type: string
+          format: date-time
+          description: The UNIX time when the wallet ledger item was created.
+        update_time:
+          type: string
+          format: date-time
+          description: The UNIX time when the wallet ledger item was updated.
+      description: An individual update to a user's wallet.
+    AclResources:
+      type: string
+      enum:
+      - ACCOUNT
+      - ACCOUNT_WALLET
+      - ACCOUNT_EXPORT
+      - ACCOUNT_FRIENDS
+      - ACCOUNT_GROUPS
+      - ACCOUNT_NOTES
+      - ACL_TEMPLATE
+      - ALL_ACCOUNTS
+      - ALL_DATA
+      - ALL_STORAGE
+      - API_EXPLORER
+      - AUDIT_LOG
+      - CONFIGURATION
+      - CHANNEL_MESSAGE
+      - USER
+      - GROUP
+      - IN_APP_PURCHASE
+      - LEADERBOARD
+      - LEADERBOARD_RECORD
+      - MATCH
+      - NOTIFICATION
+      - SATORI_MESSAGE
+      - SETTINGS
+      - STORAGE_DATA
+      - STORAGE_DATA_IMPORT
+      - HIRO_INVENTORY
+      - HIRO_PROGRESSION
+      - HIRO_ECONOMY
+      - HIRO_STATS
+      - HIRO_ENERGY
+      default: ACCOUNT
+      description: 'ATTENTION: Do not modify the order of this enum.
+
+        New resources should always be appended.'
+    AccountDevice:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A device identifier. Should be obtained by a platform-specific device API.
+        vars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Extra information that will be bundled in the session token.
+      description: Send a device to the server. Used with authenticate/link/unlink and user.
+    UserList:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/console.User'
+          description: A list of users.
+      description: A list of console users.
+    console.GroupList:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+          description: A list of groups.
+        total_count:
+          type: integer
+          format: int32
+          description: Approximate total number of groups.
+        next_cursor:
+          type: string
+          description: Next cursor.
+      description: A list of groups.
+    AccountImport:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The user ID to overwrite data for, or blank if the account should be freshly created.
+        data:
+          $ref: '#/components/schemas/AccountExport'
+      description: Request to import user account data.
+    Warning:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The config field this warning is for in a JSON pointer format.
+        message:
+          type: string
+          description: Warning message text.
+      description: A warning for a configuration field.
+    SendNotificationRequest:
+      type: object
+      properties:
+        user_ids:
+          type: array
+          items:
+            type: string
+          description: One or more users to send the notification to, or empty to send to all users.
+        subject:
+          type: string
+          description: Subject for the notification.
+        content:
+          type: object
+          description: Arbitrary content.
+        code:
+          type: integer
+          format: int32
+          description: Code.
+        persistent:
+          type: boolean
+          description: Persistent flag.
+        sender_id:
+          type: string
+          description: Sender identifier.
+      description: Request to send a notification.
+    CallRpcEndpointBody:
+      type: object
+      properties:
+        body:
+          type: string
+        user_id:
+          type: string
+        session_vars:
+          type: object
+          additionalProperties:
+            type: string
+      title: API Explorer request definition for CallApiEndpoint
+    UnlinkDeviceBody:
+      type: object
+      properties:
+        device_id:
+          type: string
+          description: Device ID to unlink.
+      description: Unlink a particular device ID from a user's account.
+    UserPresence:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The user this presence belongs to.
+        session_id:
+          type: string
+          description: A unique session ID identifying the particular connection, because the user may have many.
+        username:
+          type: string
+          description: The username for display purposes.
+        persistence:
+          type: boolean
+          description: Whether this presence generates persistent data/messages, if applicable for the stream type.
+        status:
+          type: string
+          description: A user-set status message for this stream, if applicable.
+      description: A user session associated to a stream, usually through a list operation or a join/leave event.
+    WalletLedgerList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WalletLedger'
+          description: A list of wallet ledger items.
+        next_cursor:
+          type: string
+          description: The cursor to send when retrieving the next older page, if any.
+        prev_cursor:
+          type: string
+          description: The cursor to send when retrieving the previous page newer, if any.
+      description: List of wallet ledger items for a particular user.
+    SendDirectMessageResponse:
+      type: object
+      properties:
+        delivery_results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryResult'
+          description: Results for each attempted message delivery.
+      description: The response for the SendDirectMessageRequest.
+    console.Account:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/api.Account'
+        disable_time:
+          type: string
+          format: date-time
+          description: The UNIX time when the account was disabled.
+      description: Account information.
+    GroupUserList:
+      type: object
+      properties:
+        group_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupUser'
+          description: User-role pairs for a group.
+        cursor:
+          type: string
+          description: Cursor for the next page of results, if any.
+      description: A list of users belonging to a group, along with their role.
+    GroupUser:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/api.User'
+        state:
+          type: integer
+          format: int32
+          description: Their relationship to the group.
+      description: A single user-role pair.
+    rpc.Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/Any'
+    AuditLogAction:
+      type: string
+      enum:
+      - UNKNOWN
+      - CREATE
+      - UPDATE
+      - DELETE
+      - INVOKE
+      - IMPORT
+      - EXPORT
+      default: UNKNOWN
+    Config:
+      type: object
+      properties:
+        config:
+          type: string
+          description: JSON-encoded active server configuration.
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Warning'
+          description: Any warnings about the current config.
+        server_version:
+          type: string
+          title: Server version
+      description: The current server configuration and any associated warnings.
+    MatchList.Match:
+      type: object
+      properties:
+        api_match:
+          $ref: '#/components/schemas/api.Match'
+        node:
+          type: string
+          title: The node name
+    DeliveryResult:
+      type: object
+      properties:
+        recipient_id:
+          type: string
+          description: The identity ID of the recipient.
+        integration_results:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationResult'
+          description: Results for each valid integration used in the delivery.
+      description: Details of each delivery attempt.
+    MessageChannelType:
+      type: string
+      enum:
+      - DEFAULT
+      - PUSH
+      - EMAIL
+      default: DEFAULT
+      description: "Message channel types.\n\n - PUSH: Push notification.\n - EMAIL: Email."
+    api.Notification:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the Notification.
+        subject:
+          type: string
+          description: Subject of the notification.
+        content:
+          type: string
+          description: Content of the notification in JSON.
+        code:
+          type: integer
+          format: int32
+          description: Category code for this notification.
+        sender_id:
+          type: string
+          description: ID of the sender, if a user. Otherwise 'null'.
+        create_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the notification was created.
+        persistent:
+          type: boolean
+          description: True if this notification was persisted to the database.
+      description: A notification in the server.
+    AuthenticateMFASetupRequest:
+      type: object
+      properties:
+        mfa:
+          type: string
+          description: MFA token.
+        code:
+          type: string
+          description: MFA code.
+      description: Request to change MFA.
     Template.View:
       type: object
       properties:
@@ -3160,295 +3805,35 @@ components:
             $ref: '#/components/schemas/Category.View'
           description: Category label identifiers.
       description: A template view.
-    FriendList:
-      type: object
-      properties:
-        friends:
-          type: array
-          items:
-            $ref: '#/components/schemas/Friend'
-          description: The Friend objects.
-        cursor:
-          type: string
-          description: Cursor for the next page of results, if any.
-      description: A collection of zero or more friends of the user.
-    AddAccountNoteBody:
+    console.Notification:
       type: object
       properties:
         id:
           type: string
-          description: Identifier of the note. Empty to update existing note.
-        note:
+          description: ID of the Notification.
+        subject:
           type: string
-          description: The content of the note.
-      description: Add a new note for the user.
-    AuditLogAction:
-      type: string
-      enum:
-      - UNKNOWN
-      - CREATE
-      - UPDATE
-      - DELETE
-      - INVOKE
-      - IMPORT
-      - EXPORT
-      default: UNKNOWN
-    Any:
-      type: object
-      properties:
-        '@type':
+          description: Subject of the notification.
+        content:
           type: string
-      additionalProperties: {}
-    GroupUserList:
-      type: object
-      properties:
-        group_users:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupUser'
-          description: User-role pairs for a group.
-        cursor:
-          type: string
-          description: Cursor for the next page of results, if any.
-      description: A list of users belonging to a group, along with their role.
-    console.LeaderboardList:
-      type: object
-      properties:
-        leaderboards:
-          type: array
-          items:
-            $ref: '#/components/schemas/console.Leaderboard'
-          description: The list of leaderboards returned.
-        total:
+          description: Content of the notification in JSON.
+        code:
           type: integer
           format: int32
-          description: Total count of leaderboards and tournaments.
-        cursor:
+          description: Category code for this notification.
+        sender_id:
           type: string
-          description: A cursor, if any.
-      description: A list of leaderboards.
-    SendDirectMessageResponse:
-      type: object
-      properties:
-        delivery_results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryResult'
-          description: Results for each attempted message delivery.
-      description: The response for the SendDirectMessageRequest.
-    SettingList:
-      type: object
-      properties:
-        settings:
-          type: array
-          items:
-            $ref: '#/components/schemas/Setting'
-          description: A list of settings.
-        acl_resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/AclResources'
-          description: This field is only used to allow the swagger generator to output the enum values.
-      description: A list of settings.
-    StorageListObject:
-      type: object
-      properties:
-        collection:
-          type: string
-          description: The collection which stores the object.
-        key:
-          type: string
-          description: The key of the object within the collection.
-        user_id:
-          type: string
-          description: The user owner of the object.
-        version:
-          type: string
-          description: The version hash of the object.
-        permission_read:
-          type: integer
-          format: int32
-          description: The read access permissions for the object.
-        permission_write:
-          type: integer
-          format: int32
-          description: The write access permissions for the object.
+          description: ID of the sender, if a user. Otherwise 'null'.
         create_time:
           type: string
           format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
-        update_time:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
-      description: An object within the storage engine.
-    AuditLog:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the entry.
-        timestamp:
-          type: string
-          format: date-time
-          description: The time the action occurred.
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the notification was created.
+        persistent:
+          type: boolean
+          description: True if this notification was persisted to the database.
         user_id:
           type: string
-          description: The console user id that performed the action.
-        username:
-          type: string
-          description: The console user username that performed the action.
-        email:
-          type: string
-          description: The console user email that performed the action.
-        resource:
-          $ref: '#/components/schemas/AclResources'
-        action:
-          $ref: '#/components/schemas/AuditLogAction'
-        message:
-          type: string
-          description: Log message.
-        metadata:
-          type: string
-          description: Additional details about the action.
-    PageOptions:
-      type: object
-      properties:
-        prev_cursor:
-          type: string
-          description: Cursor, if there are prev pages.
-        next_cursor:
-          type: string
-          description: Cursor, if there are next pages.
-    AuthenticateRequest:
-      type: object
-      properties:
-        username:
-          type: string
-          description: The username of the user.
-        password:
-          type: string
-          description: The password of the user.
-        mfa:
-          type: string
-          description: Multi-factor authentication code.
-      description: Authenticate a console user with username and password.
-    MatchList.Match:
-      type: object
-      properties:
-        api_match:
-          $ref: '#/components/schemas/api.Match'
-        node:
-          type: string
-          title: The node name
-    StatusList.Status:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Node name.
-        health:
-          $ref: '#/components/schemas/StatusHealth'
-        session_count:
-          type: integer
-          format: int32
-          description: Currently connected sessions.
-        presence_count:
-          type: integer
-          format: int32
-          description: Currently registered live presences.
-        match_count:
-          type: integer
-          format: int32
-          description: Current number of active authoritative matches.
-        goroutine_count:
-          type: integer
-          format: int32
-          description: Current number of running goroutines.
-        avg_latency_ms:
-          type: number
-          format: double
-          description: Average response latency in milliseconds.
-        avg_rate_sec:
-          type: number
-          format: double
-          description: Average number of requests per second.
-        avg_input_kbs:
-          type: number
-          format: double
-          description: Average input bandwidth usage.
-        avg_output_kbs:
-          type: number
-          format: double
-          description: Average output bandwidth usage.
-        party_count:
-          type: integer
-          format: int32
-          description: Current number of active parties.
-        create_time:
-          type: string
-          format: date-time
-          description: Time when the node was created and started up.
-      description: The status of a Nakama node.
-    StoreEnvironment:
-      type: string
-      enum:
-      - UNKNOWN
-      - SANDBOX
-      - PRODUCTION
-      default: UNKNOWN
-      description: "- UNKNOWN: Unknown environment.\n - SANDBOX: Sandbox/test environment.\n - PRODUCTION: Production environment."
-      title: Environment where a purchase/subscription took place,
-    SubscriptionList:
-      type: object
-      properties:
-        validated_subscriptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidatedSubscription'
-          description: Stored validated subscriptions.
-        cursor:
-          type: string
-          description: The cursor to send when retrieving the next page, if any.
-        prev_cursor:
-          type: string
-          description: The cursor to send when retrieving the previous page, if any.
-      description: A list of validated subscriptions stored by Nakama.
-    console.MatchList:
-      type: object
-      properties:
-        matches:
-          type: array
-          items:
-            $ref: '#/components/schemas/MatchList.Match'
-      description: A list of realtime matches, with their node names.
-    MatchState:
-      type: object
-      properties:
-        presences:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserPresence'
-          description: Presence list.
-        tick:
-          type: string
-          format: int64
-          description: Current tick number.
-        state:
-          type: string
-          description: State.
-      title: Match state
-    ModuleInfo:
-      type: object
-      properties:
-        path:
-          type: string
-          title: Module path
-        mod_time:
-          type: string
-          format: date-time
-          title: Module last modified date
-      title: Module information
+          description: User id.
     Extensions:
       type: object
       properties:
@@ -3461,207 +3846,161 @@ components:
           type: boolean
           description: Is Satori registered.
       description: Which Console extensions are registered and available.
-    AclTemplateList:
+    StorageCollectionsList:
       type: object
       properties:
-        templates:
-          type: array
-          items:
-            $ref: '#/components/schemas/AclTemplate'
-          description: A list of ACL templates.
-    GroupUser:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/api.User'
-        state:
-          type: integer
-          format: int32
-          description: Their relationship to the group.
-      description: A single user-role pair.
-    AddUserResponse:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/console.User'
-        token:
-          type: string
-          title: A one-time token required to update the user for the first time
-      description: Response to create/invite a new user.
-    UserGroup:
-      type: object
-      properties:
-        group:
-          $ref: '#/components/schemas/Group'
-        state:
-          type: integer
-          format: int32
-          description: The user's relationship to the group.
-      description: A single group-role pair.
-    StoreProvider:
-      type: string
-      enum:
-      - APPLE_APP_STORE
-      - GOOGLE_PLAY_STORE
-      - HUAWEI_APP_GALLERY
-      - FACEBOOK_INSTANT_STORE
-      default: APPLE_APP_STORE
-      description: "- APPLE_APP_STORE: Apple App Store\n - GOOGLE_PLAY_STORE: Google Play Store\n - HUAWEI_APP_GALLERY: Huawei App Gallery\n - FACEBOOK_INSTANT_STORE: Facebook Instant Store"
-      title: Validation Provider,
-    SendNotificationRequest:
-      type: object
-      properties:
-        user_ids:
+        collections:
           type: array
           items:
             type: string
-          description: One or more users to send the notification to, or empty to send to all users.
-        subject:
-          type: string
-          description: Subject for the notification.
-        content:
-          type: object
-          description: Arbitrary content.
-        code:
-          type: integer
-          format: int32
-          description: Code.
-        persistent:
-          type: boolean
-          description: Persistent flag.
-        sender_id:
-          type: string
-          description: Sender identifier.
-      description: Request to send a notification.
-    console.GroupList:
+          title: Available collection names in the whole of the storage
+    AccountExport:
       type: object
       properties:
+        account:
+          $ref: '#/components/schemas/api.Account'
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/StorageObject'
+          description: The user's storage.
+        friends:
+          type: array
+          items:
+            $ref: '#/components/schemas/Friend'
+          description: The user's friends.
         groups:
           type: array
           items:
             $ref: '#/components/schemas/Group'
-          description: A list of groups.
-        total_count:
-          type: integer
-          format: int32
-          description: Approximate total number of groups.
-        next_cursor:
-          type: string
-          description: Next cursor.
-      description: A list of groups.
-    AccountList:
-      type: object
-      properties:
-        users:
+          description: The user's groups.
+        messages:
           type: array
           items:
-            $ref: '#/components/schemas/api.User'
-          description: A list of users.
-        total_count:
-          type: integer
-          format: int32
-          description: Approximate total number of users.
-        next_cursor:
-          type: string
-          description: Next cursor.
-      description: A list of users.
-    AddUserRequest:
+            $ref: '#/components/schemas/ChannelMessage'
+          description: The user's chat messages.
+        leaderboard_records:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardRecord'
+          description: The user's leaderboard records.
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/api.Notification'
+          description: The user's notifications.
+        wallet_ledgers:
+          type: array
+          items:
+            $ref: '#/components/schemas/WalletLedger'
+          description: The user's wallet ledger items.
+      description: An export of all information stored for a user account.
+    MessageIntegrationType:
+      type: string
+      enum:
+      - UNKNOWN_MESSAGE_TYPE
+      - FCM
+      - APNS
+      - FACEBOOK_NOTIFICATION
+      - ONESIGNAL_NOTIFICATION
+      - WEBHOOK_NOTIFICATION
+      default: UNKNOWN_MESSAGE_TYPE
+      description: "Message integration's names.\n\n - FCM: The variant for Google's Firebase Cloud Messaging.\n - APNS: The variant for Apple's Message system.\n - FACEBOOK_NOTIFICATION: The variant for Facebook App-to-User Notifications.\n - ONESIGNAL_NOTIFICATION: The variant for OneSignal Notifications.\n - WEBHOOK_NOTIFICATION: The variant for Webhook Notifications."
+    UpdateSettingBody:
       type: object
       properties:
-        username:
+        value:
           type: string
-          description: The username of the user.
-        email:
+          description: Setting value.
+      description: Request to update an existing setting.
+    AuditLogUsersList:
+      type: object
+      properties:
+        usernames:
+          type: array
+          items:
+            type: string
+      description: List of users that can be filtered in the audit logs.
+    CallApiEndpointResponse:
+      type: object
+      properties:
+        body:
           type: string
-          description: Email address of the user.
-        acl:
+        error_message:
+          type: string
+      title: API Explorer response definition for CallApiEndpoint
+    Console.WriteStorageObjectBody:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Value.
+        version:
+          type: string
+          description: Version for OCC.
+        permission_read:
+          type: integer
+          format: int32
+          description: Read permission value.
+        permission_write:
+          type: integer
+          format: int32
+          description: Write permission value.
+      description: Write a new storage object or update an existing one.
+    PageOptions:
+      type: object
+      properties:
+        prev_cursor:
+          type: string
+          description: Cursor, if there are prev pages.
+        next_cursor:
+          type: string
+          description: Cursor, if there are next pages.
+    SendDirectMessageRequest:
+      type: object
+      properties:
+        template_id:
+          type: string
+          description: The identifier of the template used to render the message content.
+        identity_ids:
+          type: array
+          items:
+            type: string
+          description: A list of recipient identity IDs.
+        integrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageIntegrationType'
+          description: A list of integrations to use for sending the message.
+        persist:
+          type: boolean
+          description: Whether the message should be stored in the recipient's inbox.
+        channels:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/Permissions'
-          description: ACL.
-        mfa_required:
-          type: boolean
-          title: Require MFA
-        newsletter_subscription:
-          type: boolean
-          title: Subscribe to newsletters
-      title: Add a new console user
-    UserPresence:
+            $ref: '#/components/schemas/MessageChannels'
+          description: If applicable, channels to send this message through, per integration.
+        template_override:
+          $ref: '#/components/schemas/TemplateOverride'
+      description: The request to send direct messages.
+    PurchaseList:
       type: object
       properties:
-        user_id:
-          type: string
-          description: The user this presence belongs to.
-        session_id:
-          type: string
-          description: A unique session ID identifying the particular connection, because the user may have many.
-        username:
-          type: string
-          description: The username for display purposes.
-        persistence:
-          type: boolean
-          description: Whether this presence generates persistent data/messages, if applicable for the stream type.
-        status:
-          type: string
-          description: A user-set status message for this stream, if applicable.
-      description: A user session associated to a stream, usually through a list operation or a join/leave event.
-    AccountNote:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identifier of the note.
-        user_id:
-          type: string
-          description: Owner of this note.
-        note:
-          type: string
-          description: The content of the note.
-        create_time:
-          type: string
-          format: date-time
-          description: Timestamp of note creation.
-        update_time:
-          type: string
-          format: date-time
-          description: Timestamp of note update.
-        create_id:
-          type: string
-          description: Console user identifier that created this note.
-        create_username:
-          type: string
-          description: Console username that created this note.
-        update_id:
-          type: string
-          description: Console user identifier that last updated this note.
-        update_username:
-          type: string
-          description: Console username that last updated this note.
-      description: A user note.
-    ListResponse:
-      type: object
-      properties:
-        templates:
+        validated_purchases:
           type: array
           items:
-            $ref: '#/components/schemas/Template.View'
-          description: A list of templates.
-        page_options:
-          $ref: '#/components/schemas/PageOptions'
-      description: A list of templates.
-    UnlinkDeviceBody:
+            $ref: '#/components/schemas/ValidatedPurchase'
+          description: Stored validated purchases.
+        cursor:
+          type: string
+          description: The cursor to send when retrieving the next page, if any.
+        prev_cursor:
+          type: string
+          description: The cursor to send when retrieving the previous page, if any.
+      description: A list of validated purchases stored by Nakama.
+    AddAclTemplateRequest:
       type: object
       properties:
-        device_id:
-          type: string
-          description: Device ID to unlink.
-      description: Unlink a particular device ID from a user's account.
-    AclTemplate:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The identifier of the ACL template.
         name:
           type: string
           description: The name of the ACL template.
@@ -3673,96 +4012,21 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/Permissions'
           description: The ACL template permissions.
-        create_time:
-          type: string
-          format: date-time
-          description: The template Create time.
-        update_time:
-          type: string
-          format: date-time
-          description: The template Update time.
-    TemplateOverride:
+      description: Add a new ACL template.
+    ResetUserResponse:
       type: object
       properties:
-        title:
+        code:
           type: string
-          description: The title to generate the message's title.
-        value:
-          type: string
-          description: The template value to generate the message's content.
-        image_url:
-          type: string
-          description: The image_url for the message.
-        json_metadata:
-          type: string
-          title: The json_metadata for the message
-        variants:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TemplateOverride'
-          description: Language-specific template overrides. The key is the language code.
-      description: An template override.
-    HiroSystems:
+          description: An one-time code to be used when re-configuring the password.
+      description: Request to reset a user's credentials, password or MFA.
+    DeleteChannelMessagesResponse:
       type: object
       properties:
-        economy_system:
-          type: boolean
-          description: Is Economy system registered.
-        inventory_system:
-          type: boolean
-          description: Is Inventory system registered.
-        progression_system:
-          type: boolean
-          description: Is Progression system registered.
-        stats_system:
-          type: boolean
-          description: Is Stats system registered.
-        energy_system:
-          type: boolean
-          description: Is Energy system registered.
-      description: Hiro available systems.
-    UpdateAccountBody:
-      type: object
-      properties:
-        username:
+        total:
           type: string
-          description: Username.
-        display_name:
-          type: string
-          description: Display name.
-        metadata:
-          type: string
-          description: Metadata.
-        avatar_url:
-          type: string
-          description: Avatar URL.
-        lang_tag:
-          type: string
-          description: Langtag.
-        location:
-          type: string
-          description: Location.
-        timezone:
-          type: string
-          description: Timezone.
-        custom_id:
-          type: string
-          description: Custom ID.
-        email:
-          type: string
-          description: Email.
-        password:
-          type: string
-          description: Password.
-        device_ids:
-          type: object
-          additionalProperties:
-            type: string
-          description: Device ID modifications.
-        wallet:
-          type: string
-          description: Wallet.
-      description: Update user account information.
+          format: int64
+          description: Total number of messages deleted.
     LeaderboardRecord:
       type: object
       properties:
@@ -3811,24 +4075,190 @@ components:
           format: int64
           description: The maximum number of score updates allowed by the owner.
       description: Represents a complete leaderboard record with all scores and associated metadata.
-    ChannelMessageList:
+    console.NotificationList:
       type: object
       properties:
-        messages:
+        notifications:
           type: array
           items:
-            $ref: '#/components/schemas/ChannelMessage'
-          description: A list of messages.
+            $ref: '#/components/schemas/console.Notification'
+          description: List of notifications.
         next_cursor:
           type: string
-          description: The cursor to send when retrieving the next page, if any.
+          description: Next page cursor if any.
         prev_cursor:
           type: string
-          description: The cursor to send when retrieving the previous page, if any.
-        cacheable_cursor:
+          description: Previous page cursor if any.
+    console.MatchList:
+      type: object
+      properties:
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchList.Match'
+      description: A list of realtime matches, with their node names.
+    Any:
+      type: object
+      properties:
+        '@type':
           type: string
-          description: Cacheable cursor to list newer messages. Durable and designed to be stored, unlike next/prev cursors.
-      description: A list of channel messages, usually a result of a list operation.
+      additionalProperties: {}
+    AuthenticatePasswordChangeRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code.
+        password:
+          type: string
+          description: New password.
+      description: Request to change a password.
+    AclTemplate:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier of the ACL template.
+        name:
+          type: string
+          description: The name of the ACL template.
+        description:
+          type: string
+          description: The ACL template description.
+        acl:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Permissions'
+          description: The ACL template permissions.
+        create_time:
+          type: string
+          format: date-time
+          description: The template Create time.
+        update_time:
+          type: string
+          format: date-time
+          description: The template Update time.
+    AuthenticateMFASetupResponse:
+      type: object
+      properties:
+        recovery_codes:
+          type: array
+          items:
+            type: string
+          title: An one-time code to configure the MFA mechanism
+      description: Response to change MFA.
+    MessageChannels:
+      type: object
+      properties:
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageChannelType'
+    api.Account:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/api.User'
+        wallet:
+          type: string
+          description: The user's wallet data.
+        email:
+          type: string
+          description: The email address of the user.
+        devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountDevice'
+          description: The devices which belong to the user's account.
+        custom_id:
+          type: string
+          description: The custom id in the user's account.
+        verify_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's email was verified.
+        disable_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's account was disabled/banned.
+      description: A user with additional account details. Always the current user.
+    MatchState:
+      type: object
+      properties:
+        presences:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserPresence'
+          description: Presence list.
+        tick:
+          type: string
+          format: int64
+          description: Current tick number.
+        state:
+          type: string
+          description: State.
+      title: Match state
+    HiroSystems:
+      type: object
+      properties:
+        economy_system:
+          type: boolean
+          description: Is Economy system registered.
+        inventory_system:
+          type: boolean
+          description: Is Inventory system registered.
+        progression_system:
+          type: boolean
+          description: Is Progression system registered.
+        stats_system:
+          type: boolean
+          description: Is Stats system registered.
+        energy_system:
+          type: boolean
+          description: Is Energy system registered.
+      description: Hiro available systems.
+    AddGroupUsersBody:
+      type: object
+      properties:
+        ids:
+          type: string
+          description: Users to add/join.
+        join_request:
+          type: boolean
+          description: Whether it is a join request.
+      description: Add/join users to a group.
+    console.User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: User identifier.
+        username:
+          type: string
+          title: Username of the user
+        email:
+          type: string
+          title: Email of the user
+        acl:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Permissions'
+          description: ACL.
+        mfa_required:
+          type: boolean
+          description: Whether the user is required to setup MFA.
+        mfa_enabled:
+          type: boolean
+          description: Whether the user has MFA enabled.
+        create_time:
+          type: string
+          format: date-time
+          title: User's create time
+        update_time:
+          type: string
+          format: date-time
+          title: User's update time
+      title: A console user
     ValidatedSubscription:
       type: object
       properties:
@@ -3874,60 +4304,167 @@ components:
         active:
           type: boolean
           description: Whether the subscription is currently active or not.
-    UpdateSettingBody:
+    ApiEndpointDescriptor:
       type: object
       properties:
-        value:
+        method:
           type: string
-          description: Setting value.
-      description: Request to update an existing setting.
-    StorageList:
+        body_template:
+          type: string
+      title: API Explorer List of Endpoints response message
+    UpdateUserBody:
       type: object
       properties:
-        objects:
+        acl:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Permissions'
+          description: ACL.
+      description: Request to update an existing user.
+    console.LeaderboardList:
+      type: object
+      properties:
+        leaderboards:
           type: array
           items:
-            $ref: '#/components/schemas/StorageListObject'
-          description: List of storage objects matching list/filter operation.
-        total_count:
+            $ref: '#/components/schemas/console.Leaderboard'
+          description: The list of leaderboards returned.
+        total:
           type: integer
           format: int32
-          description: Approximate total number of storage objects.
-        next_cursor:
+          description: Total count of leaderboards and tournaments.
+        cursor:
           type: string
-          title: Next page cursor if any
-      description: List of storage objects.
-    DeliveryResult:
-      type: object
-      properties:
-        recipient_id:
-          type: string
-          description: The identity ID of the recipient.
-        integration_results:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntegrationResult'
-          description: Results for each valid integration used in the delivery.
-      description: Details of each delivery attempt.
-    AccountImport:
+          description: A cursor, if any.
+      description: A list of leaderboards.
+    AccountNote:
       type: object
       properties:
         id:
           type: string
-          description: The user ID to overwrite data for, or blank if the account should be freshly created.
-        data:
-          $ref: '#/components/schemas/AccountExport'
-      description: Request to import user account data.
-    AuthenticateMFASetupRequest:
+          description: Identifier of the note.
+        user_id:
+          type: string
+          description: Owner of this note.
+        note:
+          type: string
+          description: The content of the note.
+        create_time:
+          type: string
+          format: date-time
+          description: Timestamp of note creation.
+        update_time:
+          type: string
+          format: date-time
+          description: Timestamp of note update.
+        create_id:
+          type: string
+          description: Console user identifier that created this note.
+        create_username:
+          type: string
+          description: Console username that created this note.
+        update_id:
+          type: string
+          description: Console user identifier that last updated this note.
+        update_username:
+          type: string
+          description: Console username that last updated this note.
+      description: A user note.
+    FriendList:
       type: object
       properties:
-        mfa:
+        friends:
+          type: array
+          items:
+            $ref: '#/components/schemas/Friend'
+          description: The Friend objects.
+        cursor:
           type: string
-          description: MFA token.
-        code:
+          description: Cursor for the next page of results, if any.
+      description: A collection of zero or more friends of the user.
+    TemplateOverride:
+      type: object
+      properties:
+        title:
           type: string
-          description: MFA code.
-      description: Request to change MFA.
+          description: The title to generate the message's title.
+        value:
+          type: string
+          description: The template value to generate the message's content.
+        image_url:
+          type: string
+          description: The image_url for the message.
+        json_metadata:
+          type: string
+          title: The json_metadata for the message
+        variants:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TemplateOverride'
+          description: Language-specific template overrides. The key is the language code.
+      description: An template override.
+    AddUserResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/console.User'
+        token:
+          type: string
+          title: A one-time token required to update the user for the first time
+      description: Response to create/invite a new user.
+    AddAccountNoteBody:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the note. Empty to update existing note.
+        note:
+          type: string
+          description: The content of the note.
+      description: Add a new note for the user.
+    StatusList:
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusList.Status'
+          description: List of nodes and their stats.
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      description: List of nodes and their stats.
+    ApiEndpointList:
+      type: object
+      properties:
+        endpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiEndpointDescriptor'
+        rpc_endpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiEndpointDescriptor'
+      title: API Explorer List of Endpoints
+    UserGroup:
+      type: object
+      properties:
+        group:
+          $ref: '#/components/schemas/Group'
+        state:
+          type: integer
+          format: int32
+          description: The user's relationship to the group.
+      description: A single group-role pair.
+    AclTemplateList:
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/AclTemplate'
+          description: A list of ACL templates.
     IntegrationResult:
       type: object
       properties:
@@ -3942,42 +4479,15 @@ components:
         channel_type:
           $ref: '#/components/schemas/MessageChannelType'
       description: The outcome of using a specific integration.
-    UserGroupList:
+    AddUserRequest:
       type: object
       properties:
-        user_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserGroup'
-          description: Group-role pairs for a user.
-        cursor:
-          type: string
-          description: Cursor for the next page of results, if any.
-      description: A list of groups belonging to a user, along with the user's role in each group.
-    CallApiEndpointBody:
-      type: object
-      properties:
-        body:
-          type: string
-        user_id:
-          type: string
-        session_vars:
-          type: object
-          additionalProperties:
-            type: string
-      title: API Explorer request definition for CallApiEndpoint
-    console.User:
-      type: object
-      properties:
-        id:
-          type: string
-          description: User identifier.
         username:
           type: string
-          title: Username of the user
+          description: The username of the user.
         email:
           type: string
-          title: Email of the user
+          description: Email address of the user.
         acl:
           type: object
           additionalProperties:
@@ -3985,508 +4495,61 @@ components:
           description: ACL.
         mfa_required:
           type: boolean
-          description: Whether the user is required to setup MFA.
-        mfa_enabled:
+          title: Require MFA
+        newsletter_subscription:
           type: boolean
-          description: Whether the user has MFA enabled.
-        create_time:
-          type: string
-          format: date-time
-          title: User's create time
-        update_time:
-          type: string
-          format: date-time
-          title: User's update time
-      title: A console user
-    StorageObject:
+          title: Subscribe to newsletters
+      title: Add a new console user
+    SubscriptionList:
       type: object
       properties:
-        collection:
-          type: string
-          description: The collection which stores the object.
-        key:
-          type: string
-          description: The key of the object within the collection.
-        user_id:
-          type: string
-          description: The user owner of the object.
-        value:
-          type: string
-          description: The value of the object.
-        version:
-          type: string
-          description: The version hash of the object.
-        permission_read:
-          type: integer
-          format: int32
-          description: The read access permissions for the object.
-        permission_write:
-          type: integer
-          format: int32
-          description: The write access permissions for the object.
-        create_time:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
-        update_time:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
-      description: An object within the storage engine.
-    AddGroupUsersBody:
-      type: object
-      properties:
-        ids:
-          type: string
-          description: Users to add/join.
-        join_request:
-          type: boolean
-          description: Whether it is a join request.
-      description: Add/join users to a group.
-    rpc.Status:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
+        validated_subscriptions:
           type: array
           items:
-            $ref: '#/components/schemas/Any'
-    ListAccountNotesResponse:
-      type: object
-      properties:
-        notes:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountNote'
-          description: The list of notes.
+            $ref: '#/components/schemas/ValidatedSubscription'
+          description: Stored validated subscriptions.
         cursor:
-          type: string
-          description: Cursor for retrieving the next page, if any.
-      description: Response to list user notes.
-    AuthenticateLogoutRequest:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Session token to log out.
-      description: Log out a session and invalidate a session token.
-    DeleteChannelMessagesResponse:
-      type: object
-      properties:
-        total:
-          type: string
-          format: int64
-          description: Total number of messages deleted.
-    WalletLedger:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The identifier of this wallet change.
-        user_id:
-          type: string
-          description: The user ID this wallet ledger item belongs to.
-        changeset:
-          type: string
-          description: The changeset.
-        metadata:
-          type: string
-          description: Any associated metadata.
-        create_time:
-          type: string
-          format: date-time
-          description: The UNIX time when the wallet ledger item was created.
-        update_time:
-          type: string
-          format: date-time
-          description: The UNIX time when the wallet ledger item was updated.
-      description: An individual update to a user's wallet.
-    SendDirectMessageRequest:
-      type: object
-      properties:
-        template_id:
-          type: string
-          description: The identifier of the template used to render the message content.
-        identity_ids:
-          type: array
-          items:
-            type: string
-          description: A list of recipient identity IDs.
-        integrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageIntegrationType'
-          description: A list of integrations to use for sending the message.
-        persist:
-          type: boolean
-          description: Whether the message should be stored in the recipient's inbox.
-        channels:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/MessageChannels'
-          description: If applicable, channels to send this message through, per integration.
-        template_override:
-          $ref: '#/components/schemas/TemplateOverride'
-      description: The request to send direct messages.
-    Warning:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The config field this warning is for in a JSON pointer format.
-        message:
-          type: string
-          description: Warning message text.
-      description: A warning for a configuration field.
-    GroupExport:
-      type: object
-      properties:
-        group:
-          $ref: '#/components/schemas/Group'
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupUser'
-          description: The group's list of members.
-      description: An export of all information stored for a group.
-    AccountDevice:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A device identifier. Should be obtained by a platform-specific device API.
-        vars:
-          type: object
-          additionalProperties:
-            type: string
-          description: Extra information that will be bundled in the session token.
-      description: Send a device to the server. Used with authenticate/link/unlink and user.
-    UpdateUserBody:
-      type: object
-      properties:
-        acl:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Permissions'
-          description: ACL.
-      description: Request to update an existing user.
-    ResetUserResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: An one-time code to be used when re-configuring the password.
-      description: Request to reset a user's credentials, password or MFA.
-    Friend:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/api.User'
-        state:
-          type: integer
-          format: int32
-          description: 'The friend status.
-
-
-            one of "Friend.State".'
-        update_time:
-          type: string
-          format: date-time
-          description: Time of the latest relationship update.
-        metadata:
-          type: string
-          description: Metadata.
-      description: A friend of a user.
-    UpdateAclTemplateBody:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the ACL template.
-        description:
-          type: string
-          description: The ACL template description.
-        acl:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Permissions'
-          description: The ACL template permissions.
-    console.Account:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/api.Account'
-        disable_time:
-          type: string
-          format: date-time
-          description: The UNIX time when the account was disabled.
-      description: Account information.
-    MessageIntegrationType:
-      type: string
-      enum:
-      - UNKNOWN_MESSAGE_TYPE
-      - FCM
-      - APNS
-      - FACEBOOK_NOTIFICATION
-      - ONESIGNAL_NOTIFICATION
-      - WEBHOOK_NOTIFICATION
-      default: UNKNOWN_MESSAGE_TYPE
-      description: "Message integration's names.\n\n - FCM: The variant for Google's Firebase Cloud Messaging.\n - APNS: The variant for Apple's Message system.\n - FACEBOOK_NOTIFICATION: The variant for Facebook App-to-User Notifications.\n - ONESIGNAL_NOTIFICATION: The variant for OneSignal Notifications.\n - WEBHOOK_NOTIFICATION: The variant for Webhook Notifications."
-    LeaderboardRecordList:
-      type: object
-      properties:
-        records:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardRecord'
-          description: A list of leaderboard records.
-        owner_records:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardRecord'
-          description: A batched set of leaderboard records belonging to specified owners.
-        next_cursor:
           type: string
           description: The cursor to send when retrieving the next page, if any.
         prev_cursor:
           type: string
           description: The cursor to send when retrieving the previous page, if any.
-        rank_count:
-          type: string
-          format: int64
-          description: The total number of ranks available.
-      description: A set of leaderboard records, may be part of a leaderboard records page or a batch of individual records.
-    StorageCollectionsList:
-      type: object
-      properties:
-        collections:
-          type: array
-          items:
-            type: string
-          title: Available collection names in the whole of the storage
-    StatusHealth:
-      type: string
-      enum:
-      - STATUS_HEALTH_OK
-      - STATUS_HEALTH_ERROR
-      - STATUS_HEALTH_CONNECTING
-      - STATUS_HEALTH_DISCONNECTING
-      default: STATUS_HEALTH_OK
-    WalletLedgerList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/WalletLedger'
-          description: A list of wallet ledger items.
-        next_cursor:
-          type: string
-          description: The cursor to send when retrieving the next older page, if any.
-        prev_cursor:
-          type: string
-          description: The cursor to send when retrieving the previous page newer, if any.
-      description: List of wallet ledger items for a particular user.
-    AddAclTemplateRequest:
+      description: A list of validated subscriptions stored by Nakama.
+    UpdateGroupBody:
       type: object
       properties:
         name:
           type: string
-          description: The name of the ACL template.
+          description: Name.
         description:
           type: string
-          description: The ACL template description.
-        acl:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Permissions'
-          description: The ACL template permissions.
-      description: Add a new ACL template.
-    Setting:
-      type: object
-      properties:
-        name:
+          description: Description.
+        lang_tag:
           type: string
-          description: Name identifier.
-        value:
+          description: Langtag.
+        metadata:
           type: string
-          description: Setting value.
-        update_time_sec:
+          description: Metadata.
+        avatar_url:
           type: string
-          format: int64
-          description: Update time.
-      description: A single setting.
-    AuthenticateMFASetupResponse:
-      type: object
-      properties:
-        recovery_codes:
-          type: array
-          items:
-            type: string
-          title: An one-time code to configure the MFA mechanism
-      description: Response to change MFA.
-    api.Notification:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID of the Notification.
-        subject:
-          type: string
-          description: Subject of the notification.
-        content:
-          type: string
-          description: Content of the notification in JSON.
-        code:
-          type: integer
-          format: int32
-          description: Category code for this notification.
-        sender_id:
-          type: string
-          description: ID of the sender, if a user. Otherwise 'null'.
-        create_time:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the notification was created.
-        persistent:
+          description: Avatar URL.
+        open:
           type: boolean
-          description: True if this notification was persisted to the database.
-      description: A notification in the server.
-    ApiEndpointList:
-      type: object
-      properties:
-        endpoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiEndpointDescriptor'
-        rpc_endpoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiEndpointDescriptor'
-      title: API Explorer List of Endpoints
-    RequireUserMfaBody:
-      type: object
-      properties:
-        required:
-          type: boolean
-          description: Required.
-      description: Make a user's mfa required or not.
-    ApiEndpointDescriptor:
-      type: object
-      properties:
-        method:
-          type: string
-        body_template:
-          type: string
-      title: API Explorer List of Endpoints response message
-    ChannelMessage:
-      type: object
-      properties:
-        channel_id:
-          type: string
-          description: The channel this message belongs to.
-        message_id:
-          type: string
-          description: The unique ID of this message.
-        code:
+          description: Anyone can join open groups, otherwise only admins can accept members.
+        max_count:
           type: integer
           format: int32
-          description: The code representing a message type or category.
-        sender_id:
-          type: string
-          description: Message sender, usually a user ID.
-        username:
-          type: string
-          description: The username of the message sender, if any.
-        content:
-          type: string
-          description: The content payload.
-        create_time:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was created.
-        update_time:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was last updated.
-        persistent:
-          type: boolean
-          description: True if the message was persisted to the channel's history, false otherwise.
-        room_name:
-          type: string
-          description: The name of the chat room, or an empty string if this message was not sent through a chat room.
-        group_id:
-          type: string
-          description: The ID of the group, or an empty string if this message was not sent through a group channel.
-        user_id_one:
-          type: string
-          description: The ID of the first DM user, or an empty string if this message was not sent through a DM chat.
-        user_id_two:
-          type: string
-          description: The ID of the second DM user, or an empty string if this message was not sent through a DM chat.
-      description: A message sent on a channel.
-    ConsoleSession:
-      type: object
-      properties:
-        token:
-          type: string
-          description: A session token (JWT) for the console user.
-        mfa_code:
-          type: string
-          description: MFA code required to setup the MFA mechanism.
-      description: A console user session.
-    UserList:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/console.User'
-          description: A list of users.
-      description: A list of console users.
-    MessageChannels:
-      type: object
-      properties:
-        channels:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageChannelType'
-    console.NotificationList:
-      type: object
-      properties:
-        notifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/console.Notification'
-          description: List of notifications.
-        next_cursor:
-          type: string
-          description: Next page cursor if any.
-        prev_cursor:
-          type: string
-          description: Previous page cursor if any.
-    Console.WriteStorageObjectBody:
-      type: object
-      properties:
-        value:
-          type: string
-          description: Value.
-        version:
-          type: string
-          description: Version for OCC.
-        permission_read:
-          type: integer
-          format: int32
-          description: Read permission value.
-        permission_write:
-          type: integer
-          format: int32
-          description: Write permission value.
-      description: Write a new storage object or update an existing one.
+          description: The maximum number of members allowed.
+      description: Update group information.
+    StoreEnvironment:
+      type: string
+      enum:
+      - UNKNOWN
+      - SANDBOX
+      - PRODUCTION
+      default: UNKNOWN
+      description: "- UNKNOWN: Unknown environment.\n - SANDBOX: Sandbox/test environment.\n - PRODUCTION: Production environment."
+      title: Environment where a purchase/subscription took place,
     api.User:
       type: object
       properties:
@@ -4548,297 +4611,82 @@ components:
           type: string
           description: The Apple Sign In ID in the user's account.
       description: A user in the server.
-    console.Notification:
+    StorageList:
       type: object
       properties:
-        id:
-          type: string
-          description: ID of the Notification.
-        subject:
-          type: string
-          description: Subject of the notification.
-        content:
-          type: string
-          description: Content of the notification in JSON.
-        code:
-          type: integer
-          format: int32
-          description: Category code for this notification.
-        sender_id:
-          type: string
-          description: ID of the sender, if a user. Otherwise 'null'.
-        create_time:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the notification was created.
-        persistent:
-          type: boolean
-          description: True if this notification was persisted to the database.
-        user_id:
-          type: string
-          description: User id.
-    UpdateGroupBody:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name.
-        description:
-          type: string
-          description: Description.
-        lang_tag:
-          type: string
-          description: Langtag.
-        metadata:
-          type: string
-          description: Metadata.
-        avatar_url:
-          type: string
-          description: Avatar URL.
-        open:
-          type: boolean
-          description: Anyone can join open groups, otherwise only admins can accept members.
-        max_count:
-          type: integer
-          format: int32
-          description: The maximum number of members allowed.
-      description: Update group information.
-    CallRpcEndpointBody:
-      type: object
-      properties:
-        body:
-          type: string
-        user_id:
-          type: string
-        session_vars:
-          type: object
-          additionalProperties:
-            type: string
-      title: API Explorer request definition for CallApiEndpoint
-    AuditLogList:
-      type: object
-      properties:
-        entries:
+        objects:
           type: array
           items:
-            $ref: '#/components/schemas/AuditLog'
-          description: A list of audit log entries.
+            $ref: '#/components/schemas/StorageListObject'
+          description: List of storage objects matching list/filter operation.
+        total_count:
+          type: integer
+          format: int32
+          description: Approximate total number of storage objects.
         next_cursor:
           type: string
-          description: Cursor to fetch next page of results.
-        prev_cursor:
-          type: string
-          description: Cursor to fetch prev page of results.
-      description: Audit log entries.
-    StorageObjectAck:
+          title: Next page cursor if any
+      description: List of storage objects.
+    GroupExport:
       type: object
       properties:
-        collection:
-          type: string
-          description: The collection which stores the object.
-        key:
-          type: string
-          description: The key of the object within the collection.
-        version:
-          type: string
-          description: The version hash of the object.
-        user_id:
-          type: string
-          description: The owner of the object.
-        create_time:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
-        update_time:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
-      description: A storage acknowledgement.
-    CallApiEndpointResponse:
-      type: object
-      properties:
-        body:
-          type: string
-        error_message:
-          type: string
-      title: API Explorer response definition for CallApiEndpoint
-    AuditLogUsersList:
-      type: object
-      properties:
-        usernames:
+        group:
+          $ref: '#/components/schemas/Group'
+        members:
           type: array
           items:
-            type: string
-      description: List of users that can be filtered in the audit logs.
-    AuthenticatePasswordChangeRequest:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Code.
-        password:
-          type: string
-          description: New password.
-      description: Request to change a password.
-    Permissions:
-      type: object
-      properties:
-        read:
-          type: boolean
-          description: Read a resource.
-        write:
-          type: boolean
-          description: Create and/or modify a resource.
-        delete:
-          type: boolean
-          description: Delete a resource.
-      description: The possible actions that can done over a resource.
-    MessageChannelType:
+            $ref: '#/components/schemas/GroupUser'
+          description: The group's list of members.
+      description: An export of all information stored for a group.
+    StatusHealth:
       type: string
       enum:
-      - DEFAULT
-      - PUSH
-      - EMAIL
-      default: DEFAULT
-      description: "Message channel types.\n\n - PUSH: Push notification.\n - EMAIL: Email."
-    ValidatedPurchase:
+      - STATUS_HEALTH_OK
+      - STATUS_HEALTH_ERROR
+      - STATUS_HEALTH_CONNECTING
+      - STATUS_HEALTH_DISCONNECTING
+      default: STATUS_HEALTH_OK
+    ModuleInfo:
       type: object
       properties:
-        user_id:
+        path:
           type: string
-          description: Purchase User ID.
-        product_id:
-          type: string
-          description: Purchase Product ID.
-        transaction_id:
-          type: string
-          description: Purchase Transaction ID.
-        store:
-          $ref: '#/components/schemas/StoreProvider'
-        purchase_time:
+          title: Module path
+        mod_time:
           type: string
           format: date-time
-          description: Timestamp when the purchase was done.
-        create_time:
-          type: string
-          format: date-time
-          description: Timestamp when the receipt validation was stored in DB.
-        update_time:
-          type: string
-          format: date-time
-          description: Timestamp when the receipt validation was updated in DB.
-        refund_time:
-          type: string
-          format: date-time
-          title: Timestamp when the purchase was refunded. Set to UNIX
-        provider_response:
-          type: string
-          description: Raw provider validation response.
-        environment:
-          $ref: '#/components/schemas/StoreEnvironment'
-        seen_before:
-          type: boolean
-          description: Whether the purchase had already been validated by Nakama before.
-      description: Validated Purchase stored by Nakama.
-    AclResources:
+          title: Module last modified date
+      title: Module information
+    StoreProvider:
       type: string
       enum:
-      - ACCOUNT
-      - ACCOUNT_WALLET
-      - ACCOUNT_EXPORT
-      - ACCOUNT_FRIENDS
-      - ACCOUNT_GROUPS
-      - ACCOUNT_NOTES
-      - ACL_TEMPLATE
-      - ALL_ACCOUNTS
-      - ALL_DATA
-      - ALL_STORAGE
-      - API_EXPLORER
-      - AUDIT_LOG
-      - CONFIGURATION
-      - CHANNEL_MESSAGE
-      - USER
-      - GROUP
-      - IN_APP_PURCHASE
-      - LEADERBOARD
-      - LEADERBOARD_RECORD
-      - MATCH
-      - NOTIFICATION
-      - SATORI_MESSAGE
-      - SETTINGS
-      - STORAGE_DATA
-      - STORAGE_DATA_IMPORT
-      - HIRO_INVENTORY
-      - HIRO_PROGRESSION
-      - HIRO_ECONOMY
-      - HIRO_STATS
-      - HIRO_ENERGY
-      default: ACCOUNT
-      description: 'ATTENTION: Do not modify the order of this enum.
-
-        New resources should always be appended.'
-    ImportAccountBody:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AccountExport'
-      description: Request to import user account data.
-    StatusList:
-      type: object
-      properties:
-        nodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatusList.Status'
-          description: List of nodes and their stats.
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-      description: List of nodes and their stats.
-    Config:
-      type: object
-      properties:
-        config:
-          type: string
-          description: JSON-encoded active server configuration.
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/Warning'
-          description: Any warnings about the current config.
-        server_version:
-          type: string
-          title: Server version
-      description: The current server configuration and any associated warnings.
-    api.Account:
+      - APPLE_APP_STORE
+      - GOOGLE_PLAY_STORE
+      - HUAWEI_APP_GALLERY
+      - FACEBOOK_INSTANT_STORE
+      default: APPLE_APP_STORE
+      description: "- APPLE_APP_STORE: Apple App Store\n - GOOGLE_PLAY_STORE: Google Play Store\n - HUAWEI_APP_GALLERY: Huawei App Gallery\n - FACEBOOK_INSTANT_STORE: Facebook Instant Store"
+      title: Validation Provider,
+    Friend:
       type: object
       properties:
         user:
           $ref: '#/components/schemas/api.User'
-        wallet:
-          type: string
-          description: The user's wallet data.
-        email:
-          type: string
-          description: The email address of the user.
-        devices:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountDevice'
-          description: The devices which belong to the user's account.
-        custom_id:
-          type: string
-          description: The custom id in the user's account.
-        verify_time:
+        state:
+          type: integer
+          format: int32
+          description: 'The friend status.
+
+
+            one of "Friend.State".'
+        update_time:
           type: string
           format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's email was verified.
-        disable_time:
+          description: Time of the latest relationship update.
+        metadata:
           type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's account was disabled/banned.
-      description: A user with additional account details. Always the current user.
+          description: Metadata.
+      description: A friend of a user.
     Group:
       type: object
       properties:
@@ -4883,6 +4731,158 @@ components:
           format: date-time
           description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the group was last updated.
       description: A group in the server.
+    UpdateAclTemplateBody:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the ACL template.
+        description:
+          type: string
+          description: The ACL template description.
+        acl:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Permissions'
+          description: The ACL template permissions.
+    StorageObject:
+      type: object
+      properties:
+        collection:
+          type: string
+          description: The collection which stores the object.
+        key:
+          type: string
+          description: The key of the object within the collection.
+        user_id:
+          type: string
+          description: The user owner of the object.
+        value:
+          type: string
+          description: The value of the object.
+        version:
+          type: string
+          description: The version hash of the object.
+        permission_read:
+          type: integer
+          format: int32
+          description: The read access permissions for the object.
+        permission_write:
+          type: integer
+          format: int32
+          description: The write access permissions for the object.
+        create_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
+        update_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
+      description: An object within the storage engine.
+    StorageObjectAck:
+      type: object
+      properties:
+        collection:
+          type: string
+          description: The collection which stores the object.
+        key:
+          type: string
+          description: The key of the object within the collection.
+        version:
+          type: string
+          description: The version hash of the object.
+        user_id:
+          type: string
+          description: The owner of the object.
+        create_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
+        update_time:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
+      description: A storage acknowledgement.
+    ChannelMessageList:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelMessage'
+          description: A list of messages.
+        next_cursor:
+          type: string
+          description: The cursor to send when retrieving the next page, if any.
+        prev_cursor:
+          type: string
+          description: The cursor to send when retrieving the previous page, if any.
+        cacheable_cursor:
+          type: string
+          description: Cacheable cursor to list newer messages. Durable and designed to be stored, unlike next/prev cursors.
+      description: A list of channel messages, usually a result of a list operation.
+    CallApiEndpointBody:
+      type: object
+      properties:
+        body:
+          type: string
+        user_id:
+          type: string
+        session_vars:
+          type: object
+          additionalProperties:
+            type: string
+      title: API Explorer request definition for CallApiEndpoint
+    StatusList.Status:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Node name.
+        health:
+          $ref: '#/components/schemas/StatusHealth'
+        session_count:
+          type: integer
+          format: int32
+          description: Currently connected sessions.
+        presence_count:
+          type: integer
+          format: int32
+          description: Currently registered live presences.
+        match_count:
+          type: integer
+          format: int32
+          description: Current number of active authoritative matches.
+        goroutine_count:
+          type: integer
+          format: int32
+          description: Current number of running goroutines.
+        avg_latency_ms:
+          type: number
+          format: double
+          description: Average response latency in milliseconds.
+        avg_rate_sec:
+          type: number
+          format: double
+          description: Average number of requests per second.
+        avg_input_kbs:
+          type: number
+          format: double
+          description: Average input bandwidth usage.
+        avg_output_kbs:
+          type: number
+          format: double
+          description: Average output bandwidth usage.
+        party_count:
+          type: integer
+          format: int32
+          description: Current number of active parties.
+        create_time:
+          type: string
+          format: date-time
+          description: Time when the node was created and started up.
+      description: The status of a Nakama node.
   securitySchemes:
     BasicAuth:
       type: http
