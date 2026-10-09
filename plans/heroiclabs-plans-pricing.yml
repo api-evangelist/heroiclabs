@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Heroic Labs Plans and Pricing
 description: >
   Heroic Labs offers Nakama on Heroic Cloud as a managed service with
@@ -145,3 +149,40 @@ additional_services:
     description: Extended team augmentation engagement.
   - name: Training
     description: Remote or on-site training options with certification.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units: []
+  plans:
+  - name: Heroic Cloud - Development
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Heroic Cloud - Production (1 Core)
+    access: paid
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Heroic Cloud - Production (2 Cores)
+    access: paid
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Heroic Cloud - Production (4-64+ Cores)
+    access: enterprise
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Satori LiveOps
+    access: paid
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
