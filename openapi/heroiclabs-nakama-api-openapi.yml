@@ -3013,26 +3013,100 @@ paths:
       - Nakama
 components:
   schemas:
-    apiMatchmakerCompletionStats:
+    apiAccountDevice:
       type: object
       properties:
+        id:
+          type: string
+          description: A device identifier. Should be obtained by a platform-specific device API.
+        vars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Extra information that will be bundled in the session token.
+      description: Send a device to the server. Used with authenticate/link/unlink and user.
+    apiStorageObject:
+      type: object
+      properties:
+        collection:
+          type: string
+          description: The collection which stores the object.
+        key:
+          type: string
+          description: The key of the object within the collection.
+        userId:
+          type: string
+          description: The user owner of the object.
+        value:
+          type: string
+          description: The value of the object.
+        version:
+          type: string
+          description: The version hash of the object.
+        permissionRead:
+          type: integer
+          format: int32
+          description: The read access permissions for the object.
+        permissionWrite:
+          type: integer
+          format: int32
+          description: The write access permissions for the object.
         createTime:
           type: string
           format: date-time
-        completeTime:
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
+        updateTime:
           type: string
           format: date-time
-      title: Matchmaker ticket completion stats
-    apiValidatePurchaseFacebookInstantRequest:
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
+      description: An object within the storage engine.
+    apiMatch:
       type: object
       properties:
-        signedRequest:
+        matchId:
           type: string
-          description: Base64 encoded Facebook Instant signedRequest receipt data payload.
-        persist:
+          description: The ID of the match, can be used to join.
+        authoritative:
           type: boolean
-          title: Persist the purchase
-      title: Facebook Instant IAP Purchase validation request
+          description: True if it's an server-managed authoritative match, false otherwise.
+        label:
+          type: string
+          description: Match label, if any.
+        size:
+          type: integer
+          format: int32
+          description: Current number of users in the match.
+        tickRate:
+          type: integer
+          format: int32
+          title: Tick Rate
+        handlerName:
+          type: string
+          title: Handler name
+      description: Represents a realtime match.
+    apiNotificationList:
+      type: object
+      properties:
+        notifications:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiNotification'
+          description: Collection of notifications.
+        cacheableCursor:
+          type: string
+          description: Use this cursor to paginate notifications. Cache this to catch up to new notifications.
+      description: A collection of zero or more notifications.
+    apiDeleteStorageObjectsRequest:
+      type: object
+      properties:
+        objectIds:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiDeleteStorageObjectId'
+          description: Batch of storage objects.
+      description: Batch delete storage objects.
     apiStorageObjectAcks:
       type: object
       properties:
@@ -3043,26 +3117,58 @@ components:
             $ref: '#/components/schemas/apiStorageObjectAck'
           description: Batch of storage write acknowledgements.
       description: Batch of acknowledgements for the storage object write.
-    apiReadStorageObjectsRequest:
+    apiNotification:
       type: object
       properties:
-        objectIds:
+        id:
+          type: string
+          description: ID of the Notification.
+        subject:
+          type: string
+          description: Subject of the notification.
+        content:
+          type: string
+          description: Content of the notification in JSON.
+        code:
+          type: integer
+          format: int32
+          description: Category code for this notification.
+        senderId:
+          type: string
+          description: ID of the sender, if a user. Otherwise 'null'.
+        createTime:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the notification was created.
+        persistent:
+          type: boolean
+          description: True if this notification was persisted to the database.
+      description: A notification in the server.
+    apiPartyList:
+      type: object
+      properties:
+        parties:
           type: array
           items:
             type: object
-            $ref: '#/components/schemas/apiReadStorageObjectId'
-          description: Batch of storage objects.
-      description: Batch get storage objects.
-    apiLinkSteamRequest:
+            $ref: '#/components/schemas/apiParty'
+          description: A number of parties corresponding to a list operation.
+        cursor:
+          type: string
+          description: A cursor to send when retrieving the next page, if any.
+      description: A list of realtime matches.
+    apiAccountSteam:
       type: object
       properties:
-        account:
-          $ref: '#/components/schemas/apiAccountSteam'
-          description: The Facebook account details.
-        sync:
-          type: boolean
-          description: Import Steam friends for the user.
-      description: Link Steam to the current user's account.
+        token:
+          type: string
+          description: The account token received from Steam to access their profile API.
+        vars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Extra information that will be bundled in the session token.
+      description: Send a Steam token to the server. Used with authenticate/link/unlink.
     apiLeaderboardRecord:
       type: object
       properties:
@@ -3152,193 +3258,59 @@ components:
           type: boolean
           description: Whether the purchase had already been validated by Nakama before.
       description: Validated Purchase stored by Nakama.
-    apiTournamentList:
+    apiChannelMessageList:
       type: object
       properties:
-        tournaments:
+        messages:
           type: array
           items:
             type: object
-            $ref: '#/components/schemas/apiTournament'
-          description: The list of tournaments returned.
-        cursor:
+            $ref: '#/components/schemas/apiChannelMessage'
+          description: A list of messages.
+        nextCursor:
           type: string
-          description: A pagination cursor (optional).
-      description: A list of tournaments.
-    apiAccountFacebookInstantGame:
-      type: object
-      properties:
-        signedPlayerInfo:
+          description: The cursor to send when retrieving the next page, if any.
+        prevCursor:
           type: string
-          title: The OAuth token received from a Facebook Instant Game that may be decoded with the Application Secret (must be available with the nakama configuration)
-        vars:
-          type: object
-          additionalProperties:
-            type: string
-          description: Extra information that will be bundled in the session token.
-      description: Send a Facebook Instant Game token to the server. Used with authenticate/link/unlink.
-    UserGroupListUserGroup:
-      type: object
-      properties:
-        group:
-          $ref: '#/components/schemas/apiGroup'
-          description: Group.
-        state:
-          type: integer
-          format: int32
-          description: The user's relationship to the group.
-      description: A single group-role pair.
-    apiReadStorageObjectId:
-      type: object
-      properties:
-        collection:
+          description: The cursor to send when retrieving the previous page, if any.
+        cacheableCursor:
           type: string
-          description: The collection which stores the object.
-        key:
-          type: string
-          description: The key of the object within the collection.
-        userId:
-          type: string
-          description: The user owner of the object.
-      description: Storage objects to get.
-    GroupUserListGroupUser:
+          description: Cacheable cursor to list newer messages. Durable and designed to be stored, unlike next/prev cursors.
+      description: A list of channel messages, usually a result of a list operation.
+    apiFriend:
       type: object
       properties:
         user:
           $ref: '#/components/schemas/apiUser'
-          description: User.
+          description: The user object.
         state:
           type: integer
           format: int32
-          description: Their relationship to the group.
-      description: A single user-role pair.
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
+          description: 'The friend status.
+
+
+            one of "Friend.State".'
+        updateTime:
           type: string
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/protobufAny'
-    apiGroup:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The id of a group.
-        creatorId:
-          type: string
-          description: The id of the user who created the group.
-        name:
-          type: string
-          description: The unique name of the group.
-        description:
-          type: string
-          description: A description for the group.
-        langTag:
-          type: string
-          description: The language expected to be a tag which follows the BCP-47 spec.
+          format: date-time
+          description: Time of the latest relationship update.
         metadata:
           type: string
-          description: Additional information stored as a JSON object.
-        avatarUrl:
-          type: string
-          description: A URL for an avatar image.
-        open:
-          type: boolean
-          description: Anyone can join open groups, otherwise only admins can accept members.
-        edgeCount:
-          type: integer
-          format: int32
-          description: The current count of all members in the group.
-        maxCount:
-          type: integer
-          format: int32
-          description: The maximum number of members allowed.
-        createTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the group was created.
-        updateTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the group was last updated.
-      description: A group in the server.
-    apiStorageObjectAck:
+          description: Metadata.
+      description: A friend of a user.
+    apiValidatePurchaseHuaweiRequest:
       type: object
       properties:
-        collection:
+        purchase:
           type: string
-          description: The collection which stores the object.
-        key:
+          description: JSON encoded Huawei InAppPurchaseData.
+        signature:
           type: string
-          description: The key of the object within the collection.
-        version:
-          type: string
-          description: The version hash of the object.
-        userId:
-          type: string
-          description: The owner of the object.
-        createTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
-        updateTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
-      description: A storage acknowledgement.
-    apiPartyList:
-      type: object
-      properties:
-        parties:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiParty'
-          description: A number of parties corresponding to a list operation.
-        cursor:
-          type: string
-          description: A cursor to send when retrieving the next page, if any.
-      description: A list of realtime matches.
-    apiStorageObjectList:
-      type: object
-      properties:
-        objects:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiStorageObject'
-          description: The list of storage objects.
-        cursor:
-          type: string
-          description: The cursor for the next page of results, if any.
-      description: List of storage objects.
-    apiValidatePurchaseAppleRequest:
-      type: object
-      properties:
-        receipt:
-          type: string
-          description: Base64 encoded Apple receipt data payload.
+          description: InAppPurchaseData signature.
         persist:
           type: boolean
           title: Persist the purchase
-      title: Apple IAP Purchases validation request
-    apiDeleteStorageObjectsRequest:
-      type: object
-      properties:
-        objectIds:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiDeleteStorageObjectId'
-          description: Batch of storage objects.
-      description: Batch delete storage objects.
+      title: Huawei IAP Purchase validation request
     apiWriteStorageObject:
       type: object
       properties:
@@ -3366,18 +3338,169 @@ components:
           format: int32
           description: The write access permissions for the object.
       description: The object to store.
-    apiAccountDevice:
+    UserGroupListUserGroup:
+      type: object
+      properties:
+        group:
+          $ref: '#/components/schemas/apiGroup'
+          description: Group.
+        state:
+          type: integer
+          format: int32
+          description: The user's relationship to the group.
+      description: A single group-role pair.
+    apiMatchmakerCompletionStats:
+      type: object
+      properties:
+        createTime:
+          type: string
+          format: date-time
+        completeTime:
+          type: string
+          format: date-time
+      title: Matchmaker ticket completion stats
+    GroupUserListGroupUser:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/apiUser'
+          description: User.
+        state:
+          type: integer
+          format: int32
+          description: Their relationship to the group.
+      description: A single user-role pair.
+    apiFriendList:
+      type: object
+      properties:
+        friends:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiFriend'
+          description: The Friend objects.
+        cursor:
+          type: string
+          description: Cursor for the next page of results, if any.
+      description: A collection of zero or more friends of the user.
+    apiValidateSubscriptionResponse:
+      type: object
+      properties:
+        validatedSubscription:
+          $ref: '#/components/schemas/apiValidatedSubscription'
+      description: Validate Subscription response.
+    apiTournamentList:
+      type: object
+      properties:
+        tournaments:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiTournament'
+          description: The list of tournaments returned.
+        cursor:
+          type: string
+          description: A pagination cursor (optional).
+      description: A list of tournaments.
+    apiAccountCustom:
       type: object
       properties:
         id:
           type: string
-          description: A device identifier. Should be obtained by a platform-specific device API.
+          description: A custom identifier.
         vars:
           type: object
           additionalProperties:
             type: string
           description: Extra information that will be bundled in the session token.
-      description: Send a device to the server. Used with authenticate/link/unlink and user.
+      description: Send a custom ID to the server. Used with authenticate/link/unlink.
+    apiUpdateAccountRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username of the user's account.
+        displayName:
+          type: string
+          description: The display name of the user.
+        avatarUrl:
+          type: string
+          description: A URL for an avatar image.
+        langTag:
+          type: string
+          description: The language expected to be a tag which follows the BCP-47 spec.
+        location:
+          type: string
+          description: The location set by the user.
+        timezone:
+          type: string
+          description: The timezone set by the user.
+      description: Update a user's account details.
+    apiUsers:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiUser'
+          description: The User objects.
+      description: A collection of zero or more users.
+    WriteLeaderboardRecordRequestLeaderboardRecordWrite:
+      type: object
+      properties:
+        score:
+          type: string
+          format: int64
+          description: The score value to submit.
+        subscore:
+          type: string
+          format: int64
+          description: An optional secondary value.
+        metadata:
+          type: string
+          description: Optional record metadata.
+        operator:
+          $ref: '#/components/schemas/apiOperator'
+          description: Operator override.
+      description: Record values to write.
+    apiGroupUserList:
+      type: object
+      properties:
+        groupUsers:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/GroupUserListGroupUser'
+          description: User-role pairs for a group.
+        cursor:
+          type: string
+          description: Cursor for the next page of results, if any.
+      description: A list of users belonging to a group, along with their role.
+    apiAccountGoogle:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The OAuth token received from Google to access their profile API.
+        vars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Extra information that will be bundled in the session token.
+      description: Send a Google token to the server. Used with authenticate/link/unlink.
+    apiAccountFacebookInstantGame:
+      type: object
+      properties:
+        signedPlayerInfo:
+          type: string
+          title: The OAuth token received from a Facebook Instant Game that may be decoded with the Application Secret (must be available with the nakama configuration)
+        vars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Extra information that will be bundled in the session token.
+      description: Send a Facebook Instant Game token to the server. Used with authenticate/link/unlink.
     apiTournament:
       type: object
       properties:
@@ -3458,15 +3581,19 @@ components:
           type: boolean
           description: Whether the user must join the tournament before being able to submit scores.
       description: A tournament on the server.
-    apiStoreEnvironment:
-      type: string
-      enum:
-      - UNKNOWN
-      - SANDBOX
-      - PRODUCTION
-      default: UNKNOWN
-      description: "- UNKNOWN: Unknown environment.\n - SANDBOX: Sandbox/test environment.\n - PRODUCTION: Production environment."
-      title: Environment where a purchase/subscription took place,
+    apiReadStorageObjectId:
+      type: object
+      properties:
+        collection:
+          type: string
+          description: The collection which stores the object.
+        key:
+          type: string
+          description: The key of the object within the collection.
+        userId:
+          type: string
+          description: The user owner of the object.
+      description: Storage objects to get.
     apiEvent:
       type: object
       properties:
@@ -3486,280 +3613,16 @@ components:
           type: boolean
           description: True if the event came directly from a client call, false otherwise.
       description: Represents an event to be passed through the server to registered event handlers.
-    apiAccountApple:
+    apiSessionLogoutRequest:
       type: object
       properties:
         token:
           type: string
-          description: The ID token received from Apple to validate.
-        vars:
-          type: object
-          additionalProperties:
-            type: string
-          description: Extra information that will be bundled in the session token.
-      description: Send a Apple Sign In token to the server. Used with authenticate/link/unlink.
-    apiNotificationList:
-      type: object
-      properties:
-        notifications:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiNotification'
-          description: Collection of notifications.
-        cacheableCursor:
+          description: Session token to log out.
+        refreshToken:
           type: string
-          description: Use this cursor to paginate notifications. Cache this to catch up to new notifications.
-      description: A collection of zero or more notifications.
-    apiValidateSubscriptionGoogleRequest:
-      type: object
-      properties:
-        receipt:
-          type: string
-          description: JSON encoded Google purchase payload.
-        persist:
-          type: boolean
-          description: Persist the subscription.
-      title: Google Subscription validation request
-    apiCreateGroupRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: A unique name for the group.
-        description:
-          type: string
-          description: A description for the group.
-        langTag:
-          type: string
-          description: The language expected to be a tag which follows the BCP-47 spec.
-        avatarUrl:
-          type: string
-          description: A URL for an avatar image.
-        open:
-          type: boolean
-          description: Mark a group as open or not where only admins can accept members.
-        maxCount:
-          type: integer
-          format: int32
-          description: Maximum number of group members.
-      description: Create a group with the current user as owner.
-    apiValidatePurchaseResponse:
-      type: object
-      properties:
-        validatedPurchases:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiValidatedPurchase'
-          description: Newly seen validated purchases.
-      description: Validate IAP response.
-    apiMatch:
-      type: object
-      properties:
-        matchId:
-          type: string
-          description: The ID of the match, can be used to join.
-        authoritative:
-          type: boolean
-          description: True if it's an server-managed authoritative match, false otherwise.
-        label:
-          type: string
-          description: Match label, if any.
-        size:
-          type: integer
-          format: int32
-          description: Current number of users in the match.
-        tickRate:
-          type: integer
-          format: int32
-          title: Tick Rate
-        handlerName:
-          type: string
-          title: Handler name
-      description: Represents a realtime match.
-    apiGroupList:
-      type: object
-      properties:
-        groups:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiGroup'
-          description: One or more groups.
-        cursor:
-          type: string
-          description: A cursor used to get the next page.
-      description: One or more groups returned from a listing operation.
-    apiValidatePurchaseGoogleRequest:
-      type: object
-      properties:
-        purchase:
-          type: string
-          description: JSON encoded Google purchase payload.
-        persist:
-          type: boolean
-          title: Persist the purchase
-      title: Google IAP Purchase validation request
-    apiUpdateAccountRequest:
-      type: object
-      properties:
-        username:
-          type: string
-          description: The username of the user's account.
-        displayName:
-          type: string
-          description: The display name of the user.
-        avatarUrl:
-          type: string
-          description: A URL for an avatar image.
-        langTag:
-          type: string
-          description: The language expected to be a tag which follows the BCP-47 spec.
-        location:
-          type: string
-          description: The location set by the user.
-        timezone:
-          type: string
-          description: The timezone set by the user.
-      description: Update a user's account details.
-    apiSessionRefreshRequest:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Refresh token.
-        vars:
-          type: object
-          additionalProperties:
-            type: string
-          description: Extra information that will be bundled in the session token.
-      description: Authenticate against the server with a refresh token.
-    apiTournamentRecordList:
-      type: object
-      properties:
-        records:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiLeaderboardRecord'
-          description: A list of tournament records.
-        ownerRecords:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiLeaderboardRecord'
-          description: A batched set of tournament records belonging to specified owners.
-        nextCursor:
-          type: string
-          description: The cursor to send when retireving the next page (optional).
-        prevCursor:
-          type: string
-          description: The cursor to send when retrieving the previous page (optional).
-        rankCount:
-          type: string
-          format: int64
-          description: The total number of ranks available.
-      description: A set of tournament records which may be part of a tournament records page or a batch of individual records.
-    WriteTournamentRecordRequestTournamentRecordWrite:
-      type: object
-      properties:
-        score:
-          type: string
-          format: int64
-          description: The score value to submit.
-        subscore:
-          type: string
-          format: int64
-          description: An optional secondary value.
-        metadata:
-          type: string
-          description: A JSON object of additional properties (optional).
-        operator:
-          $ref: '#/components/schemas/apiOperator'
-          description: Operator override.
-      description: Record values to write.
-    apiAccount:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/apiUser'
-          description: The user object.
-        wallet:
-          type: string
-          description: The user's wallet data.
-        email:
-          type: string
-          description: The email address of the user.
-        devices:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiAccountDevice'
-          description: The devices which belong to the user's account.
-        customId:
-          type: string
-          description: The custom id in the user's account.
-        verifyTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's email was verified.
-        disableTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's account was disabled/banned.
-      description: A user with additional account details. Always the current user.
-    apiGroupUserList:
-      type: object
-      properties:
-        groupUsers:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/GroupUserListGroupUser'
-          description: User-role pairs for a group.
-        cursor:
-          type: string
-          description: Cursor for the next page of results, if any.
-      description: A list of users belonging to a group, along with their role.
-    apiMatchmakerStats:
-      type: object
-      properties:
-        ticketCount:
-          type: integer
-          format: int32
-        oldestTicketCreateTime:
-          type: string
-          format: date-time
-        completions:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiMatchmakerCompletionStats'
-      title: Matchmaker stats
-    apiMatchList:
-      type: object
-      properties:
-        matches:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiMatch'
-          description: A number of matches corresponding to a list operation.
-      description: A list of realtime matches.
-    apiFriendsOfFriendsList:
-      type: object
-      properties:
-        friendsOfFriends:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/FriendsOfFriendsListFriendOfFriend'
-          description: User friends of friends.
-        cursor:
-          type: string
-          description: Cursor for the next page of results, if any.
-      title: A List of friends of friends
+          description: Refresh token to invalidate.
+      description: Log out a session, invalidate a refresh token, or log out all sessions/refresh tokens for a user.
     apiValidatedSubscription:
       type: object
       properties:
@@ -3807,17 +3670,430 @@ components:
         active:
           type: boolean
           description: Whether the subscription is currently active or not.
-    apiSessionLogoutRequest:
+    apiSubscriptionList:
+      type: object
+      properties:
+        validatedSubscriptions:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiValidatedSubscription'
+          description: Stored validated subscriptions.
+        cursor:
+          type: string
+          description: The cursor to send when retrieving the next page, if any.
+        prevCursor:
+          type: string
+          description: The cursor to send when retrieving the previous page, if any.
+      description: A list of validated subscriptions stored by Nakama.
+    apiReadStorageObjectsRequest:
+      type: object
+      properties:
+        objectIds:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiReadStorageObjectId'
+          description: Batch of storage objects.
+      description: Batch get storage objects.
+    apiDeleteStorageObjectId:
+      type: object
+      properties:
+        collection:
+          type: string
+          description: The collection which stores the object.
+        key:
+          type: string
+          description: The key of the object within the collection.
+        version:
+          type: string
+          description: The version hash of the object.
+      description: Storage objects to delete.
+    apiAccount:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/apiUser'
+          description: The user object.
+        wallet:
+          type: string
+          description: The user's wallet data.
+        email:
+          type: string
+          description: The email address of the user.
+        devices:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiAccountDevice'
+          description: The devices which belong to the user's account.
+        customId:
+          type: string
+          description: The custom id in the user's account.
+        verifyTime:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's email was verified.
+        disableTime:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the user's account was disabled/banned.
+      description: A user with additional account details. Always the current user.
+    apiFriendsOfFriendsList:
+      type: object
+      properties:
+        friendsOfFriends:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/FriendsOfFriendsListFriendOfFriend'
+          description: User friends of friends.
+        cursor:
+          type: string
+          description: Cursor for the next page of results, if any.
+      title: A List of friends of friends
+    apiMatchList:
+      type: object
+      properties:
+        matches:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiMatch'
+          description: A number of matches corresponding to a list operation.
+      description: A list of realtime matches.
+    apiLeaderboardRecordList:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiLeaderboardRecord'
+          description: A list of leaderboard records.
+        ownerRecords:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiLeaderboardRecord'
+          description: A batched set of leaderboard records belonging to specified owners.
+        nextCursor:
+          type: string
+          description: The cursor to send when retrieving the next page, if any.
+        prevCursor:
+          type: string
+          description: The cursor to send when retrieving the previous page, if any.
+        rankCount:
+          type: string
+          format: int64
+          description: The total number of ranks available.
+      description: A set of leaderboard records, may be part of a leaderboard records page or a batch of individual records.
+    apiAccountEmail:
+      type: object
+      properties:
+        email:
+          type: string
+          description: A valid RFC-5322 email address.
+        password:
+          type: string
+          description: 'A password for the user account.
+
+
+            Ignored with unlink operations.'
+        vars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Extra information that will be bundled in the session token.
+      description: Send an email with password to the server. Used with authenticate/link/unlink.
+    apiChannelMessage:
+      type: object
+      properties:
+        channelId:
+          type: string
+          description: The channel this message belongs to.
+        messageId:
+          type: string
+          description: The unique ID of this message.
+        code:
+          type: integer
+          format: int32
+          description: The code representing a message type or category.
+        senderId:
+          type: string
+          description: Message sender, usually a user ID.
+        username:
+          type: string
+          description: The username of the message sender, if any.
+        content:
+          type: string
+          description: The content payload.
+        createTime:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was created.
+        updateTime:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was last updated.
+        persistent:
+          type: boolean
+          description: True if the message was persisted to the channel's history, false otherwise.
+        roomName:
+          type: string
+          description: The name of the chat room, or an empty string if this message was not sent through a chat room.
+        groupId:
+          type: string
+          description: The ID of the group, or an empty string if this message was not sent through a group channel.
+        userIdOne:
+          type: string
+          description: The ID of the first DM user, or an empty string if this message was not sent through a DM chat.
+        userIdTwo:
+          type: string
+          description: The ID of the second DM user, or an empty string if this message was not sent through a DM chat.
+      description: A message sent on a channel.
+    apiListSubscriptionsRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int32
+          title: Max number of results per page
+        cursor:
+          type: string
+          title: Cursor to retrieve a page of records from
+      description: List user subscriptions.
+    apiAccountApple:
       type: object
       properties:
         token:
           type: string
-          description: Session token to log out.
+          description: The ID token received from Apple to validate.
+        vars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Extra information that will be bundled in the session token.
+      description: Send a Apple Sign In token to the server. Used with authenticate/link/unlink.
+    apiValidatePurchaseGoogleRequest:
+      type: object
+      properties:
+        purchase:
+          type: string
+          description: JSON encoded Google purchase payload.
+        persist:
+          type: boolean
+          title: Persist the purchase
+      title: Google IAP Purchase validation request
+    apiStorageObjectList:
+      type: object
+      properties:
+        objects:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiStorageObject'
+          description: The list of storage objects.
+        cursor:
+          type: string
+          description: The cursor for the next page of results, if any.
+      description: List of storage objects.
+    apiCreateGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: A unique name for the group.
+        description:
+          type: string
+          description: A description for the group.
+        langTag:
+          type: string
+          description: The language expected to be a tag which follows the BCP-47 spec.
+        avatarUrl:
+          type: string
+          description: A URL for an avatar image.
+        open:
+          type: boolean
+          description: Mark a group as open or not where only admins can accept members.
+        maxCount:
+          type: integer
+          format: int32
+          description: Maximum number of group members.
+      description: Create a group with the current user as owner.
+    apiValidateSubscriptionAppleRequest:
+      type: object
+      properties:
+        receipt:
+          type: string
+          description: Base64 encoded Apple receipt data payload.
+        persist:
+          type: boolean
+          description: Persist the subscription.
+      title: Apple Subscription validation request
+    apiGroup:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of a group.
+        creatorId:
+          type: string
+          description: The id of the user who created the group.
+        name:
+          type: string
+          description: The unique name of the group.
+        description:
+          type: string
+          description: A description for the group.
+        langTag:
+          type: string
+          description: The language expected to be a tag which follows the BCP-47 spec.
+        metadata:
+          type: string
+          description: Additional information stored as a JSON object.
+        avatarUrl:
+          type: string
+          description: A URL for an avatar image.
+        open:
+          type: boolean
+          description: Anyone can join open groups, otherwise only admins can accept members.
+        edgeCount:
+          type: integer
+          format: int32
+          description: The current count of all members in the group.
+        maxCount:
+          type: integer
+          format: int32
+          description: The maximum number of members allowed.
+        createTime:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the group was created.
+        updateTime:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the group was last updated.
+      description: A group in the server.
+    apiOperator:
+      type: string
+      enum:
+      - NO_OVERRIDE
+      - BEST
+      - SET
+      - INCREMENT
+      - DECREMENT
+      default: NO_OVERRIDE
+      description: "Operator that can be used to override the one set in the leaderboard.\n\n - NO_OVERRIDE: Do not override the leaderboard operator.\n - BEST: Override the leaderboard operator with BEST.\n - SET: Override the leaderboard operator with SET.\n - INCREMENT: Override the leaderboard operator with INCREMENT.\n - DECREMENT: Override the leaderboard operator with DECREMENT."
+    apiValidateSubscriptionGoogleRequest:
+      type: object
+      properties:
+        receipt:
+          type: string
+          description: JSON encoded Google purchase payload.
+        persist:
+          type: boolean
+          description: Persist the subscription.
+      title: Google Subscription validation request
+    apiValidatePurchaseFacebookInstantRequest:
+      type: object
+      properties:
+        signedRequest:
+          type: string
+          description: Base64 encoded Facebook Instant signedRequest receipt data payload.
+        persist:
+          type: boolean
+          title: Persist the purchase
+      title: Facebook Instant IAP Purchase validation request
+    apiStorageObjectAck:
+      type: object
+      properties:
+        collection:
+          type: string
+          description: The collection which stores the object.
+        key:
+          type: string
+          description: The key of the object within the collection.
+        version:
+          type: string
+          description: The version hash of the object.
+        userId:
+          type: string
+          description: The owner of the object.
+        createTime:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
+        updateTime:
+          type: string
+          format: date-time
+          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
+      description: A storage acknowledgement.
+    apiMatchmakerStats:
+      type: object
+      properties:
+        ticketCount:
+          type: integer
+          format: int32
+        oldestTicketCreateTime:
+          type: string
+          format: date-time
+        completions:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiMatchmakerCompletionStats'
+      title: Matchmaker stats
+    FriendsOfFriendsListFriendOfFriend:
+      type: object
+      properties:
+        referrer:
+          type: string
+          description: The user who referred its friend.
+        user:
+          $ref: '#/components/schemas/apiUser'
+          description: User.
+      description: A friend of a friend.
+    apiLinkSteamRequest:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/apiAccountSteam'
+          description: The Facebook account details.
+        sync:
+          type: boolean
+          description: Import Steam friends for the user.
+      description: Link Steam to the current user's account.
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    apiSession:
+      type: object
+      properties:
+        created:
+          type: boolean
+          description: True if the corresponding account was just created, false otherwise.
+        token:
+          type: string
+          description: Authentication credentials.
         refreshToken:
           type: string
-          description: Refresh token to invalidate.
-      description: Log out a session, invalidate a refresh token, or log out all sessions/refresh tokens for a user.
-    WriteLeaderboardRecordRequestLeaderboardRecordWrite:
+          description: Refresh token that can be used for session token renewal.
+      description: A user's session used to authenticate messages.
+    apiValidatePurchaseResponse:
+      type: object
+      properties:
+        validatedPurchases:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiValidatedPurchase'
+          description: Newly seen validated purchases.
+      description: Validate IAP response.
+    WriteTournamentRecordRequestTournamentRecordWrite:
       type: object
       properties:
         score:
@@ -3830,11 +4106,97 @@ components:
           description: An optional secondary value.
         metadata:
           type: string
-          description: Optional record metadata.
+          description: A JSON object of additional properties (optional).
         operator:
           $ref: '#/components/schemas/apiOperator'
           description: Operator override.
       description: Record values to write.
+    apiRpc:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier of the function.
+        payload:
+          type: string
+          description: The payload of the function which must be a JSON object.
+        httpKey:
+          type: string
+          description: The authentication key used when executed as a non-client HTTP request.
+      description: Execute an Lua function on the server.
+    apiStoreEnvironment:
+      type: string
+      enum:
+      - UNKNOWN
+      - SANDBOX
+      - PRODUCTION
+      default: UNKNOWN
+      description: "- UNKNOWN: Unknown environment.\n - SANDBOX: Sandbox/test environment.\n - PRODUCTION: Production environment."
+      title: Environment where a purchase/subscription took place,
+    apiStoreProvider:
+      type: string
+      enum:
+      - APPLE_APP_STORE
+      - GOOGLE_PLAY_STORE
+      - HUAWEI_APP_GALLERY
+      - FACEBOOK_INSTANT_STORE
+      default: APPLE_APP_STORE
+      description: "- APPLE_APP_STORE: Apple App Store\n - GOOGLE_PLAY_STORE: Google Play Store\n - HUAWEI_APP_GALLERY: Huawei App Gallery\n - FACEBOOK_INSTANT_STORE: Facebook Instant Store"
+      title: Validation Provider,
+    apiStorageObjects:
+      type: object
+      properties:
+        objects:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiStorageObject'
+          description: The batch of storage objects.
+      description: Batch of storage objects.
+    apiGroupList:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apiGroup'
+          description: One or more groups.
+        cursor:
+          type: string
+          description: A cursor used to get the next page.
+      description: One or more groups returned from a listing operation.
+    apiAccountGameCenter:
+      type: object
+      properties:
+        playerId:
+          type: string
+          description: Player ID (generated by GameCenter).
+        bundleId:
+          type: string
+          description: Bundle ID (generated by GameCenter).
+        timestampSeconds:
+          type: string
+          format: int64
+          description: Time since UNIX epoch when the signature was created.
+        salt:
+          type: string
+          description: A random "NSString" used to compute the hash and keep it randomized.
+        signature:
+          type: string
+          description: The verification signature data generated.
+        publicKeyUrl:
+          type: string
+          description: The URL for the public encryption key.
+        vars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Extra information that will be bundled in the session token.
+      description: 'Send Apple''s Game Center account credentials to the server. Used with authenticate/link/unlink.
+
+
+        https://developer.apple.com/documentation/gamekit/gklocalplayer/1515407-generateidentityverificationsign'
     apiUser:
       type: object
       properties:
@@ -3896,29 +4258,6 @@ components:
           type: string
           description: The Apple Sign In ID in the user's account.
       description: A user in the server.
-    apiUsers:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiUser'
-          description: The User objects.
-      description: A collection of zero or more users.
-    apiValidatePurchaseHuaweiRequest:
-      type: object
-      properties:
-        purchase:
-          type: string
-          description: JSON encoded Huawei InAppPurchaseData.
-        signature:
-          type: string
-          description: InAppPurchaseData signature.
-        persist:
-          type: boolean
-          title: Persist the purchase
-      title: Huawei IAP Purchase validation request
     apiParty:
       type: object
       properties:
@@ -3939,104 +4278,28 @@ components:
           type: string
           description: The party label, if any.
       description: Incoming information about a party.
-    apiFriend:
+    apiSessionRefreshRequest:
       type: object
       properties:
-        user:
-          $ref: '#/components/schemas/apiUser'
-          description: The user object.
-        state:
-          type: integer
-          format: int32
-          description: 'The friend status.
-
-
-            one of "Friend.State".'
-        updateTime:
+        token:
           type: string
-          format: date-time
-          description: Time of the latest relationship update.
-        metadata:
-          type: string
-          description: Metadata.
-      description: A friend of a user.
-    apiAccountGameCenter:
-      type: object
-      properties:
-        playerId:
-          type: string
-          description: Player ID (generated by GameCenter).
-        bundleId:
-          type: string
-          description: Bundle ID (generated by GameCenter).
-        timestampSeconds:
-          type: string
-          format: int64
-          description: Time since UNIX epoch when the signature was created.
-        salt:
-          type: string
-          description: A random "NSString" used to compute the hash and keep it randomized.
-        signature:
-          type: string
-          description: The verification signature data generated.
-        publicKeyUrl:
-          type: string
-          description: The URL for the public encryption key.
+          description: Refresh token.
         vars:
           type: object
           additionalProperties:
             type: string
           description: Extra information that will be bundled in the session token.
-      description: 'Send Apple''s Game Center account credentials to the server. Used with authenticate/link/unlink.
-
-
-        https://developer.apple.com/documentation/gamekit/gklocalplayer/1515407-generateidentityverificationsign'
-    apiRpc:
+      description: Authenticate against the server with a refresh token.
+    apiValidatePurchaseAppleRequest:
       type: object
       properties:
-        id:
+        receipt:
           type: string
-          description: The identifier of the function.
-        payload:
-          type: string
-          description: The payload of the function which must be a JSON object.
-        httpKey:
-          type: string
-          description: The authentication key used when executed as a non-client HTTP request.
-      description: Execute an Lua function on the server.
-    apiValidateSubscriptionResponse:
-      type: object
-      properties:
-        validatedSubscription:
-          $ref: '#/components/schemas/apiValidatedSubscription'
-      description: Validate Subscription response.
-    apiNotification:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID of the Notification.
-        subject:
-          type: string
-          description: Subject of the notification.
-        content:
-          type: string
-          description: Content of the notification in JSON.
-        code:
-          type: integer
-          format: int32
-          description: Category code for this notification.
-        senderId:
-          type: string
-          description: ID of the sender, if a user. Otherwise 'null'.
-        createTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the notification was created.
-        persistent:
+          description: Base64 encoded Apple receipt data payload.
+        persist:
           type: boolean
-          description: True if this notification was persisted to the database.
-      description: A notification in the server.
+          title: Persist the purchase
+      title: Apple IAP Purchases validation request
     apiUserGroupList:
       type: object
       properties:
@@ -4050,81 +4313,6 @@ components:
           type: string
           description: Cursor for the next page of results, if any.
       description: A list of groups belonging to a user, along with the user's role in each group.
-    apiSession:
-      type: object
-      properties:
-        created:
-          type: boolean
-          description: True if the corresponding account was just created, false otherwise.
-        token:
-          type: string
-          description: Authentication credentials.
-        refreshToken:
-          type: string
-          description: Refresh token that can be used for session token renewal.
-      description: A user's session used to authenticate messages.
-    apiAccountGoogle:
-      type: object
-      properties:
-        token:
-          type: string
-          description: The OAuth token received from Google to access their profile API.
-        vars:
-          type: object
-          additionalProperties:
-            type: string
-          description: Extra information that will be bundled in the session token.
-      description: Send a Google token to the server. Used with authenticate/link/unlink.
-    apiFriendList:
-      type: object
-      properties:
-        friends:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiFriend'
-          description: The Friend objects.
-        cursor:
-          type: string
-          description: Cursor for the next page of results, if any.
-      description: A collection of zero or more friends of the user.
-    apiStorageObjects:
-      type: object
-      properties:
-        objects:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiStorageObject'
-          description: The batch of storage objects.
-      description: Batch of storage objects.
-    apiSubscriptionList:
-      type: object
-      properties:
-        validatedSubscriptions:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiValidatedSubscription'
-          description: Stored validated subscriptions.
-        cursor:
-          type: string
-          description: The cursor to send when retrieving the next page, if any.
-        prevCursor:
-          type: string
-          description: The cursor to send when retrieving the previous page, if any.
-      description: A list of validated subscriptions stored by Nakama.
-    apiListSubscriptionsRequest:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int32
-          title: Max number of results per page
-        cursor:
-          type: string
-          title: Cursor to retrieve a page of records from
-      description: List user subscriptions.
     apiWriteStorageObjectsRequest:
       type: object
       properties:
@@ -4135,54 +4323,6 @@ components:
             $ref: '#/components/schemas/apiWriteStorageObject'
           description: The objects to store on the server.
       description: Write objects to the storage engine.
-    FriendsOfFriendsListFriendOfFriend:
-      type: object
-      properties:
-        referrer:
-          type: string
-          description: The user who referred its friend.
-        user:
-          $ref: '#/components/schemas/apiUser'
-          description: User.
-      description: A friend of a friend.
-    apiAccountSteam:
-      type: object
-      properties:
-        token:
-          type: string
-          description: The account token received from Steam to access their profile API.
-        vars:
-          type: object
-          additionalProperties:
-            type: string
-          description: Extra information that will be bundled in the session token.
-      description: Send a Steam token to the server. Used with authenticate/link/unlink.
-    apiOperator:
-      type: string
-      enum:
-      - NO_OVERRIDE
-      - BEST
-      - SET
-      - INCREMENT
-      - DECREMENT
-      default: NO_OVERRIDE
-      description: "Operator that can be used to override the one set in the leaderboard.\n\n - NO_OVERRIDE: Do not override the leaderboard operator.\n - BEST: Override the leaderboard operator with BEST.\n - SET: Override the leaderboard operator with SET.\n - INCREMENT: Override the leaderboard operator with INCREMENT.\n - DECREMENT: Override the leaderboard operator with DECREMENT."
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    apiValidateSubscriptionAppleRequest:
-      type: object
-      properties:
-        receipt:
-          type: string
-          description: Base64 encoded Apple receipt data payload.
-        persist:
-          type: boolean
-          description: Persist the subscription.
-      title: Apple Subscription validation request
     apiAccountFacebook:
       type: object
       properties:
@@ -4195,54 +4335,20 @@ components:
             type: string
           description: Extra information that will be bundled in the session token.
       description: Send a Facebook token to the server. Used with authenticate/link/unlink.
-    apiAccountCustom:
+    rpcStatus:
       type: object
       properties:
-        id:
-          type: string
-          description: A custom identifier.
-        vars:
-          type: object
-          additionalProperties:
-            type: string
-          description: Extra information that will be bundled in the session token.
-      description: Send a custom ID to the server. Used with authenticate/link/unlink.
-    apiStorageObject:
-      type: object
-      properties:
-        collection:
-          type: string
-          description: The collection which stores the object.
-        key:
-          type: string
-          description: The key of the object within the collection.
-        userId:
-          type: string
-          description: The user owner of the object.
-        value:
-          type: string
-          description: The value of the object.
-        version:
-          type: string
-          description: The version hash of the object.
-        permissionRead:
+        code:
           type: integer
           format: int32
-          description: The read access permissions for the object.
-        permissionWrite:
-          type: integer
-          format: int32
-          description: The write access permissions for the object.
-        createTime:
+        message:
           type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was created.
-        updateTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the object was last updated.
-      description: An object within the storage engine.
-    apiLeaderboardRecordList:
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'
+    apiTournamentRecordList:
       type: object
       properties:
         records:
@@ -4250,130 +4356,24 @@ components:
           items:
             type: object
             $ref: '#/components/schemas/apiLeaderboardRecord'
-          description: A list of leaderboard records.
+          description: A list of tournament records.
         ownerRecords:
           type: array
           items:
             type: object
             $ref: '#/components/schemas/apiLeaderboardRecord'
-          description: A batched set of leaderboard records belonging to specified owners.
+          description: A batched set of tournament records belonging to specified owners.
         nextCursor:
           type: string
-          description: The cursor to send when retrieving the next page, if any.
+          description: The cursor to send when retireving the next page (optional).
         prevCursor:
           type: string
-          description: The cursor to send when retrieving the previous page, if any.
+          description: The cursor to send when retrieving the previous page (optional).
         rankCount:
           type: string
           format: int64
           description: The total number of ranks available.
-      description: A set of leaderboard records, may be part of a leaderboard records page or a batch of individual records.
-    apiStoreProvider:
-      type: string
-      enum:
-      - APPLE_APP_STORE
-      - GOOGLE_PLAY_STORE
-      - HUAWEI_APP_GALLERY
-      - FACEBOOK_INSTANT_STORE
-      default: APPLE_APP_STORE
-      description: "- APPLE_APP_STORE: Apple App Store\n - GOOGLE_PLAY_STORE: Google Play Store\n - HUAWEI_APP_GALLERY: Huawei App Gallery\n - FACEBOOK_INSTANT_STORE: Facebook Instant Store"
-      title: Validation Provider,
-    apiDeleteStorageObjectId:
-      type: object
-      properties:
-        collection:
-          type: string
-          description: The collection which stores the object.
-        key:
-          type: string
-          description: The key of the object within the collection.
-        version:
-          type: string
-          description: The version hash of the object.
-      description: Storage objects to delete.
-    apiAccountEmail:
-      type: object
-      properties:
-        email:
-          type: string
-          description: A valid RFC-5322 email address.
-        password:
-          type: string
-          description: 'A password for the user account.
-
-
-            Ignored with unlink operations.'
-        vars:
-          type: object
-          additionalProperties:
-            type: string
-          description: Extra information that will be bundled in the session token.
-      description: Send an email with password to the server. Used with authenticate/link/unlink.
-    apiChannelMessageList:
-      type: object
-      properties:
-        messages:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/apiChannelMessage'
-          description: A list of messages.
-        nextCursor:
-          type: string
-          description: The cursor to send when retrieving the next page, if any.
-        prevCursor:
-          type: string
-          description: The cursor to send when retrieving the previous page, if any.
-        cacheableCursor:
-          type: string
-          description: Cacheable cursor to list newer messages. Durable and designed to be stored, unlike next/prev cursors.
-      description: A list of channel messages, usually a result of a list operation.
-    apiChannelMessage:
-      type: object
-      properties:
-        channelId:
-          type: string
-          description: The channel this message belongs to.
-        messageId:
-          type: string
-          description: The unique ID of this message.
-        code:
-          type: integer
-          format: int32
-          description: The code representing a message type or category.
-        senderId:
-          type: string
-          description: Message sender, usually a user ID.
-        username:
-          type: string
-          description: The username of the message sender, if any.
-        content:
-          type: string
-          description: The content payload.
-        createTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was created.
-        updateTime:
-          type: string
-          format: date-time
-          description: The UNIX time (for gRPC clients) or ISO string (for REST clients) when the message was last updated.
-        persistent:
-          type: boolean
-          description: True if the message was persisted to the channel's history, false otherwise.
-        roomName:
-          type: string
-          description: The name of the chat room, or an empty string if this message was not sent through a chat room.
-        groupId:
-          type: string
-          description: The ID of the group, or an empty string if this message was not sent through a group channel.
-        userIdOne:
-          type: string
-          description: The ID of the first DM user, or an empty string if this message was not sent through a DM chat.
-        userIdTwo:
-          type: string
-          description: The ID of the second DM user, or an empty string if this message was not sent through a DM chat.
-      description: A message sent on a channel.
+      description: A set of tournament records which may be part of a tournament records page or a batch of individual records.
   securitySchemes:
     BasicAuth:
       type: http

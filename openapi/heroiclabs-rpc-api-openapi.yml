@@ -3300,59 +3300,133 @@ paths:
       - RPC
 components:
   schemas:
-    SyncEventLeaderboards:
-      type: object
-      properties: null
-    SyncEnergy:
+    EconomyGrantRequest:
       type: object
       properties:
-        modifiers:
+        reward_modifiers:
           type: array
           items:
-            $ref: '#/components/schemas/EnergyModifier'
-    TeamAchievementsClaimRequest:
+            $ref: '#/components/schemas/RewardModifier'
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EnergyModifier:
+      type: object
+      properties:
+        operator:
+          type: string
+        value:
+          type: integer
+          format: int32
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+    ProgressionPurchaseRequest:
       type: object
       properties:
         id:
           type: string
-        achievement_ids:
+    TeamStore:
+      type: object
+      properties:
+        store_items:
           type: array
           items:
-            type: string
-        claim_total_reward:
-          type: boolean
-    ChallengeInviteRequest:
+            $ref: '#/components/schemas/TeamStoreItem'
+        active_reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveRewardModifier'
+        current_time_sec:
+          type: integer
+          format: int64
+    LeaderboardScoreList:
+      type: object
+      properties:
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        owner_scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardScore'
+        next_cursor:
+          type: string
+        prev_cursor:
+          type: string
+        rank_count:
+          type: integer
+          format: int64
+        leaderboard:
+          $ref: '#/components/schemas/Leaderboard'
+    ChallengeGetRequest:
       type: object
       properties:
         challenge_id:
           type: string
-        invitees:
+        with_scores:
+          type: boolean
+    AuctionClaimBidRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    Leaderboard:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        ascending:
+          type: boolean
+        operator:
+          type: string
+        prev_reset_time_sec:
+          type: integer
+          format: int64
+        next_reset_time_sec:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        regions:
           type: array
           items:
             type: string
-    TeamInventoryListRequest:
+        authoritative:
+          type: boolean
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    TeamInventoryConsumeRequest:
       type: object
       properties:
         id:
           type: string
-        item_category:
-          type: string
-    EventLeaderboardGet:
-      type: object
-      properties:
-        id:
-          type: string
-    AuctionListCreatedRequest:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int64
-        cursor:
-          type: string
-    InventoryConsumeRequest:
-      type: object
-      properties:
         overconsume:
           type: boolean
         items:
@@ -3365,109 +3439,9 @@ components:
           additionalProperties:
             type: integer
             format: int64
-    TutorialAcceptRequest:
+    StatUpdateRequest:
       type: object
       properties:
-        id:
-          type: string
-    StreaksResetRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-    UnlockablesQueueAddRequest:
-      type: object
-      properties:
-        instance_ids:
-          type: array
-          items:
-            type: string
-    EnergyList:
-      type: object
-      properties: null
-    AuctionCreateRequest:
-      type: object
-      properties:
-        template_id:
-          type: string
-        condition_id:
-          type: string
-        instance_ids:
-          type: array
-          items:
-            type: string
-        start_time_sec:
-          type: integer
-          format: int64
-        allowed_user_ids:
-          type: array
-          items:
-            type: string
-    TeamMember:
-      type: object
-      properties:
-        id:
-          type: string
-        activity:
-          type: integer
-          format: int64
-    LeaderboardUpdate:
-      type: object
-      properties:
-        id:
-          type: string
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        metadata:
-          type: string
-    TeamEventLeaderboardGet:
-      type: object
-      properties:
-        id:
-          type: string
-        event_leaderboard_id:
-          type: string
-    AuctionClaimCreated:
-      type: object
-      properties:
-        auction:
-          $ref: '#/components/schemas/Auction'
-        reward:
-          $ref: '#/components/schemas/AuctionBidAmount'
-        fee:
-          $ref: '#/components/schemas/AuctionBidAmount'
-        returned_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InventoryItem'
-        received_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InventoryItem'
-    TeamWallet:
-      type: object
-      properties:
-        id:
-          type: string
-        update_time_sec:
-          type: integer
-          format: int64
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    TeamStatUpdateRequest:
-      type: object
-      properties:
-        id:
-          type: string
         public:
           type: array
           items:
@@ -3476,6 +3450,260 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StatUpdate'
+    EconomyPurchaseAck:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        is_sandbox_purchase:
+          type: boolean
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EventLeaderboard:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        ascending:
+          type: boolean
+        operator:
+          type: string
+        tier:
+          type: integer
+          format: int32
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        expiry_time_sec:
+          type: integer
+          format: int64
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        claim_time_sec:
+          type: integer
+          format: int64
+        reward:
+          $ref: '#/components/schemas/Reward'
+        count:
+          type: integer
+          format: int64
+        max_count:
+          type: integer
+          format: int64
+        max_num_score:
+          type: integer
+          format: int64
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventLeaderboardScore'
+        is_active:
+          type: boolean
+        can_claim:
+          type: boolean
+        can_roll:
+          type: boolean
+        matchmaker_properties:
+          type: object
+          additionalProperties: true
+        current_time_sec:
+          type: integer
+          format: int64
+        cohort_id:
+          type: string
+        backing_id:
+          type: string
+        rolls:
+          type: integer
+          format: int64
+        max_rolls:
+          type: integer
+          format: int64
+        score_target:
+          type: integer
+          format: int64
+        score_target_players:
+          type: integer
+          format: int64
+        score_time_limit_sec:
+          type: integer
+          format: int64
+        score_time_limit_ends_sec:
+          type: integer
+          format: int64
+        tier_delta_per_phase:
+          type: integer
+          format: int64
+        roll_cooldown_sec:
+          type: integer
+          format: int64
+        roll_cooldown_ends_sec:
+          type: integer
+          format: int64
+        reroll_count_freeze:
+          type: boolean
+        best_rank:
+          type: integer
+          format: int64
+        can_update:
+          type: boolean
+        can_roll_with_claim:
+          type: boolean
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    AvailableRewards:
+      type: object
+      properties:
+        guaranteed:
+          $ref: '#/components/schemas/AvailableRewardsContents'
+        weighted:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsContents'
+        max_rolls:
+          type: integer
+          format: int64
+        total_weight:
+          type: integer
+          format: int64
+        max_repeat_rolls:
+          type: integer
+          format: int64
+        to_mailbox_expiry_sec:
+          type: integer
+          format: int64
+        team_reward:
+          $ref: '#/components/schemas/AvailableTeamRewards'
+        message:
+          type: string
+    TeamWriteChatMessageRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+    EconomyListRequest:
+      type: object
+      properties:
+        store_type:
+          $ref: '#/components/schemas/EconomyStoreType'
+    UnlockablesReward:
+      type: object
+      properties:
+        unlockables:
+          $ref: '#/components/schemas/UnlockablesList'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+    SyncUnlockables:
+      type: object
+      properties:
+        removes:
+          type: array
+          items:
+            type: string
+    TeamRewardMailboxDeleteRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        entry_ids:
+          type: array
+          items:
+            type: string
+    ProgressionResetRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    AvailableRewardsRewardModifier:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        operator:
+          type: string
+        value:
+          $ref: '#/components/schemas/RewardRangeInt64'
+        duration_sec:
+          $ref: '#/components/schemas/RewardRangeUiNt64'
+    SyncEconomy:
+      type: object
+      properties:
+        modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveRewardModifier'
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    TeamEventLeaderboardRoll:
+      type: object
+      properties:
+        id:
+          type: string
+        event_leaderboard_id:
+          type: string
+        metadata:
+          type: string
+        claim_reward:
+          type: boolean
+    EconomyDonationAck:
+      type: object
+      properties:
+        created:
+          type: boolean
+        donation:
+          $ref: '#/components/schemas/EconomyDonation'
+    AchievementsUpdateRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+        amount:
+          type: integer
+          format: int64
+        achievements:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EconomyListStoreItemCost:
+      type: object
+      properties:
+        sku:
+          type: string
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
     ChallengeCreateRequest:
       type: object
       properties:
@@ -3509,181 +3737,9 @@ components:
           type: object
           additionalProperties:
             type: string
-    LeaderboardListRequest:
+    InventoryConsumeRequest:
       type: object
       properties:
-        categories:
-          type: array
-          items:
-            type: string
-    AvailableTeamRewardsContents:
-      type: object
-      properties:
-        item_sets:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableRewardsItemSet'
-        reward_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableRewardsRewardModifier'
-        weight:
-          type: integer
-          format: int64
-    InventoryUpdateItemsRequest:
-      type: object
-      properties: null
-    UnlockablesList:
-      type: object
-      properties:
-        unlockables:
-          type: array
-          items:
-            $ref: '#/components/schemas/Unlockable'
-        overflow:
-          $ref: '#/components/schemas/Unlockable'
-        slots:
-          type: integer
-          format: int32
-        active_slots:
-          type: integer
-          format: int32
-        max_active_slots:
-          type: integer
-          format: int32
-        slot_cost:
-          $ref: '#/components/schemas/UnlockableSlotCost'
-        instance_id:
-          type: string
-        queued_unlocks:
-          type: array
-          items:
-            type: string
-        max_queued_unlocks:
-          type: integer
-          format: int32
-    TeamGiftList:
-      type: object
-      properties:
-        gifts:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamGift'
-    EventLeaderboardList:
-      type: object
-      properties:
-        with_scores:
-          type: boolean
-        categories:
-          type: array
-          items:
-            type: string
-    AuctionList:
-      type: object
-      properties:
-        auctions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Auction'
-        cursor:
-          type: string
-    InventoryUpdateAck:
-      type: object
-      properties:
-        inventory:
-          $ref: '#/components/schemas/Inventory'
-    TutorialAbandonRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    InventoryDeleteItemsRequest:
-      type: object
-      properties:
-        instance_ids:
-          type: array
-          items:
-            type: string
-    EventLeaderboardDebugRandomScoresRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        min:
-          type: integer
-          format: int64
-        max:
-          type: integer
-          format: int64
-        operator:
-          type: integer
-          format: int32
-        subscore_min:
-          type: integer
-          format: int64
-        subscore_max:
-          type: integer
-          format: int64
-    EconomyDonationContributor:
-      type: object
-      properties:
-        user_id:
-          type: string
-        count:
-          type: integer
-          format: int64
-        claim_count:
-          type: integer
-          format: int64
-    TeamSearchRequest:
-      type: object
-      properties:
-        input:
-          type: string
-        limit:
-          type: integer
-          format: int32
-        lang_tag:
-          type: string
-        min_activity:
-          type: integer
-          format: int64
-    TeamMemberReward:
-      type: object
-      properties:
-        energy_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardEnergyModifier'
-        reward_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardModifier'
-        grant_time_sec:
-          type: integer
-          format: int64
-        items:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    ChallengesList:
-      type: object
-      properties:
-        challenges:
-          type: array
-          items:
-            $ref: '#/components/schemas/Challenge'
-    TeamInventoryConsumeRequest:
-      type: object
-      properties:
-        id:
-          type: string
         overconsume:
           type: boolean
         items:
@@ -3696,605 +3752,34 @@ components:
           additionalProperties:
             type: integer
             format: int64
-    EconomyUpdateAck:
-      type: object
-      properties:
-        inventory:
-          $ref: '#/components/schemas/Inventory'
-        reward:
-          $ref: '#/components/schemas/Reward'
-        active_reward_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActiveRewardModifier'
-        current_time_sec:
-          type: integer
-          format: int64
-        wallet:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    ChallengeState:
-      type: string
-      enum:
-      - CHALLENGE_STATE_NONE
-      - CHALLENGE_STATE_INVITED
-      - CHALLENGE_STATE_JOINED
-      - CHALLENGE_STATE_CLAIMED
-      - CHALLENGE_STATE_DECLINED
-      - CHALLENGE_STATE_LEFT
-    TutorialDeclineRequest:
+    EventLeaderboardRoll:
       type: object
       properties:
         id:
           type: string
-    ActiveRewardModifier:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-        operator:
-          type: string
-        value:
-          type: integer
-          format: int64
-        start_time_sec:
-          type: integer
-          format: int64
-        end_time_sec:
-          type: integer
-          format: int64
-    SyncRequest:
-      type: object
-      properties:
-        inventory:
-          $ref: '#/components/schemas/SyncInventory'
-        economy:
-          $ref: '#/components/schemas/SyncEconomy'
-        achievements:
-          $ref: '#/components/schemas/SyncAchievements'
-        energy:
-          $ref: '#/components/schemas/SyncEnergy'
-        event_leaderboards:
-          $ref: '#/components/schemas/SyncEventLeaderboards'
-        progressions:
-          $ref: '#/components/schemas/SyncProgressions'
-        stats:
-          $ref: '#/components/schemas/StatUpdateRequest'
-        tutorials:
-          $ref: '#/components/schemas/SyncTutorials'
-        unlockables:
-          $ref: '#/components/schemas/SyncUnlockables'
-        streaks:
-          $ref: '#/components/schemas/SyncStreaks'
-    Incentive:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        code:
-          type: string
-        type:
-          $ref: '#/components/schemas/IncentiveType'
-        create_time_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        expiry_time_sec:
-          type: integer
-          format: int64
-        recipient_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        sender_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        unclaimed_recipients:
-          type: array
-          items:
-            type: string
-        rewards:
-          type: array
-          items:
-            $ref: '#/components/schemas/Reward'
-        max_claims:
-          type: integer
-          format: int64
-        additional_properties:
-          type: object
-          additionalProperties: true
-    SyncTutorials:
-      type: object
-      properties:
-        accepts:
-          type: array
-          items:
-            type: string
-        declines:
-          type: array
-          items:
-            type: string
-        abandons:
-          type: array
-          items:
-            type: string
-        updates:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    TeamInventoryUpdateItemsRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    SyncInventory:
-      type: object
-      properties: null
-    AchievementList:
-      type: object
-      properties: null
-    EconomyDonationClaimRewards:
-      type: object
-      properties:
-        donations:
-          $ref: '#/components/schemas/EconomyDonationsList'
-    EnergyModifier:
-      type: object
-      properties:
-        operator:
-          type: string
-        value:
-          type: integer
-          format: int32
-        start_time_sec:
-          type: integer
-          format: int64
-        end_time_sec:
-          type: integer
-          format: int64
-    TeamGiftListRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    RewardMailboxDeleteRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-    ProgressionList:
-      type: object
-      properties: null
-    EconomyPurchaseIntentRequest:
-      type: object
-      properties:
-        item_id:
-          type: string
-        store_type:
-          $ref: '#/components/schemas/EconomyStoreType'
-        sku:
-          type: string
-        amount:
-          type: number
-          format: double
-        currency:
-          type: string
-    ChallengeSearchRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        category:
-          type: string
-        limit:
-          type: integer
-          format: int64
-    ChallengeSubmitScoreRequest:
-      type: object
-      properties:
-        challenge_id:
-          type: string
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
         metadata:
           type: string
-        conditional_metadata_update:
+        claim_reward:
           type: boolean
-    ProgressionResetRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-    StatUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: integer
-          format: int64
-        operator:
-          $ref: '#/components/schemas/StatUpdateOperator'
-    TeamGiftContributeAck:
-      type: object
-      properties:
-        gift:
-          $ref: '#/components/schemas/TeamGift'
-        count:
-          type: integer
-          format: int64
-        reward:
-          $ref: '#/components/schemas/Reward'
-    StreaksClaimRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-    TeamAchievementsGetRequest:
+    TeamRewardMailboxClaimRequest:
       type: object
       properties:
         id:
           type: string
-    TeamWalletGrantRequest:
-      type: object
-      properties:
-        id:
+        entry_id:
           type: string
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    ProgressionPurchaseRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    TeamEventLeaderboards:
-      type: object
-      properties:
-        event_leaderboards:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamEventLeaderboard'
-    EconomyListStoreItem:
-      type: object
-      properties:
-        category:
-          type: string
-        cost:
-          $ref: '#/components/schemas/EconomyListStoreItemCost'
-        description:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        unavailable:
+        delete:
           type: boolean
-        additionalProperties:
-          type: object
-          additionalProperties:
-            type: string
-    EconomyPlacementStartRequest:
-      type: object
-      properties:
-        placement_id:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-    AuctionTemplates:
-      type: object
-      properties: null
-    UserTeamsListRequest:
-      type: object
-      properties:
-        user_ids:
-          type: array
-          items:
-            type: string
-    InventoryConsumeRewards:
-      type: object
-      properties:
-        inventory:
-          $ref: '#/components/schemas/Inventory'
-    InventoryGrantRequest:
-      type: object
-      properties:
-        items:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    TutorialState:
-      type: string
-      enum:
-      - TUTORIAL_STATE_NONE
-      - TUTORIAL_STATE_ACCEPTED
-      - TUTORIAL_STATE_DECLINED
-      - TUTORIAL_STATE_IN_PROGRESS
-      - TUTORIAL_STATE_COMPLETED
-      - TUTORIAL_STATE_ABANDONED
-    AuctionListBidsRequest:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int64
-        cursor:
-          type: string
-    TeamStoreListRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    EconomyDonationAck:
-      type: object
-      properties:
-        created:
-          type: boolean
-        donation:
-          $ref: '#/components/schemas/EconomyDonation'
-    StatUpdateOperator:
-      type: string
-      enum:
-      - STAT_UPDATE_OPERATOR_UNSPECIFIED
-      - STAT_UPDATE_OPERATOR_SET
-      - STAT_UPDATE_OPERATOR_DELTA
-      - STAT_UPDATE_OPERATOR_MIN
-      - STAT_UPDATE_OPERATOR_MAX
-    TutorialResetRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-    EventLeaderboardClaim:
-      type: object
-      properties:
-        id:
-          type: string
-    ChallengeRewardTier:
-      type: object
-      properties:
-        rank_max:
-          type: integer
-          format: int64
-        rank_min:
-          type: integer
-          format: int64
-        available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
     AchievementsUpdateAck:
       type: object
       properties: null
-    IncentiveInfo:
+    LeaderboardList:
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        code:
-          type: string
-        type:
-          $ref: '#/components/schemas/IncentiveType'
-        sender:
-          type: string
-        available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        can_claim:
-          type: boolean
-        reward:
-          $ref: '#/components/schemas/Reward'
-        create_time_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        expiry_time_sec:
-          type: integer
-          format: int64
-        claim_time_sec:
-          type: integer
-          format: int64
-    TeamEventLeaderboardClaim:
-      type: object
-      properties:
-        id:
-          type: string
-        event_leaderboard_id:
-          type: string
-    TeamListRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-        location:
-          type: string
-        limit:
-          type: integer
-          format: int32
-    AvailableTeamRewards:
-      type: object
-      properties:
-        guaranteed:
-          $ref: '#/components/schemas/AvailableTeamRewardsContents'
-        weighted:
+        leaderboards:
           type: array
           items:
-            $ref: '#/components/schemas/AvailableTeamRewardsContents'
-        max_rolls:
-          type: integer
-          format: int64
-        total_weight:
-          type: integer
-          format: int64
-        max_repeat_rolls:
-          type: integer
-          format: int64
-        to_mailbox_expiry_sec:
-          type: integer
-          format: int64
-        member_reward:
-          $ref: '#/components/schemas/AvailableTeamMemberRewards'
-    Challenge:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        ascending:
-          type: boolean
-        operator:
-          type: string
-        start_time_sec:
-          type: integer
-          format: int64
-        claim_time_sec:
-          type: integer
-          format: int64
-        end_time_sec:
-          type: integer
-          format: int64
-        reward_tiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChallengeRewardTier'
-        available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        size:
-          type: integer
-          format: int64
-        max_size:
-          type: integer
-          format: int64
-        max_num_score:
-          type: integer
-          format: int64
-        scores:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChallengeScore'
-        is_active:
-          type: boolean
-        current_time_sec:
-          type: integer
-          format: int64
-        can_claim:
-          type: boolean
-        state:
-          $ref: '#/components/schemas/ChallengeState'
-        reward:
-          $ref: '#/components/schemas/Reward'
-        category:
-          type: string
-        open:
-          type: boolean
-        owner_id:
-          type: string
-        additionalProperties:
-          type: object
-          additionalProperties:
-            type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-    IncentiveSenderClaimRequest:
-      type: object
-      properties:
-        code:
-          type: string
-        recipient_ids:
-          type: array
-          items:
-            type: string
-    LeaderboardConfigList:
-      type: object
-      properties:
-        leaderboard_configs:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardConfig'
-    TeamGiftContributeRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        gift_id:
-          type: string
-        count:
-          type: integer
-          format: int64
-    Reward:
-      type: object
-      properties:
-        energy_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardEnergyModifier'
-        reward_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardModifier'
-        grant_time_sec:
-          type: integer
-          format: int64
-        to_mailbox_expiry_sec:
-          type: integer
-          format: int64
-        team_reward:
-          $ref: '#/components/schemas/TeamReward'
-        message:
-          type: string
-        items:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    AuctionFee:
-      type: object
-      properties:
-        percentage:
-          type: number
-          format: double
-        fixed:
-          $ref: '#/components/schemas/AuctionBidAmount'
+            $ref: '#/components/schemas/Leaderboard'
     SyncResponse:
       type: object
       properties:
@@ -4330,127 +3815,14 @@ components:
           additionalProperties:
             type: integer
             format: int64
-    TeamInventoryGrantRequest:
+    TeamStoreItemCost:
       type: object
       properties:
-        id:
-          type: string
-        items:
+        currencies:
           type: object
           additionalProperties:
             type: integer
             format: int64
-    Inventory:
-      type: object
-      properties: null
-    StatUpdateRequest:
-      type: object
-      properties:
-        public:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatUpdate'
-        private:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatUpdate'
-    SyncUnlockables:
-      type: object
-      properties:
-        removes:
-          type: array
-          items:
-            type: string
-    IncentiveRecipientClaimRequest:
-      type: object
-      properties:
-        code:
-          type: string
-    ChallengeClaimRequest:
-      type: object
-      properties:
-        challenge_id:
-          type: string
-    TeamStorePurchaseAck:
-      type: object
-      properties:
-        inventory:
-          $ref: '#/components/schemas/Inventory'
-        reward:
-          $ref: '#/components/schemas/Reward'
-        wallet:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    TeamStorePurchaseRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        item_id:
-          type: string
-    EconomyPlacementStatus:
-      type: object
-      properties:
-        reward_id:
-          type: string
-        placement_id:
-          type: string
-        create_time_sec:
-          type: integer
-          format: int64
-        complete_time_sec:
-          type: integer
-          format: int64
-        success:
-          type: boolean
-        reward:
-          $ref: '#/components/schemas/Reward'
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-    StreaksUpdateRequest:
-      type: object
-      properties:
-        updates:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    EnergySpendRequest:
-      type: object
-      properties: null
-    EconomyPurchaseRequest:
-      type: object
-      properties:
-        item_id:
-          type: string
-        store_type:
-          $ref: '#/components/schemas/EconomyStoreType'
-        receipt:
-          type: string
-    LeaderboardScoreList:
-      type: object
-      properties:
-        scores:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardScore'
-        owner_scores:
-          type: array
-          items:
-            $ref: '#/components/schemas/LeaderboardScore'
-        next_cursor:
-          type: string
-        prev_cursor:
-          type: string
-        rank_count:
-          type: integer
-          format: int64
-        leaderboard:
-          $ref: '#/components/schemas/Leaderboard'
     InventoryItem:
       type: object
       properties:
@@ -4492,87 +3864,47 @@ components:
           type: object
           additionalProperties:
             type: string
-    AuctionClaimCreatedRequest:
+    EconomyPlacementStatus:
       type: object
       properties:
-        id:
+        reward_id:
           type: string
-    RewardRangeUiNt64:
+        placement_id:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        complete_time_sec:
+          type: integer
+          format: int64
+        success:
+          type: boolean
+        reward:
+          $ref: '#/components/schemas/Reward'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    TeamEventLeaderboards:
       type: object
       properties:
-        min:
-          type: integer
-          format: int64
-        max:
-          type: integer
-          format: int64
-        multiple:
-          type: integer
-          format: int64
-    TeamUpdateRequest:
+        event_leaderboards:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamEventLeaderboard'
+    Incentive:
       type: object
       properties:
         id:
           type: string
         name:
           type: string
-        desc:
+        description:
           type: string
-        open:
-          type: boolean
-        avatar_url:
+        code:
           type: string
-        lang_tag:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
-    TeamRewardMailboxDeleteRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        entry_ids:
-          type: array
-          items:
-            type: string
-    AuctionClaimBidRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    UnlockablesRequest:
-      type: object
-      properties:
-        instance_id:
-          type: string
-    ChallengeGetRequest:
-      type: object
-      properties:
-        challenge_id:
-          type: string
-        with_scores:
-          type: boolean
-    LeaderboardScore:
-      type: object
-      properties:
-        leaderboard_id:
-          type: string
-        owner_id:
-          type: string
-        username:
-          type: string
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        num_score:
-          type: integer
-          format: int32
-        metadata:
-          type: string
+        type:
+          $ref: '#/components/schemas/IncentiveType'
         create_time_sec:
           type: integer
           format: int64
@@ -4582,88 +3914,55 @@ components:
         expiry_time_sec:
           type: integer
           format: int64
-        rank:
-          type: integer
-          format: int64
-        num_scores:
-          type: integer
-          format: int64
-    TeamGiftReward:
-      type: object
-      properties:
-        min_count:
-          type: integer
-          format: int64
-        contributor_reward:
+        recipient_rewards:
           $ref: '#/components/schemas/AvailableRewards'
-        noncontributor_reward:
+        sender_rewards:
           $ref: '#/components/schemas/AvailableRewards'
-    RewardEnergyModifier:
-      type: object
-      properties:
-        id:
-          type: string
-        operator:
-          type: string
-        value:
-          type: integer
-          format: int64
-        duration_sec:
-          type: integer
-          format: int64
-        weight:
-          type: integer
-          format: int64
-    Team:
-      type: object
-      properties:
-        id:
-          type: string
-        creator_id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        lang_tag:
-          type: string
-        metadata:
-          type: string
-        avatar_url:
-          type: string
-        open:
-          type: boolean
-        edge_count:
-          type: integer
-          format: int32
-        max_count:
-          type: integer
-          format: int32
-        create_time_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        activity:
-          type: integer
-          format: int64
-        members:
+        unclaimed_recipients:
           type: array
           items:
-            $ref: '#/components/schemas/TeamMember'
-    AuctionCancelRequest:
+            type: string
+        rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reward'
+        max_claims:
+          type: integer
+          format: int64
+        additional_properties:
+          type: object
+          additionalProperties: true
+    TeamStatListRequest:
       type: object
       properties:
         id:
           type: string
-    TeamStore:
+    EventLeaderboards:
+      type: object
+      properties:
+        event_leaderboards:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventLeaderboard'
+    InventoryUpdateItemsRequest:
+      type: object
+      properties: null
+    TutorialAbandonRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    EconomyList:
       type: object
       properties:
         store_items:
           type: array
           items:
-            $ref: '#/components/schemas/TeamStoreItem'
+            $ref: '#/components/schemas/EconomyListStoreItem'
+        placements:
+          type: array
+          items:
+            $ref: '#/components/schemas/EconomyListPlacement'
         active_reward_modifiers:
           type: array
           items:
@@ -4671,35 +3970,96 @@ components:
         current_time_sec:
           type: integer
           format: int64
-    EconomyDonationRequest:
-      type: object
-      properties:
-        donation_id:
-          type: string
-    LeaderboardScoresListRequest:
+    TeamGiftListRequest:
       type: object
       properties:
         id:
           type: string
-        owner_ids:
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: string
+        activity:
+          type: integer
+          format: int64
+    AuctionCancel:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/Auction'
+        reward:
+          $ref: '#/components/schemas/AuctionReward'
+    AvailableTeamMemberRewards:
+      type: object
+      properties:
+        guaranteed:
+          $ref: '#/components/schemas/AvailableRewardsContents'
+        weighted:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsContents'
+        max_rolls:
+          type: integer
+          format: int64
+        total_weight:
+          type: integer
+          format: int64
+        max_repeat_rolls:
+          type: integer
+          format: int64
+    IncentiveInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        type:
+          $ref: '#/components/schemas/IncentiveType'
+        sender:
+          type: string
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        can_claim:
+          type: boolean
+        reward:
+          $ref: '#/components/schemas/Reward'
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        expiry_time_sec:
+          type: integer
+          format: int64
+        claim_time_sec:
+          type: integer
+          format: int64
+    LeaderboardConfigList:
+      type: object
+      properties:
+        leaderboard_configs:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardConfig'
+    EnergySpendWithRefillStartTimeRequest:
+      type: object
+      properties: null
+    IncentiveSenderClaimRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        recipient_ids:
           type: array
           items:
             type: string
-        limit:
-          type: integer
-          format: int32
-        cursor:
-          type: string
-        expiry:
-          type: integer
-          format: int64
-        region:
-          type: string
-    LeaderboardGet:
-      type: object
-      properties:
-        id:
-          type: string
     TeamEventLeaderboard:
       type: object
       properties:
@@ -4807,6 +4167,356 @@ components:
           type: object
           additionalProperties:
             type: string
+    EventLeaderboardDebugUnenrollRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+    Challenge:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        ascending:
+          type: boolean
+        operator:
+          type: string
+        start_time_sec:
+          type: integer
+          format: int64
+        claim_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        reward_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChallengeRewardTier'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        size:
+          type: integer
+          format: int64
+        max_size:
+          type: integer
+          format: int64
+        max_num_score:
+          type: integer
+          format: int64
+        scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChallengeScore'
+        is_active:
+          type: boolean
+        current_time_sec:
+          type: integer
+          format: int64
+        can_claim:
+          type: boolean
+        state:
+          $ref: '#/components/schemas/ChallengeState'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        category:
+          type: string
+        open:
+          type: boolean
+        owner_id:
+          type: string
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    TeamStorePurchaseAck:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    TeamListRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+        location:
+          type: string
+        limit:
+          type: integer
+          format: int32
+    UnlockablesQueueSetRequest:
+      type: object
+      properties:
+        instance_ids:
+          type: array
+          items:
+            type: string
+    TeamList:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+        cursor:
+          type: string
+    ChallengeRewardTier:
+      type: object
+      properties:
+        rank_max:
+          type: integer
+          format: int64
+        rank_min:
+          type: integer
+          format: int64
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+    SyncEventLeaderboards:
+      type: object
+      properties: null
+    LeaderboardScore:
+      type: object
+      properties:
+        leaderboard_id:
+          type: string
+        owner_id:
+          type: string
+        username:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_score:
+          type: integer
+          format: int32
+        metadata:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        expiry_time_sec:
+          type: integer
+          format: int64
+        rank:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+    SyncTutorials:
+      type: object
+      properties:
+        accepts:
+          type: array
+          items:
+            type: string
+        declines:
+          type: array
+          items:
+            type: string
+        abandons:
+          type: array
+          items:
+            type: string
+        updates:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EconomyDonationRequest:
+      type: object
+      properties:
+        donation_id:
+          type: string
+    TeamStorePurchaseRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        item_id:
+          type: string
+    EconomyListStoreItem:
+      type: object
+      properties:
+        category:
+          type: string
+        cost:
+          $ref: '#/components/schemas/EconomyListStoreItemCost'
+        description:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        unavailable:
+          type: boolean
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    ProgressionList:
+      type: object
+      properties: null
+    TeamSearchRequest:
+      type: object
+      properties:
+        input:
+          type: string
+        limit:
+          type: integer
+          format: int32
+        lang_tag:
+          type: string
+        min_activity:
+          type: integer
+          format: int64
+    EconomyUpdateAck:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+        reward:
+          $ref: '#/components/schemas/Reward'
+        active_reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveRewardModifier'
+        current_time_sec:
+          type: integer
+          format: int64
+        wallet:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EnergyList:
+      type: object
+      properties: null
+    AuctionBid:
+      type: object
+      properties:
+        user_id:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        create_time_sec:
+          type: integer
+          format: int64
+    EconomyStoreType:
+      type: string
+      enum:
+      - ECONOMY_STORE_TYPE_UNSPECIFIED
+      - ECONOMY_STORE_TYPE_APPLE_APPSTORE
+      - ECONOMY_STORE_TYPE_GOOGLE_PLAY
+      - ECONOMY_STORE_TYPE_FBINSTANT
+      - ECONOMY_STORE_TYPE_DISCORD
+    LeaderboardScoresListRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        owner_ids:
+          type: array
+          items:
+            type: string
+        limit:
+          type: integer
+          format: int32
+        cursor:
+          type: string
+        expiry:
+          type: integer
+          format: int64
+        region:
+          type: string
+    SyncRequest:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/SyncInventory'
+        economy:
+          $ref: '#/components/schemas/SyncEconomy'
+        achievements:
+          $ref: '#/components/schemas/SyncAchievements'
+        energy:
+          $ref: '#/components/schemas/SyncEnergy'
+        event_leaderboards:
+          $ref: '#/components/schemas/SyncEventLeaderboards'
+        progressions:
+          $ref: '#/components/schemas/SyncProgressions'
+        stats:
+          $ref: '#/components/schemas/StatUpdateRequest'
+        tutorials:
+          $ref: '#/components/schemas/SyncTutorials'
+        unlockables:
+          $ref: '#/components/schemas/SyncUnlockables'
+        streaks:
+          $ref: '#/components/schemas/SyncStreaks'
+    UserTeamsListRequest:
+      type: object
+      properties:
+        user_ids:
+          type: array
+          items:
+            type: string
+    TeamWallet:
+      type: object
+      properties:
+        id:
+          type: string
+        update_time_sec:
+          type: integer
+          format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EnergySpendRequest:
+      type: object
+      properties: null
+    TeamWalletGetRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    TeamEventLeaderboardList:
+      type: object
+      properties:
+        id:
+          type: string
+        with_scores:
+          type: boolean
+        categories:
+          type: array
+          items:
+            type: string
     AuctionBidAmount:
       type: object
       properties:
@@ -4828,9 +4538,814 @@ components:
           additionalProperties:
             type: integer
             format: int64
+    TeamInventoryGrantRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    TeamRewardMailboxListRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    ChallengeInviteRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+        invitees:
+          type: array
+          items:
+            type: string
+    UnlockablesQueueAddRequest:
+      type: object
+      properties:
+        instance_ids:
+          type: array
+          items:
+            type: string
+    TeamStoreItem:
+      type: object
+      properties:
+        category:
+          type: string
+        cost:
+          $ref: '#/components/schemas/TeamStoreItemCost'
+        description:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        unavailable:
+          type: boolean
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    TeamGiftContributeRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        gift_id:
+          type: string
+        count:
+          type: integer
+          format: int64
+    StreaksUpdateRequest:
+      type: object
+      properties:
+        updates:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    IncentiveSenderDeleteRequest:
+      type: object
+      properties:
+        code:
+          type: string
+    StatUpdateOperator:
+      type: string
+      enum:
+      - STAT_UPDATE_OPERATOR_UNSPECIFIED
+      - STAT_UPDATE_OPERATOR_SET
+      - STAT_UPDATE_OPERATOR_DELTA
+      - STAT_UPDATE_OPERATOR_MIN
+      - STAT_UPDATE_OPERATOR_MAX
+    EventLeaderboardGet:
+      type: object
+      properties:
+        id:
+          type: string
+    TeamEventLeaderboardUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        event_leaderboard_id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+        conditional_metadata_update:
+          type: boolean
+    EconomyDonationGetRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    AuctionReward:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+    EconomyDonationsByUserList:
+      type: object
+      properties: null
+    EventLeaderboardUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+        conditional_metadata_update:
+          type: boolean
+    RateAppRequest:
+      type: object
+      properties:
+        score:
+          type: integer
+          format: int32
+        message:
+          type: string
+    EconomyPurchaseRequest:
+      type: object
+      properties:
+        item_id:
+          type: string
+        store_type:
+          $ref: '#/components/schemas/EconomyStoreType'
+        receipt:
+          type: string
+    TeamStoreListRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    RewardMailboxList:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardMailboxEntry'
+        cursor:
+          type: string
+    AvailableRewardsEnergyModifier:
+      type: object
+      properties:
+        id:
+          type: string
+        operator:
+          type: string
+        value:
+          $ref: '#/components/schemas/RewardRangeInt64'
+        duration_sec:
+          $ref: '#/components/schemas/RewardRangeUiNt64'
+    TutorialAcceptRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    LeaderboardListRequest:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            type: string
     SyncProgressions:
       type: object
       properties: null
+    ChallengeClaimRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+    InventoryGrantRequest:
+      type: object
+      properties:
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    TeamGiftClaimRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        gift_id:
+          type: string
+        end_time_sec:
+          type: integer
+          format: int64
+    StatList:
+      type: object
+      properties: null
+    InventoryList:
+      type: object
+      properties: null
+    TeamGiftContributor:
+      type: object
+      properties:
+        user_id:
+          type: string
+        username:
+          type: string
+        avatar_url:
+          type: string
+        display_name:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+    RewardMailboxListRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    DevicePrefsRequest:
+      type: object
+      properties:
+        device_id:
+          type: string
+        push_token_android:
+          type: string
+        push_token_ios:
+          type: string
+    TeamEventLeaderboardScore:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        avatar_url:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        rank:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    StatUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: integer
+          format: int64
+        operator:
+          $ref: '#/components/schemas/StatUpdateOperator'
+    TeamCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        desc:
+          type: string
+        open:
+          type: boolean
+        avatar_url:
+          type: string
+        lang_tag:
+          type: string
+        setup_metadata:
+          type: string
+    RewardRangeInt64:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int64
+        max:
+          type: integer
+          format: int64
+        multiple:
+          type: integer
+          format: int64
+    ChallengeSubmitScoreRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+        conditional_metadata_update:
+          type: boolean
+    TutorialList:
+      type: object
+      properties: null
+    AuctionListBidsRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    ProgressionUpdateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        counts:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    AuctionBidRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        bid:
+          $ref: '#/components/schemas/AuctionBidAmount'
+    TeamGiftContributeAck:
+      type: object
+      properties:
+        gift:
+          $ref: '#/components/schemas/TeamGift'
+        count:
+          type: integer
+          format: int64
+        reward:
+          $ref: '#/components/schemas/Reward'
+    TeamGiftList:
+      type: object
+      properties:
+        gifts:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamGift'
+    TeamStatUpdateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        public:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatUpdate'
+        private:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatUpdate'
+    EconomyDonation:
+      type: object
+      properties:
+        user_id:
+          type: string
+        claim_count:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        current_time_sec:
+          type: integer
+          format: int64
+        description:
+          type: string
+        expire_time_sec:
+          type: integer
+          format: int64
+        id:
+          type: string
+        max_count:
+          type: integer
+          format: int64
+        name:
+          type: string
+        recipient_available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        user_contribution_max_count:
+          type: integer
+          format: int64
+        contributors:
+          type: array
+          items:
+            $ref: '#/components/schemas/EconomyDonationContributor'
+        contributor_available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        recipient_rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reward'
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    LeaderboardGet:
+      type: object
+      properties:
+        id:
+          type: string
+    EconomyListPlacement:
+      type: object
+      properties:
+        id:
+          type: string
+        reward:
+          $ref: '#/components/schemas/Reward'
+        available_rewards:
+          $ref: '#/components/schemas/AvailableRewards'
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    InventoryUpdateAck:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+    EconomyDonationContributor:
+      type: object
+      properties:
+        user_id:
+          type: string
+        count:
+          type: integer
+          format: int64
+        claim_count:
+          type: integer
+          format: int64
+    UnlockablesList:
+      type: object
+      properties:
+        unlockables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Unlockable'
+        overflow:
+          $ref: '#/components/schemas/Unlockable'
+        slots:
+          type: integer
+          format: int32
+        active_slots:
+          type: integer
+          format: int32
+        max_active_slots:
+          type: integer
+          format: int32
+        slot_cost:
+          $ref: '#/components/schemas/UnlockableSlotCost'
+        instance_id:
+          type: string
+        queued_unlocks:
+          type: array
+          items:
+            type: string
+        max_queued_unlocks:
+          type: integer
+          format: int32
+    AuctionFee:
+      type: object
+      properties:
+        percentage:
+          type: number
+          format: double
+        fixed:
+          $ref: '#/components/schemas/AuctionBidAmount'
+    TeamUpdateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        desc:
+          type: string
+        open:
+          type: boolean
+        avatar_url:
+          type: string
+        lang_tag:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+    Reward:
+      type: object
+      properties:
+        energy_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardEnergyModifier'
+        reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardModifier'
+        grant_time_sec:
+          type: integer
+          format: int64
+        to_mailbox_expiry_sec:
+          type: integer
+          format: int64
+        team_reward:
+          $ref: '#/components/schemas/TeamReward'
+        message:
+          type: string
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    AchievementsClaimRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+        claim_total_reward:
+          type: boolean
+    RewardMailboxClaimRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        delete:
+          type: boolean
+    StreaksResetRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    IncentiveRecipientGetRequest:
+      type: object
+      properties:
+        code:
+          type: string
+    TeamAchievementsClaimRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        achievement_ids:
+          type: array
+          items:
+            type: string
+        claim_total_reward:
+          type: boolean
+    UnlockableCost:
+      type: object
+      properties:
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    ChallengeTemplates:
+      type: object
+      properties: null
+    AuctionCreateRequest:
+      type: object
+      properties:
+        template_id:
+          type: string
+        condition_id:
+          type: string
+        instance_ids:
+          type: array
+          items:
+            type: string
+        start_time_sec:
+          type: integer
+          format: int64
+        allowed_user_ids:
+          type: array
+          items:
+            type: string
+    EnergyGrantRequest:
+      type: object
+      properties: null
+    EconomyDonationGiveRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+        donation_id:
+          type: string
+    Inventory:
+      type: object
+      properties: null
+    TeamGiftClaimAck:
+      type: object
+      properties:
+        gift:
+          $ref: '#/components/schemas/TeamGift'
+        rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reward'
+    SyncEnergy:
+      type: object
+      properties:
+        modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnergyModifier'
+    TeamAchievementsGetRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    ChallengeState:
+      type: string
+      enum:
+      - CHALLENGE_STATE_NONE
+      - CHALLENGE_STATE_INVITED
+      - CHALLENGE_STATE_JOINED
+      - CHALLENGE_STATE_CLAIMED
+      - CHALLENGE_STATE_DECLINED
+      - CHALLENGE_STATE_LEFT
+    StreaksClaimRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    TeamEventLeaderboardDebugFillRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        event_leaderboard_id:
+          type: string
+        target_count:
+          type: integer
+          format: int32
+    TeamMemberReward:
+      type: object
+      properties:
+        energy_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardEnergyModifier'
+        reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardModifier'
+        grant_time_sec:
+          type: integer
+          format: int64
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    TutorialState:
+      type: string
+      enum:
+      - TUTORIAL_STATE_NONE
+      - TUTORIAL_STATE_ACCEPTED
+      - TUTORIAL_STATE_DECLINED
+      - TUTORIAL_STATE_IN_PROGRESS
+      - TUTORIAL_STATE_COMPLETED
+      - TUTORIAL_STATE_ABANDONED
+    EventLeaderboardScore:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        display_name:
+          type: string
+        avatar_url:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        rank:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        tier_delta:
+          type: integer
+          format: int32
+        metadata:
+          type: string
+    UnlockablesQueueRemoveRequest:
+      type: object
+      properties:
+        instance_ids:
+          type: array
+          items:
+            type: string
+    ChallengeLeaveRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+    EnergySpendReward:
+      type: object
+      properties:
+        energies:
+          $ref: '#/components/schemas/EnergyList'
+        reward:
+          $ref: '#/components/schemas/Reward'
+    ActiveRewardModifier:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        operator:
+          type: string
+        value:
+          type: integer
+          format: int64
+        start_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
     IncentiveList:
       type: object
       properties:
@@ -4838,6 +5353,738 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Incentive'
+    TutorialUpdateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        step:
+          type: integer
+          format: int32
+    TeamInventoryListRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        item_category:
+          type: string
+    SyncStreaks:
+      type: object
+      properties:
+        resets:
+          type: array
+          items:
+            type: string
+    TeamEventLeaderboardContribution:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        display_name:
+          type: string
+        avatar_url:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    ChallengeJoinRequest:
+      type: object
+      properties:
+        challenge_id:
+          type: string
+    RewardEnergyModifier:
+      type: object
+      properties:
+        id:
+          type: string
+        operator:
+          type: string
+        value:
+          type: integer
+          format: int64
+        duration_sec:
+          type: integer
+          format: int64
+        weight:
+          type: integer
+          format: int64
+    RewardMailboxEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        reward:
+          $ref: '#/components/schemas/Reward'
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        expiry_time_sec:
+          type: integer
+          format: int64
+        claim_time_sec:
+          type: integer
+          format: int64
+        can_claim:
+          type: boolean
+    TeamEventLeaderboardDebugRandomScoresRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        event_leaderboard_id:
+          type: string
+        min:
+          type: integer
+          format: int64
+        max:
+          type: integer
+          format: int64
+        operator:
+          type: integer
+          format: int32
+        subscore_min:
+          type: integer
+          format: int64
+        subscore_max:
+          type: integer
+          format: int64
+    TutorialDeclineRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    EconomyPlacementStartRequest:
+      type: object
+      properties:
+        placement_id:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    SyncInventory:
+      type: object
+      properties: null
+    EventLeaderboardList:
+      type: object
+      properties:
+        with_scores:
+          type: boolean
+        categories:
+          type: array
+          items:
+            type: string
+    AuctionListRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        sort:
+          type: array
+          items:
+            type: string
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+        allowed_only:
+          type: boolean
+    AchievementList:
+      type: object
+      properties: null
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        code:
+          type: integer
+          format: int32
+    AuctionTemplates:
+      type: object
+      properties: null
+    AuctionClaimBid:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/Auction'
+        reward:
+          $ref: '#/components/schemas/AuctionReward'
+    UnlockablesRequest:
+      type: object
+      properties:
+        instance_id:
+          type: string
+    EconomyDonationClaimRequest:
+      type: object
+      properties:
+        donation_ids:
+          type: array
+          items:
+            type: string
+    EconomyPurchaseIntentRequest:
+      type: object
+      properties:
+        item_id:
+          type: string
+        store_type:
+          $ref: '#/components/schemas/EconomyStoreType'
+        sku:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+    InventoryConsumeRewards:
+      type: object
+      properties:
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+    ChallengeSearchRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        limit:
+          type: integer
+          format: int64
+    EventLeaderboardClaim:
+      type: object
+      properties:
+        id:
+          type: string
+    TeamInventoryUpdateItemsRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    LeaderboardConfig:
+      type: object
+      properties:
+        id:
+          type: string
+        sort_order:
+          type: string
+        operator:
+          type: string
+        reset_schedule:
+          type: string
+        authoritative:
+          type: boolean
+        regions:
+          type: array
+          items:
+            type: string
+    IncentiveRecipientClaimRequest:
+      type: object
+      properties:
+        code:
+          type: string
+    UnlockableSlotCost:
+      type: object
+      properties:
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    ProgressionGetRequest:
+      type: object
+      properties: null
+    LeaderboardUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+    InventoryDeleteItemsRequest:
+      type: object
+      properties:
+        instance_ids:
+          type: array
+          items:
+            type: string
+    TeamWalletGrantRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    AvailableTeamRewards:
+      type: object
+      properties:
+        guaranteed:
+          $ref: '#/components/schemas/AvailableTeamRewardsContents'
+        weighted:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableTeamRewardsContents'
+        max_rolls:
+          type: integer
+          format: int64
+        total_weight:
+          type: integer
+          format: int64
+        max_repeat_rolls:
+          type: integer
+          format: int64
+        to_mailbox_expiry_sec:
+          type: integer
+          format: int64
+        member_reward:
+          $ref: '#/components/schemas/AvailableTeamMemberRewards'
+    AuctionCancelRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    AuctionClaimCreated:
+      type: object
+      properties:
+        auction:
+          $ref: '#/components/schemas/Auction'
+        reward:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        fee:
+          $ref: '#/components/schemas/AuctionBidAmount'
+        returned_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+        received_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryItem'
+    IncentiveSenderCreateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    TeamReward:
+      type: object
+      properties:
+        reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardModifier'
+        member_reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/RewardModifier'
+        grant_time_sec:
+          type: integer
+          format: int64
+        to_mailbox_expiry_sec:
+          type: integer
+          format: int64
+        member_reward:
+          $ref: '#/components/schemas/TeamMemberReward'
+        items:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        currencies:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    TeamGiftReward:
+      type: object
+      properties:
+        min_count:
+          type: integer
+          format: int64
+        contributor_reward:
+          $ref: '#/components/schemas/AvailableRewards'
+        noncontributor_reward:
+          $ref: '#/components/schemas/AvailableRewards'
+    Team:
+      type: object
+      properties:
+        id:
+          type: string
+        creator_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        lang_tag:
+          type: string
+        metadata:
+          type: string
+        avatar_url:
+          type: string
+        open:
+          type: boolean
+        edge_count:
+          type: integer
+          format: int32
+        max_count:
+          type: integer
+          format: int32
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        activity:
+          type: integer
+          format: int64
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMember'
+    EconomyDonationClaimRewards:
+      type: object
+      properties:
+        donations:
+          $ref: '#/components/schemas/EconomyDonationsList'
+    EventLeaderboardDebugRandomScoresRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        min:
+          type: integer
+          format: int64
+        max:
+          type: integer
+          format: int64
+        operator:
+          type: integer
+          format: int32
+        subscore_min:
+          type: integer
+          format: int64
+        subscore_max:
+          type: integer
+          format: int64
+    AvailableRewardsContents:
+      type: object
+      properties:
+        item_sets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsItemSet'
+        energy_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsEnergyModifier'
+        reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsRewardModifier'
+        weight:
+          type: integer
+          format: int64
+    AuctionList:
+      type: object
+      properties:
+        auctions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Auction'
+        cursor:
+          type: string
+    EconomyPlacementStatusRequest:
+      type: object
+      properties:
+        reward_id:
+          type: string
+        placement_id:
+          type: string
+        count:
+          type: integer
+          format: int32
+    Tutorial:
+      type: object
+      properties:
+        id:
+          type: string
+        current:
+          type: integer
+          format: int32
+        max:
+          type: integer
+          format: int32
+        state:
+          $ref: '#/components/schemas/TutorialState'
+        update_time_sec:
+          type: integer
+          format: int64
+        complete_time_sec:
+          type: integer
+          format: int64
+        additionalProperties:
+          type: object
+          additionalProperties:
+            type: string
+    LeaderboardScoresListAroundOwnerRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        limit:
+          type: integer
+          format: int32
+        owner_id:
+          type: string
+        expiry:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+        region:
+          type: string
+    TeamGift:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        start_time_sec:
+          type: integer
+          format: int64
+        contribution_end_time_sec:
+          type: integer
+          format: int64
+        end_time_sec:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        max_count:
+          type: integer
+          format: int64
+        max_contributor_count:
+          type: integer
+          format: int64
+        contribution_cost:
+          $ref: '#/components/schemas/AvailableRewards'
+        contribution_reward:
+          $ref: '#/components/schemas/AvailableRewards'
+        rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamGiftReward'
+        additional_properties:
+          type: object
+          additionalProperties: true
+        contributors:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamGiftContributor'
+        can_contribute:
+          type: boolean
+        contributor_remaining_count:
+          type: integer
+          format: int64
+        can_claim:
+          type: boolean
+        available_rewards:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamGiftReward'
+    ChallengeScore:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        display_name:
+          type: string
+        avatar_url:
+          type: string
+        create_time_sec:
+          type: integer
+          format: int64
+        update_time_sec:
+          type: integer
+          format: int64
+        rank:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int64
+        subscore:
+          type: integer
+          format: int64
+        num_scores:
+          type: integer
+          format: int64
+        metadata:
+          type: string
+        state:
+          $ref: '#/components/schemas/ChallengeState'
+    StreaksList:
+      type: object
+      properties: null
+    UserTeamsList:
+      type: object
+      properties: null
+    ChannelMessageAck:
+      type: object
+      properties:
+        channel_id:
+          type: string
+        message_id:
+          type: string
+        code:
+          type: integer
+          format: int32
+        username:
+          type: string
+        create_time:
+          type: integer
+          format: int64
+        update_time:
+          type: integer
+          format: int64
+        persistent:
+          type: boolean
+        room_name:
+          type: string
+        group_id:
+          type: string
+        user_id_one:
+          type: string
+        user_id_two:
+          type: string
+    TeamAchievementsUpdateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        achievement_ids:
+          type: array
+          items:
+            type: string
+        amount:
+          type: integer
+          format: int64
+        achievements:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+    EconomyDonationsList:
+      type: object
+      properties:
+        donations:
+          type: array
+          items:
+            $ref: '#/components/schemas/EconomyDonation'
+    InventoryListRequest:
+      type: object
+      properties:
+        item_category:
+          type: string
+    AvailableTeamRewardsContents:
+      type: object
+      properties:
+        item_sets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsItemSet'
+        reward_modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableRewardsRewardModifier'
+        weight:
+          type: integer
+          format: int64
+    RewardRangeUiNt64:
+      type: object
+      properties:
+        min:
+          type: integer
+          format: int64
+        max:
+          type: integer
+          format: int64
+        multiple:
+          type: integer
+          format: int64
+    AuctionListCreatedRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int64
+        cursor:
+          type: string
+    SyncAchievements:
+      type: object
+      properties: null
+    AuctionClaimCreatedRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    IncentiveType:
+      type: string
+      enum:
+      - INCENTIVE_TYPE_UNSPECIFIED
+      - INCENTIVE_TYPE_INVITE
+    TutorialResetRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
     Auction:
       type: object
       properties:
@@ -4925,162 +6172,6 @@ components:
             type: string
         immediate_buyout:
           type: boolean
-    IncentiveSenderCreateRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    LeaderboardList:
-      type: object
-      properties:
-        leaderboards:
-          type: array
-          items:
-            $ref: '#/components/schemas/Leaderboard'
-    RateAppRequest:
-      type: object
-      properties:
-        score:
-          type: integer
-          format: int32
-        message:
-          type: string
-    UnlockablesQueueRemoveRequest:
-      type: object
-      properties:
-        instance_ids:
-          type: array
-          items:
-            type: string
-    Tutorial:
-      type: object
-      properties:
-        id:
-          type: string
-        current:
-          type: integer
-          format: int32
-        max:
-          type: integer
-          format: int32
-        state:
-          $ref: '#/components/schemas/TutorialState'
-        update_time_sec:
-          type: integer
-          format: int64
-        complete_time_sec:
-          type: integer
-          format: int64
-        additionalProperties:
-          type: object
-          additionalProperties:
-            type: string
-    AvailableRewardsContents:
-      type: object
-      properties:
-        item_sets:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableRewardsItemSet'
-        energy_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableRewardsEnergyModifier'
-        reward_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableRewardsRewardModifier'
-        weight:
-          type: integer
-          format: int64
-    EventLeaderboardUpdate:
-      type: object
-      properties:
-        id:
-          type: string
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        metadata:
-          type: string
-        conditional_metadata_update:
-          type: boolean
-    AvailableRewardsItemSet:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/RewardRangeInt64'
-        max_repeats:
-          type: integer
-          format: int64
-        set:
-          type: array
-          items:
-            type: string
-    AuctionReward:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InventoryItem'
-    ProgressionUpdateRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        counts:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    TeamAchievementsUpdateRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        achievement_ids:
-          type: array
-          items:
-            type: string
-        amount:
-          type: integer
-          format: int64
-        achievements:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    StatList:
-      type: object
-      properties: null
-    TeamList:
-      type: object
-      properties:
-        teams:
-          type: array
-          items:
-            $ref: '#/components/schemas/Team'
-        cursor:
-          type: string
-    AchievementsUpdateRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-        amount:
-          type: integer
-          format: int64
-        achievements:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
     ChallengeListRequest:
       type: object
       properties:
@@ -5090,853 +6181,48 @@ components:
             type: string
         with_scores:
           type: boolean
-    TeamStoreItem:
+    ChallengesList:
       type: object
       properties:
-        category:
-          type: string
-        cost:
-          $ref: '#/components/schemas/TeamStoreItemCost'
-        description:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        unavailable:
-          type: boolean
-        additionalProperties:
-          type: object
-          additionalProperties:
-            type: string
-    TeamRewardMailboxClaimRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        entry_id:
-          type: string
-        delete:
-          type: boolean
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-        code:
-          type: integer
-          format: int32
-    SyncEconomy:
-      type: object
-      properties:
-        modifiers:
+        challenges:
           type: array
           items:
-            $ref: '#/components/schemas/ActiveRewardModifier'
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    TeamWriteChatMessageRequest:
+            $ref: '#/components/schemas/Challenge'
+    EconomyPurchaseRestoreRequest:
       type: object
       properties:
-        id:
-          type: string
-        content:
-          type: string
-    UnlockableCost:
-      type: object
-      properties:
-        items:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    TeamEventLeaderboardRoll:
+        store_type:
+          $ref: '#/components/schemas/EconomyStoreType'
+        receipts:
+          type: array
+          items:
+            type: string
+    TeamEventLeaderboardGet:
       type: object
       properties:
         id:
           type: string
         event_leaderboard_id:
           type: string
-        metadata:
-          type: string
-        claim_reward:
-          type: boolean
-    EconomyDonationGiveRequest:
-      type: object
-      properties:
-        user_id:
-          type: string
-        donation_id:
-          type: string
-    IncentiveSenderDeleteRequest:
-      type: object
-      properties:
-        code:
-          type: string
-    EventLeaderboards:
-      type: object
-      properties:
-        event_leaderboards:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventLeaderboard'
-    UnlockablesReward:
-      type: object
-      properties:
-        unlockables:
-          $ref: '#/components/schemas/UnlockablesList'
-        reward:
-          $ref: '#/components/schemas/Reward'
-        available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-    InventoryList:
-      type: object
-      properties: null
-    UnlockableSlotCost:
-      type: object
-      properties:
-        items:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    TeamGiftClaimAck:
-      type: object
-      properties:
-        gift:
-          $ref: '#/components/schemas/TeamGift'
-        rewards:
-          type: array
-          items:
-            $ref: '#/components/schemas/Reward'
-    AvailableRewards:
-      type: object
-      properties:
-        guaranteed:
-          $ref: '#/components/schemas/AvailableRewardsContents'
-        weighted:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableRewardsContents'
-        max_rolls:
-          type: integer
-          format: int64
-        total_weight:
-          type: integer
-          format: int64
-        max_repeat_rolls:
-          type: integer
-          format: int64
-        to_mailbox_expiry_sec:
-          type: integer
-          format: int64
-        team_reward:
-          $ref: '#/components/schemas/AvailableTeamRewards'
-        message:
-          type: string
-    TeamGiftContributor:
-      type: object
-      properties:
-        user_id:
-          type: string
-        username:
-          type: string
-        avatar_url:
-          type: string
-        display_name:
-          type: string
-        create_time_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        count:
-          type: integer
-          format: int64
-    EconomyListPlacement:
-      type: object
-      properties:
-        id:
-          type: string
-        reward:
-          $ref: '#/components/schemas/Reward'
-        available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        additionalProperties:
-          type: object
-          additionalProperties:
-            type: string
-    EnergyGrantRequest:
-      type: object
-      properties: null
-    IncentiveType:
-      type: string
-      enum:
-      - INCENTIVE_TYPE_UNSPECIFIED
-      - INCENTIVE_TYPE_INVITE
     TeamGetRequest:
       type: object
       properties:
         team_id:
           type: string
-    RewardRangeInt64:
-      type: object
-      properties:
-        min:
-          type: integer
-          format: int64
-        max:
-          type: integer
-          format: int64
-        multiple:
-          type: integer
-          format: int64
-    RewardMailboxListRequest:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int64
-        cursor:
-          type: string
-    AuctionClaimBid:
-      type: object
-      properties:
-        auction:
-          $ref: '#/components/schemas/Auction'
-        reward:
-          $ref: '#/components/schemas/AuctionReward'
-    AvailableRewardsRewardModifier:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-        operator:
-          type: string
-        value:
-          $ref: '#/components/schemas/RewardRangeInt64'
-        duration_sec:
-          $ref: '#/components/schemas/RewardRangeUiNt64'
-    TutorialList:
-      type: object
-      properties: null
-    AuctionCancel:
-      type: object
-      properties:
-        auction:
-          $ref: '#/components/schemas/Auction'
-        reward:
-          $ref: '#/components/schemas/AuctionReward'
-    TeamRewardMailboxListRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        limit:
-          type: integer
-          format: int64
-        cursor:
-          type: string
-    LeaderboardScoresListAroundOwnerRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        limit:
-          type: integer
-          format: int32
-        owner_id:
-          type: string
-        expiry:
-          type: integer
-          format: int64
-        cursor:
-          type: string
-        region:
-          type: string
-    EconomyDonation:
-      type: object
-      properties:
-        user_id:
-          type: string
-        claim_count:
-          type: integer
-          format: int64
-        count:
-          type: integer
-          format: int64
-        current_time_sec:
-          type: integer
-          format: int64
-        description:
-          type: string
-        expire_time_sec:
-          type: integer
-          format: int64
-        id:
-          type: string
-        max_count:
-          type: integer
-          format: int64
-        name:
-          type: string
-        recipient_available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        user_contribution_max_count:
-          type: integer
-          format: int64
-        contributors:
-          type: array
-          items:
-            $ref: '#/components/schemas/EconomyDonationContributor'
-        contributor_available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        recipient_rewards:
-          type: array
-          items:
-            $ref: '#/components/schemas/Reward'
-        additionalProperties:
-          type: object
-          additionalProperties:
-            type: string
-    EconomyPurchaseAck:
-      type: object
-      properties:
-        inventory:
-          $ref: '#/components/schemas/Inventory'
-        reward:
-          $ref: '#/components/schemas/Reward'
-        is_sandbox_purchase:
-          type: boolean
-        wallet:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    StreaksList:
-      type: object
-      properties: null
-    InventoryListRequest:
-      type: object
-      properties:
-        item_category:
-          type: string
-    ChallengeScore:
-      type: object
-      properties:
-        id:
-          type: string
-        username:
-          type: string
-        display_name:
-          type: string
-        avatar_url:
-          type: string
-        create_time_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        rank:
-          type: integer
-          format: int64
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        num_scores:
-          type: integer
-          format: int64
-        metadata:
-          type: string
-        state:
-          $ref: '#/components/schemas/ChallengeState'
-    AuctionListRequest:
-      type: object
-      properties:
-        query:
-          type: string
-        sort:
-          type: array
-          items:
-            type: string
-        limit:
-          type: integer
-          format: int64
-        cursor:
-          type: string
-        allowed_only:
-          type: boolean
-    TeamGiftClaimRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        gift_id:
-          type: string
-        end_time_sec:
-          type: integer
-          format: int64
-    TeamEventLeaderboardContribution:
-      type: object
-      properties:
-        id:
-          type: string
-        username:
-          type: string
-        display_name:
-          type: string
-        avatar_url:
-          type: string
-        create_time_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        num_scores:
-          type: integer
-          format: int64
-        metadata:
-          type: string
-    SyncAchievements:
-      type: object
-      properties: null
-    EventLeaderboardRoll:
-      type: object
-      properties:
-        id:
-          type: string
-        metadata:
-          type: string
-        claim_reward:
-          type: boolean
-    EconomyDonationGetRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-    UserTeamsList:
-      type: object
-      properties: null
-    TeamEventLeaderboardList:
-      type: object
-      properties:
-        id:
-          type: string
-        with_scores:
-          type: boolean
-        categories:
-          type: array
-          items:
-            type: string
-    AchievementsClaimRequest:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-        claim_total_reward:
-          type: boolean
-    EconomyPlacementStatusRequest:
-      type: object
-      properties:
-        reward_id:
-          type: string
-        placement_id:
-          type: string
-        count:
-          type: integer
-          format: int32
-    LeaderboardConfig:
-      type: object
-      properties:
-        id:
-          type: string
-        sort_order:
-          type: string
-        operator:
-          type: string
-        reset_schedule:
-          type: string
-        authoritative:
-          type: boolean
-        regions:
-          type: array
-          items:
-            type: string
-    TeamStoreItemCost:
-      type: object
-      properties:
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    DevicePrefsRequest:
-      type: object
-      properties:
-        device_id:
-          type: string
-        push_token_android:
-          type: string
-        push_token_ios:
-          type: string
-    EconomyList:
-      type: object
-      properties:
-        store_items:
-          type: array
-          items:
-            $ref: '#/components/schemas/EconomyListStoreItem'
-        placements:
-          type: array
-          items:
-            $ref: '#/components/schemas/EconomyListPlacement'
-        active_reward_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActiveRewardModifier'
-        current_time_sec:
-          type: integer
-          format: int64
-    ProgressionGetRequest:
-      type: object
-      properties: null
-    ChallengeLeaveRequest:
-      type: object
-      properties:
-        challenge_id:
-          type: string
-    TeamStatListRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    EventLeaderboard:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        category:
-          type: string
-        ascending:
-          type: boolean
-        operator:
-          type: string
-        tier:
-          type: integer
-          format: int32
-        start_time_sec:
-          type: integer
-          format: int64
-        end_time_sec:
-          type: integer
-          format: int64
-        expiry_time_sec:
-          type: integer
-          format: int64
-        available_rewards:
-          $ref: '#/components/schemas/AvailableRewards'
-        claim_time_sec:
-          type: integer
-          format: int64
-        reward:
-          $ref: '#/components/schemas/Reward'
-        count:
-          type: integer
-          format: int64
-        max_count:
-          type: integer
-          format: int64
-        max_num_score:
-          type: integer
-          format: int64
-        scores:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventLeaderboardScore'
-        is_active:
-          type: boolean
-        can_claim:
-          type: boolean
-        can_roll:
-          type: boolean
-        matchmaker_properties:
-          type: object
-          additionalProperties: true
-        current_time_sec:
-          type: integer
-          format: int64
-        cohort_id:
-          type: string
-        backing_id:
-          type: string
-        rolls:
-          type: integer
-          format: int64
-        max_rolls:
-          type: integer
-          format: int64
-        score_target:
-          type: integer
-          format: int64
-        score_target_players:
-          type: integer
-          format: int64
-        score_time_limit_sec:
-          type: integer
-          format: int64
-        score_time_limit_ends_sec:
-          type: integer
-          format: int64
-        tier_delta_per_phase:
-          type: integer
-          format: int64
-        roll_cooldown_sec:
-          type: integer
-          format: int64
-        roll_cooldown_ends_sec:
-          type: integer
-          format: int64
-        reroll_count_freeze:
-          type: boolean
-        best_rank:
-          type: integer
-          format: int64
-        can_update:
-          type: boolean
-        can_roll_with_claim:
-          type: boolean
-        additionalProperties:
-          type: object
-          additionalProperties:
-            type: string
-    TeamEventLeaderboardDebugRandomScoresRequest:
+    TeamEventLeaderboardClaim:
       type: object
       properties:
         id:
           type: string
         event_leaderboard_id:
           type: string
-        min:
-          type: integer
-          format: int64
-        max:
-          type: integer
-          format: int64
-        operator:
-          type: integer
-          format: int32
-        subscore_min:
-          type: integer
-          format: int64
-        subscore_max:
-          type: integer
-          format: int64
-    TeamCreateRequest:
+    RewardMailboxDeleteRequest:
       type: object
       properties:
-        name:
-          type: string
-        desc:
-          type: string
-        open:
-          type: boolean
-        avatar_url:
-          type: string
-        lang_tag:
-          type: string
-        setup_metadata:
-          type: string
-    EventLeaderboardDebugUnenrollRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        user_id:
-          type: string
-    EventLeaderboardScore:
-      type: object
-      properties:
-        id:
-          type: string
-        username:
-          type: string
-        display_name:
-          type: string
-        avatar_url:
-          type: string
-        create_time_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        rank:
-          type: integer
-          format: int64
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        num_scores:
-          type: integer
-          format: int64
-        tier_delta:
-          type: integer
-          format: int32
-        metadata:
-          type: string
-    ChannelMessageAck:
-      type: object
-      properties:
-        channel_id:
-          type: string
-        message_id:
-          type: string
-        code:
-          type: integer
-          format: int32
-        username:
-          type: string
-        create_time:
-          type: integer
-          format: int64
-        update_time:
-          type: integer
-          format: int64
-        persistent:
-          type: boolean
-        room_name:
-          type: string
-        group_id:
-          type: string
-        user_id_one:
-          type: string
-        user_id_two:
-          type: string
-    AuctionBidRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        version:
-          type: string
-        bid:
-          $ref: '#/components/schemas/AuctionBidAmount'
-    RewardMailboxList:
-      type: object
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardMailboxEntry'
-        cursor:
-          type: string
-    EconomyDonationClaimRequest:
-      type: object
-      properties:
-        donation_ids:
+        ids:
           type: array
           items:
             type: string
-    EconomyStoreType:
-      type: string
-      enum:
-      - ECONOMY_STORE_TYPE_UNSPECIFIED
-      - ECONOMY_STORE_TYPE_APPLE_APPSTORE
-      - ECONOMY_STORE_TYPE_GOOGLE_PLAY
-      - ECONOMY_STORE_TYPE_FBINSTANT
-      - ECONOMY_STORE_TYPE_DISCORD
-    EnergySpendReward:
-      type: object
-      properties:
-        energies:
-          $ref: '#/components/schemas/EnergyList'
-        reward:
-          $ref: '#/components/schemas/Reward'
-    SyncStreaks:
-      type: object
-      properties:
-        resets:
-          type: array
-          items:
-            type: string
-    ChallengeTemplates:
-      type: object
-      properties: null
-    RewardModifier:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-        operator:
-          type: string
-        value:
-          type: integer
-          format: int64
-        duration_sec:
-          type: integer
-          format: int64
-    AvailableTeamMemberRewards:
-      type: object
-      properties:
-        guaranteed:
-          $ref: '#/components/schemas/AvailableRewardsContents'
-        weighted:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableRewardsContents'
-        max_rolls:
-          type: integer
-          format: int64
-        total_weight:
-          type: integer
-          format: int64
-        max_repeat_rolls:
-          type: integer
-          format: int64
     Unlockable:
       type: object
       properties:
@@ -5979,319 +6265,33 @@ components:
           type: object
           additionalProperties:
             type: string
-    TutorialUpdateRequest:
+    AvailableRewardsItemSet:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/RewardRangeInt64'
+        max_repeats:
+          type: integer
+          format: int64
+        set:
+          type: array
+          items:
+            type: string
+    RewardModifier:
       type: object
       properties:
         id:
           type: string
-        step:
-          type: integer
-          format: int32
-    AvailableRewardsEnergyModifier:
-      type: object
-      properties:
-        id:
+        type:
           type: string
         operator:
           type: string
         value:
-          $ref: '#/components/schemas/RewardRangeInt64'
+          type: integer
+          format: int64
         duration_sec:
-          $ref: '#/components/schemas/RewardRangeUiNt64'
-    RewardMailboxEntry:
-      type: object
-      properties:
-        id:
-          type: string
-        reward:
-          $ref: '#/components/schemas/Reward'
-        create_time_sec:
           type: integer
           format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        expiry_time_sec:
-          type: integer
-          format: int64
-        claim_time_sec:
-          type: integer
-          format: int64
-        can_claim:
-          type: boolean
-    IncentiveRecipientGetRequest:
-      type: object
-      properties:
-        code:
-          type: string
-    TeamEventLeaderboardScore:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        avatar_url:
-          type: string
-        create_time_sec:
-          type: integer
-          format: int64
-        update_time_sec:
-          type: integer
-          format: int64
-        rank:
-          type: integer
-          format: int64
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        num_scores:
-          type: integer
-          format: int64
-        metadata:
-          type: string
-    Leaderboard:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        category:
-          type: string
-        ascending:
-          type: boolean
-        operator:
-          type: string
-        prev_reset_time_sec:
-          type: integer
-          format: int64
-        next_reset_time_sec:
-          type: integer
-          format: int64
-        current_time_sec:
-          type: integer
-          format: int64
-        start_time_sec:
-          type: integer
-          format: int64
-        end_time_sec:
-          type: integer
-          format: int64
-        regions:
-          type: array
-          items:
-            type: string
-        authoritative:
-          type: boolean
-        additionalProperties:
-          type: object
-          additionalProperties:
-            type: string
-    EconomyGrantRequest:
-      type: object
-      properties:
-        reward_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardModifier'
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        items:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    EconomyDonationsList:
-      type: object
-      properties:
-        donations:
-          type: array
-          items:
-            $ref: '#/components/schemas/EconomyDonation'
-    EconomyListStoreItemCost:
-      type: object
-      properties:
-        sku:
-          type: string
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    AuctionBid:
-      type: object
-      properties:
-        user_id:
-          type: string
-        bid:
-          $ref: '#/components/schemas/AuctionBidAmount'
-        create_time_sec:
-          type: integer
-          format: int64
-    EconomyPurchaseRestoreRequest:
-      type: object
-      properties:
-        store_type:
-          $ref: '#/components/schemas/EconomyStoreType'
-        receipts:
-          type: array
-          items:
-            type: string
-    TeamGift:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        category:
-          type: string
-        start_time_sec:
-          type: integer
-          format: int64
-        contribution_end_time_sec:
-          type: integer
-          format: int64
-        end_time_sec:
-          type: integer
-          format: int64
-        count:
-          type: integer
-          format: int64
-        max_count:
-          type: integer
-          format: int64
-        max_contributor_count:
-          type: integer
-          format: int64
-        contribution_cost:
-          $ref: '#/components/schemas/AvailableRewards'
-        contribution_reward:
-          $ref: '#/components/schemas/AvailableRewards'
-        rewards:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamGiftReward'
-        additional_properties:
-          type: object
-          additionalProperties: true
-        contributors:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamGiftContributor'
-        can_contribute:
-          type: boolean
-        contributor_remaining_count:
-          type: integer
-          format: int64
-        can_claim:
-          type: boolean
-        available_rewards:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamGiftReward'
-    EconomyListRequest:
-      type: object
-      properties:
-        store_type:
-          $ref: '#/components/schemas/EconomyStoreType'
-    TeamWalletGetRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    TeamReward:
-      type: object
-      properties:
-        reward_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardModifier'
-        member_reward_modifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/RewardModifier'
-        grant_time_sec:
-          type: integer
-          format: int64
-        to_mailbox_expiry_sec:
-          type: integer
-          format: int64
-        member_reward:
-          $ref: '#/components/schemas/TeamMemberReward'
-        items:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        currencies:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-    TeamEventLeaderboardUpdate:
-      type: object
-      properties:
-        id:
-          type: string
-        event_leaderboard_id:
-          type: string
-        score:
-          type: integer
-          format: int64
-        subscore:
-          type: integer
-          format: int64
-        metadata:
-          type: string
-        conditional_metadata_update:
-          type: boolean
-    EnergySpendWithRefillStartTimeRequest:
-      type: object
-      properties: null
-    RewardMailboxClaimRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        delete:
-          type: boolean
-    EconomyDonationsByUserList:
-      type: object
-      properties: null
-    UnlockablesQueueSetRequest:
-      type: object
-      properties:
-        instance_ids:
-          type: array
-          items:
-            type: string
-    ChallengeJoinRequest:
-      type: object
-      properties:
-        challenge_id:
-          type: string
-    TeamEventLeaderboardDebugFillRequest:
-      type: object
-      properties:
-        id:
-          type: string
-        event_leaderboard_id:
-          type: string
-        target_count:
-          type: integer
-          format: int32
   securitySchemes:
     bearerAuthNakama:
       type: http
