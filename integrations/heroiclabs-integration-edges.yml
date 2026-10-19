@@ -1,6 +1,13 @@
 generated: '2026-10-15'
 method: searched
 checked:
+- https://api.nuget.org/v3
+- https://crates.io/api/v1
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - unity/integrations/unity-integration-edges.yml
 source:
 - unity/integrations/unity-integration-edges.yml
@@ -24,3 +31,42 @@ edges:
   category: Unity Verified Solutions
   publisher_verified:
   - Unity Verified Solution
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@heroiclabs/nakama-js
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@heroiclabs/nakama-js'
+      version: 2.8.0
+      released: '2026-05-27'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@heroiclabs/nakama-js
+      repo_leg: domain:heroiclabs.com
+      publisher_leg: email:heroiclabs.com
+      matched_by: domain+name-among-holders
+    - name: '@heroiclabs/satori-js'
+      version: 2.7.1
+      released: '2026-05-27'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@heroiclabs/satori-js
+      repo_leg: domain:heroiclabs.com
+      publisher_leg: email:heroiclabs.com
+      matched_by: domain+name-among-holders
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
