@@ -9,6 +9,11 @@ checked:
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
 - unity/integrations/unity-integration-edges.yml
+- https://500.co/api/startups
+- https://500.co/companies
+- https://www.antler.co/portfolio
+- https://www.techstars.com/portfolio
+- https://www.ycombinator.com/companies
 source:
 - unity/integrations/unity-integration-edges.yml
 edges:
@@ -70,3 +75,32 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Y Combinator
+  partner: y-combinator
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.ycombinator.com/companies/heroic-labs
+  category: accelerator portfolio participation
+  contract_reference:
+    register: Y Combinator company directory (ycombinator.com/companies/<slug>)
+    standard: null
+    spec_file: null
+    role: accelerator-portfolio-company
+    registered_name: Heroic Labs
+    register_id: https://www.ycombinator.com/companies/heroic-labs
+    register_country: GB
+    register_website: http://heroiclabs.com
+    matched_domain: heroiclabs.com
+    matched_by: domain+name-among-holders
+    signal_note: 'participation only: the accelerator''s own portfolio register lists the company (cohort / investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-accelerator-portfolios.py
+    detected: '2026-10-21'
+    batch: Summer 2015
+    year: '2014'
+    status: Active
+  detected_by: sweep-accelerator-portfolios.py
+  first_seen: '2026-10-21'
