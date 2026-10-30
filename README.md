@@ -1,4 +1,4 @@
-# Heroic Labs (heroiclabs)
+# Heroic Labs
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,65 +64,200 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Heroic Labs is the company behind Nakama, the leading open-source game backend server trusted by over 1 million developers worldwide. Nakama provides a comprehensive REST, WebSocket, and gRPC API for building scalable multiplayer and social games, covering real-time matchmaking, leaderboards, tournaments, chat, friend systems, presence tracking, and custom server logic in Go, TypeScript, and Lua. Heroic Labs also offers Heroic Cloud as a fully managed deployment platform, Hiro as a meta-game toolkit, and Satori as a LiveOps product for feature flags, A/B experiments, and live events.
+Heroic Labs is the company behind Nakama, a leading open-source game backend server providing a comprehensive REST, WebSocket, and gRPC API for building scalable multiplayer and social games. The platform delivers essential backend services including real-time matchmaking, leaderboards, tournaments, chat, friend systems, and presence tracking. Nakama exposes its functionality via RESTful HTTP endpoints, real-time WebSocket connections, and gRPC, with server runtime support for custom logic in Go, TypeScript, and Lua. Heroic Labs also offers Heroic Cloud as a fully managed deployment platform and Satori as a LiveOps product for feature flags, A/B experiments, and live events.
 
-- **APIs.json:** https://raw.githubusercontent.com/api-evangelist/heroiclabs/refs/heads/main/apis.yml
-- **Naftiko:** https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=heroiclabs-api-evangelist&utm_content=repo
+**Areas:** Game Backend · Multiplayer · Real-Time · WebSocket · Matchmaking · Leaderboards · Social Gaming · Open Source · LiveOps · gRPC
 
----
+## Heroic Labs on APIs.io
 
-## Tags
+Everything profiled for Heroic Labs is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/heroiclabs/](https://apis.io/providers/heroiclabs/)** — or go straight to one of the APIs or properties below.
 
-Game Backend, Multiplayer, Real-Time, WebSocket, Matchmaking, Leaderboards, Social Gaming, Open Source, LiveOps, gRPC
+### APIs (4)
 
----
+- [Nakama API](https://apis.io/apis/heroiclabs/nakama-api/) — The Nakama API is the core REST and WebSocket API for Heroic Labs' open-source game backend server. It provides endpoints for user authentication (social,…
+- [Satori API](https://apis.io/apis/heroiclabs/satori-api/) — The Satori API is Heroic Labs' LiveOps platform API enabling game developers to manage live operations including feature flags, A/B experiments, audiences,…
+- [Heroic Labs Console API](https://apis.io/apis/heroiclabs/heroiclabs-console-api/) — The Console API from Heroic Labs — 73 operation(s) for console.
+- [Heroic Labs Rpc API](https://apis.io/apis/heroiclabs/heroiclabs-rpc-api/) — The Rpc API from Heroic Labs — 131 operation(s) for rpc.
 
-## APIs
+### Published properties
 
-| Name | Description | Docs |
-|------|-------------|------|
-| Nakama API | Core REST, WebSocket, and gRPC API for the Nakama game backend server — authentication, matchmaking, leaderboards, storage, social, and real-time gameplay | https://heroiclabs.com/docs/nakama/ |
-| Satori API | LiveOps REST API for feature flags, A/B experiments, audiences, and scheduled live events | https://heroiclabs.com/docs/satori/ |
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
----
+#### AsyncAPI (1)
 
-## Plans / Rate Limits / FinOps
+Event-driven and webhook contracts.
 
-| Resource | File |
-|----------|------|
-| Plans & Pricing | [plans/heroiclabs-plans-pricing.yml](plans/heroiclabs-plans-pricing.yml) |
-| Rate Limits | [rate-limits/heroiclabs-rate-limits.yml](rate-limits/heroiclabs-rate-limits.yml) |
-| FinOps | [finops/heroiclabs-finops.yml](finops/heroiclabs-finops.yml) |
+- [Heroiclabs Nakama Realtime Events](https://apis.io/asyncapis/heroiclabs/heroiclabs-nakama-realtime-events/)
 
-Heroic Cloud pricing is CPU-allocation based for Nakama server instances and their managed databases, with no DAU/MAU/CCU charges on any plan. Satori LiveOps starts at $600/month with event-based ingestion pricing. Support packages range from $2,000/month (Studio Basic) to custom pricing (Studio Premium). No fixed per-endpoint rate limits are published; throughput is bounded by the CPU tier selected.
+#### GraphQL (1)
 
----
+GraphQL schemas.
 
-## Timestamps
+- [Moved to /providers/heroiclabs/](https://apis.io/graphqls/heroiclabs/heroiclabs-graphql/)
 
-- **Created:** 2026-06-12
-- **Modified:** 2026-06-12
+#### MCP servers (1)
 
----
+Model Context Protocol servers that expose the API to agents.
 
-## Common
+- [heroic-labs-nakama](https://apis.io/servers/heroiclabs/heroic-labs-nakama/)
 
-| Type | URL |
-|------|-----|
-| Website | https://heroiclabs.com/ |
-| Documentation | https://heroiclabs.com/docs/nakama/ |
-| GitHub Org | https://github.com/heroiclabs |
-| LinkedIn | https://www.linkedin.com/company/heroic-labs |
-| Blog | https://heroiclabs.com/blog/ |
-| Pricing | https://heroiclabs.com/pricing/ |
-| Status Page | https://heroiclabs.com/docs/nakama/getting-started/console/status/ |
-| X / Twitter | https://twitter.com/heroicdev |
-| Forum | https://forum.heroiclabs.com/ |
+#### Agentic access (1)
 
----
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Maintainers
+- [Heroiclabs Agentic Access](https://apis.io/agentic-access/heroiclabs/heroiclabs-agentic-access/)
 
-| Name | Email |
-|------|-------|
-| Kin Lane | kin@apievangelist.com |
+#### JSON Schema (10)
+
+The data models the API reads and writes.
+
+- [apiAccount](https://apis.io/schemas/heroiclabs/apiAccount/)
+- [apiChannelMessage](https://apis.io/schemas/heroiclabs/apiChannelMessage/)
+- [apiFriend](https://apis.io/schemas/heroiclabs/apiFriend/)
+- [apiGroup](https://apis.io/schemas/heroiclabs/apiGroup/)
+- [apiLeaderboardRecord](https://apis.io/schemas/heroiclabs/apiLeaderboardRecord/)
+- [apiMatch](https://apis.io/schemas/heroiclabs/apiMatch/)
+- [apiNotification](https://apis.io/schemas/heroiclabs/apiNotification/)
+- [apiSession](https://apis.io/schemas/heroiclabs/apiSession/)
+- [apiStorageObject](https://apis.io/schemas/heroiclabs/apiStorageObject/)
+- [apiTournament](https://apis.io/schemas/heroiclabs/apiTournament/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Heroiclabs Context](https://apis.io/jsonld/heroiclabs/heroiclabs-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Heroic Labs (Nakama) API Vocabulary](https://apis.io/vocabularies/heroiclabs/heroiclabs-vocabulary/)
+
+#### Examples (5)
+
+Example requests and responses.
+
+- [Heroiclabs Authenticate Email Example](https://apis.io/examples/heroiclabs/heroiclabs-authenticate-email-example/)
+- [Heroiclabs Create Match Example](https://apis.io/examples/heroiclabs/heroiclabs-create-match-example/)
+- [Heroiclabs List Leaderboard Records Example](https://apis.io/examples/heroiclabs/heroiclabs-list-leaderboard-records-example/)
+- [Heroiclabs Send Event Example](https://apis.io/examples/heroiclabs/heroiclabs-send-event-example/)
+- [Heroiclabs Write Storage Object Example](https://apis.io/examples/heroiclabs/heroiclabs-write-storage-object-example/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Hiro RPC Console API](https://apis.io/collections/heroiclabs/open-heroiclabs-console-api/)
+- [Hiro RPC Console Nakama API](https://apis.io/collections/heroiclabs/open-heroiclabs-nakama-api/)
+- [Hiro Console Rpc API](https://apis.io/collections/heroiclabs/open-heroiclabs-rpc-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Heroiclabs Nakama Overlay](https://apis.io/overlays/heroiclabs/heroiclabs-nakama-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Heroic Labs — jsonschema rules](https://apis.io/rules/heroiclabs/heroiclabs-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Heroiclabs Authentication](https://apis.io/security/heroiclabs/heroiclabs-authentication/)
+- [Heroiclabs Domain Security](https://apis.io/security/heroiclabs/heroiclabs-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Heroiclabs Plans Pricing](https://apis.io/plans/heroiclabs/heroiclabs-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Heroiclabs Rate Limits](https://apis.io/rate-limits/heroiclabs/heroiclabs-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Heroiclabs Finops](https://apis.io/finops/heroiclabs/heroiclabs-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://heroiclabs.com/)
+- [Documentation](https://heroiclabs.com/docs/nakama/)
+- [Getting started](https://heroiclabs.com/docs/nakama/getting-started/)
+- [API reference](https://heroiclabs.com/docs/nakama/)
+- [Pricing](https://heroiclabs.com/pricing/)
+- [Sign up](https://cloud.heroiclabs.com/register)
+- [Support](https://forum.heroiclabs.com)
+- [Blog](https://heroiclabs.com/blog/)
+- [Compliance](https://heroiclabs.com/docs/heroic-cloud/enterprise/privacy-compliance/)
+- [Terms of service](https://heroiclabs.com/tos.txt)
+- [Privacy policy](https://heroiclabs.com/privacypolicy.txt)
+- [GitHub](https://github.com/heroiclabs)
+- [Status](https://heroiclabs.com/docs/nakama/getting-started/console/status/)
+
+## API Evangelist rating
+
+**Kin Score 58.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 54.7 |
+| Contract governance | 41.7 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 80.4 |
+| Access clarity | 50.0 |
+
+**Agent readiness 25.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | mostly |
+
+**Regulatory alignment 27.0** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/heroiclabs/](https://apis.io/providers/heroiclabs/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Heroic Labs: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/heroiclabs/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
